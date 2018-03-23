@@ -1,7 +1,7 @@
 <?php 
     $includeLevel = 2;
-    require 'connectionDB.php';
-    require 'fonctions_diverses.php';
+    require_once 'connectionDB.php';
+    require_once 'fonctions_diverses.php';
 
     if(isset($_POST['connection'])) {
         if(!empty($_POST['nom']) && !empty($_POST['mdp'])) {
@@ -16,7 +16,7 @@
                 // on ouvre la session avec $_SESSION:
                 $_SESSION['Id_groupe'] = $donnees['Id_groupe']; // mise en session de l'id de l'internaute
                 $connection->closeCursor();
-                alerteBox('Vous \352tes ant que ' . $donnees['Nom_groupe'], '../../index.php');
+                alerteBox('Vous \352tes connect\351s en tant que ' . $donnees['Nom_groupe'], '../../index.php');
             }else{
                 $connection->closeCursor();
                 alerteBox('Veuillez r\351essayer', '../../connection.php?nom=' . $nomInternaute);

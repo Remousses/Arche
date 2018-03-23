@@ -7,15 +7,15 @@
 		<!DOCTYPE html>
 		<html>
 		<head>
-		<?php require 'includes/head.php'; ?>
+		<?php require_once 'includes/head.php'; ?>
 			</head>
 			
 			<body>
 				<div>
 					<?php 
 					    require_once 'includes/fonctions/upload.inc.php';
-                        require 'includes/btn_fixed.php';
-					    require 'includes/menu.php';
+                        require_once 'includes/btn_fixed.php';
+					    require_once 'includes/menu.php';
                     ?>
 				</div>
 					
@@ -25,7 +25,7 @@
 				
 				<div class="milieu">
 					<?php 
-						require 'includes/fonctions/fonction_gestions_produits.php';
+						require_once 'includes/fonctions/fonction_gestions_produits.php';
 						gestions_produits(1);
 					?>
 				</div>

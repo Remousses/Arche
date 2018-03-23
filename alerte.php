@@ -6,17 +6,17 @@
         <!DOCTYPE html>
         <html>
             <head>
-                <?php require 'includes/head.php'; ?>
+                <?php require_once 'includes/head.php'; ?>
             </head>
 
             <body>
                 <?php 
-                    require 'includes/btn_fixed.php';
-                    require 'includes/menu.php';
+                    require_once 'includes/btn_fixed.php';
+                    require_once 'includes/menu.php';
                 ?>
                 <br><br><br><br><br>
                 <?php
-                    require 'includes/fonctions/vues/fonction_vue_all.php';
+                    require_once 'includes/fonctions/vues/fonction_vue_all.php';
                     participationProjet();
                 ?>
                 <br><br><br>

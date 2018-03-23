@@ -6,14 +6,13 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<?php require 'includes/head.php'; ?>
+		<?php require_once 'includes/head.php'; ?>
 	</head>
 	
 	<body>
         <?php 
-            require 'includes/btn_fixed.php';
-            require 'includes/menu.php';
-			var_dump($_SESSION['Id_groupe']);
+            require_once 'includes/btn_fixed.php';
+            require_once 'includes/menu.php';
         ?>
             
 		<div class="titre">

@@ -28,6 +28,21 @@
 <?php
     }
 
+    function voirAlertes($nomAlerte, $informations, $date){
+        $informationsPlus = $informations;
+        if (strlen($informationsPlus) > 40){
+            $informationsPlus = substr($informationsPlus, 0, 40);
+            
+            $dernierMot = strrpos($informationsPlus, " ");
+            $informationsPlus = substr($informationsPlus, 0, $dernierMot);
+            $informationsPlus .= " ...";
+        }
+        
+        echo 'Nom : ' . $nomAlerte . '<br>
+            Informations : ' . $informationsPlus . '<br>
+            Lancer le ' . $date . '<br>';
+    }
+
     function participationProjet(){
         echo 'participationProjet';
 ?>

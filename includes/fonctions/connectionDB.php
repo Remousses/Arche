@@ -1,9 +1,9 @@
 <?php
 	function DBConnection($includeLevel) {
 		if($includeLevel == 1){
-			require 'param/id_dev.php';
+			require_once 'param/id_dev.php';
 		}else if ($includeLevel == 2){
-			require '../../param/id_dev.php';
+			require_once '../../param/id_dev.php';
 		}
 		
 		if(session_id() == ""){

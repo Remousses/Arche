@@ -1,7 +1,7 @@
 <?php 
     $includeLevel = 2;
-    require 'connectionDB.php';
-    require 'fonctions_diverses.php';
+    require_once 'connectionDB.php';
+    require_once 'fonctions_diverses.php';
 
     if(isset($_POST['inscriptionInternaute'])){            
         if(!empty($_POST['nomInternauteInscription']) && !empty($_POST['prenomInternauteInscription']) 

@@ -1,20 +1,20 @@
 <?php 
 	session_start();
-    require 'includes/fonctions/fonctions_diverses.php';
+    require_once 'includes/fonctions/fonctions_diverses.php';
 
 	if(!isset($_SESSION['Id_internaute'])){
 ?>
         <!DOCTYPE html>
         <html>
             <head>
-              <?php require 'includes/head.php'; ?>
+              <?php require_once 'includes/head.php'; ?>
             </head>
 
             <body>
                 <?php 
-                    require 'includes/btn_fixed.php';
-                    require 'includes/menu.php';
-                    require 'includes/fonctions/vues/fonction_vue_all.php';
+                    require_once 'includes/btn_fixed.php';
+                    require_once 'includes/menu.php';
+                    require_once 'includes/fonctions/vues/fonction_vue_all.php';
                     echo '<br><br><br><br><br>';
                     connectionInternaute();
                     inscriptionInternaute();
