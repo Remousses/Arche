@@ -40,3 +40,29 @@ $('.tab a').on('click', function (e) {
   $(target).fadeIn(600);
   
 });
+
+CharacterCount = function(TextArea,FieldToCount){
+    var myField = document.getElementById(TextArea);
+    var myLabel = document.getElementById(FieldToCount); 
+
+    if(!myField || !myLabel){
+      return false;
+    }
+
+    var MaxChars =  myField.maxLengh;
+
+    if(!MaxChars){
+      MaxChars =  myField.getAttribute('maxlength'); 
+    }
+    
+    if(!MaxChars){
+      return false;
+    }
+
+    var remainingChars =   MaxChars - myField.value.length
+    myLabel.innerHTML = remainingChars+" Characters Remaining of Maximum "+MaxChars
+  }
+
+  setInterval(function(){
+    CharacterCount('myfield','CharCountLabel1')
+  },55);

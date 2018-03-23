@@ -1,5 +1,4 @@
 <?php
-    require '../param/id.php';
     header('Content-Type: text/html; charset=UTF-8');
     define('pageprecedente', $_SERVER["HTTP_REFERER"], true);
 
