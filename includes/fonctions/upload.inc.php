@@ -6,7 +6,7 @@
 	 * $fichier : le fichier en lui-memem;
 	 * $tailleMax : la taille maximale du fichier en octets;
 	 * $extensionsPossibles : tableau des extensions autorisees;
-	 * $repertoireDestination : nom du fichier o� sera enregistr� le fichier (suivi de /).
+	 * $repertoireDestination : nom du fichier ou sera enregistre le fichier (suivi de /).
 	 */
 	
 	function upload($fichier, $tailleMax, $extensionsPossibles, $repertoireDestination){

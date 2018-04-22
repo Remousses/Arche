@@ -1,35 +1,37 @@
 <?php
     session_start();
-    $includeLevel = 2;
-    require_once 'connectionDB.php';
-    require_once 'fonctions_diverses.php';
-
+    require_once 'connexionDB.php';
+    require_once '../../param/infos_id_groupe.php';
+    
     if(strpos($_SERVER['PHP_SELF'], 'fonction_validation.php') !== false && isset($_SESSION['Id_groupe'])){
-        if($_SESSION['Id_groupe'] == 3){
-            if(!empty($_GET['confirmerAlerte'])){
-                $update = DBConnection($includeLevel)->prepare('UPDATE alerte SET Status = 1 WHERE Id_alerte = ' . $_GET['confirmerAlerte']);
+        if($_SESSION['Id_groupe'] == getIdGroupeComite()){
+            if(!empty($_GET['approuverAlerte']) && intval($_GET['approuverAlerte']) != 0){
+                $approuver = DBconnexion()->prepare('UPDATE alerte SET Statut = 1 WHERE Id_alerte = ' . $_GET['approuverAlerte']);
                 
-                if($update->execute()){
-                    alerteBox('L\'alerte \340 \351t\351 modifi\351e', '../../all_alertes.php');
+                if($approuver->execute()){
+                    $approuver->closeCursor();
+                    header('Location: ../../all_alertes.php?message=succesApprouverAlerte');
                 }else{
-                    alerteBox('Veuillez r\351essayer', '../../all_alertes.php');
+                    $approuver->closeCursor();
+                    header('Location: ../../all_alertes.php?message=erreurApprouverAlerte');
                 }
-            }else if(!empty($_GET['supprimerAlerte'])){                
-                $suppression = DBConnection($includeLevel)->prepare('DELETE FROM alerte WHERE Id_alerte = "' . $_GET['supprimerAlerte'] .'"');
+            }else if(!empty($_GET['archiverAlerte']) && intval($_GET['archiverAlerte']) != 0){                
+                $archiver = DBconnexion()->prepare('UPDATE alerte SET Statut = 2 WHERE Id_alerte = ' . $_GET['archiverAlerte'] .'');
                 
-                if($suppression->execute()){
-                    alerteBox('L\'alerte \340 \351t\351 supprim\351e', '../../all_alertes.php');
+                if($archiver->execute()){
+                    $archiver->closeCursor();
+                    header('Location: ../../all_alertes.php?message=succesArchiverAlerte');
                 }else{
-                    $suppression->closeCursor();
-                    alerteBox('Veuillez r\351essayer', '../../all_alertes.php');
+                    $archiver->closeCursor();
+                    header('Location: ../../all_alertes.php?message=erreurArchiverAlerte');
                 }
-            }else {
-                alerteBox('Cette page n\'existe pas. Redirection sur la page d\'accueil', '../../index.php');
+            }else{
+                header('Location: ../../index.php?message=erreurPage');
             }
-        }else {
-            alerteBox('Cette page n\'existe pas. Redirection sur la page d\'accueil', '../../index.php');
+        }else{
+            header('Location: ../../index.php?message=erreurPage');
         }
-    }else {
-        alerteBox('Cette page n\'existe pas. Redirection sur la page d\'accueil', '../../index.php');
+    }else{
+        header('Location: ../../index.php?message=erreurPage');
     }
 ?>
