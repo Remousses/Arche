@@ -82,5 +82,6 @@
 
 $(window).on("load",function(){
     $("#nouvelleEspece").modal("show");
-    $("#sidenavToggler").sidenavToggler("show");
+    $("#nouvelleTache").modal("show");
+    // $("#sidenavToggler").sidenavToggler("show");
 });

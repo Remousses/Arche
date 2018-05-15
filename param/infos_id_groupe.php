@@ -1,5 +1,5 @@
 <?php
-    function getIdGroupeUtilisateur(){
+    function getIdGroupeVisiteur(){
         return 1;
     }
 
@@ -15,15 +15,23 @@
         return 4;
     }
 
-    function getIdGroupeSuperAdministrateur(){
+    function getIdGroupeMissionnaire(){
         return 5;
     }
 
-    function getIdGroupeMissionnaire(){
+    function getIdGroupeSentinelle(){
         return 6;
     }
 
-    function getIdGroupeSentinelle(){
+    function getIdGroupeParrainFinancier(){
         return 7;
+    }
+
+    function getIdGroupeRessourcesHumaines(){
+        return 8;
+    }
+
+    function getIdGroupePersonnelPermanent(){
+        return 9;
     }
 ?>

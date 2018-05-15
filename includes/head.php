@@ -5,6 +5,7 @@
 <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css">
 <link href="vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
 <link href="vendor/datatables/dataTables.bootstrap4.css" rel="stylesheet" type="text/css">
+    <link href="https://cdn.jsdelivr.net/npm/gijgo@1.9.6/css/gijgo.min.css" rel="stylesheet" type="text/css" />
 <link href="css/sb-admin.css" rel="stylesheet" type="text/css">
 
 <script src="vendor/jquery/jquery.min.js"></script>
@@ -15,28 +16,8 @@
 <script src="vendor/datatables/dataTables.bootstrap4.js"></script>
 <script src="js/sb-admin-datatables.min.js"></script>
 <script src="js/sb-admin-charts.min.js"></script>
-<script>
-    $(document).ready(function(){
-        $('#toggleNavColor').click(function() {
-            $('nav').toggleClass('navbar-dark navbar-light');
-            $('nav').toggleClass('bg-dark bg-light');
-            $('body').toggleClass('bg-dark bg-light');
-        });
-
-        $('#candidater').on('shown.bs.modal', function() {
-            $(this).find('textarea:first').focus();
-        });
-
-        $('#nouvelleEspece').on('shown.bs.modal', function() {
-            $(this).find('input:first').focus();
-        });
-    });
-    
-    function candidater(idAlerte, idEspece){
-        $('#idAlerteCandidater').val(idAlerte);
-        $('#idEspeceCandidater').val(idEspece);
-    }   
-</script>
+<script src="https://cdn.jsdelivr.net/npm/gijgo@1.9.6/js/gijgo.min.js" type="text/javascript"></script>
+<script src="js/index.js"></script>
 
 <?php
     require_once 'param/infos_id_groupe.php';
@@ -47,5 +28,6 @@
     require_once 'includes/fonctions/vues/admin/fonction_vue_admin_narrateur.php';
     require_once 'includes/fonctions/vues/admin/fonction_vue_admin_sentinelle.php';
     require_once 'includes/fonctions/gestions/fonction_gestions_alertes.php';
+    require_once 'includes/fonctions/gestions/fonction_gestions_candidatures.php';
     require_once 'includes/fonctions/gestions/fonction_gestions_projets.php';
 ?>

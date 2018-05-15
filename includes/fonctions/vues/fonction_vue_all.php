@@ -66,23 +66,36 @@
         
         echo '<div class="card mb-3" id="alerte' . $idAlerte . '">
             <a href="' . (empty($_SESSION) ? 'connexion.php' : 'voir_projets.php?idAlerte=' . $idAlerte . '&idEspece=' . $idEspece) . '">
-                <div class="center"><img src="images/especes/' . $photo .'" alt="' . $nomEspece . '" heigth="40%" width="40%"/></div> <br>
+                <div class="center"><img class="image_alerte" src="images/especes/' . $photo .'" alt="' . $nomEspece . '"/></div> <br>
             </a>
             <div class="card-body">';
-            if(isset($_GET['message'])){
-                if($_GET['message'] == 'erreurProjet_' . $idAlerte){
-                    messageBox('danger', 'Cette alerte n\'a pas de projets en cours. Vous avez été redirigez vers la page des alertes.');
-                }
+            
+        if(isset($_GET['message'])){
+            $message = $_GET['message'];
+            if($message == 'erreurProjet_' . $idAlerte){
+                messageBox('danger', 'Cette alerte n\'a pas de projets en cours. Vous avez été redirigez vers la page des alertes.');
+            }else if($message == 'succesCandidature_' . $idAlerte){
+                messageBox('success', 'Votre demande de candidature va être prise en compte.');
+            }else if($message == 'erreurCandidature_' . $idAlerte){
+                messageBox('danger', 'Erreur lors de la demande de candidature.');
+            }else if($message == 'existeCandidature_' . $idAlerte){
+                messageBox('warning', 'Vous avez déjà candidater à cette alerte.');
+            }else if($message == 'succesRepartition_' . $idAlerte){
+                messageBox('success', 'La répartition a été effectuée.');
+            }else if($message == 'erreurRepartition_' . $idAlerte){
+                messageBox('danger', 'La répartition n\'a pas été effectuée.');
             }
-                echo '<h6 class="card-title mb-1"><a href="' . (empty($_SESSION) ? 'connexion.php' : 'voir_projets.php?idAlerte=' . $idAlerte . '&idEspece=' . $idEspece) . '">' . $nomAlerte . '</a></h6>
+        }
+
+        echo '<h6 class="card-title mb-1"><a href="' . (empty($_SESSION) ? 'connexion.php' : 'voir_projets.php?idAlerte=' . $idAlerte . '&idEspece=' . $idEspece) . '">' . $nomAlerte . '</a></h6>
                 <p class="card-text small">' . $informations .'</p>
-            </div>
-            <hr class="my-0">
-            <div class="card-body py-2 small">
-            ' . $texte .'
-            </div>
-            <div class="card-footer small text-muted">Postée le ' . dateFr($date) . '</div>
-        </div>';
+                </div>
+                <hr class="my-0">
+                <div class="card-body py-2 small">
+                ' . $texte .'
+                </div>
+                <div class="card-footer small text-muted">Postée le ' . dateFr($date) . '</div>
+            </div>';
 
         return $tabAlerte;
     }
@@ -104,7 +117,21 @@
                                 <label for="informationsCandidater">Pourquoi vous intéressez-vous à cette alerte ?</label>
                                 <textarea class="form-control" type="text" name="informationsCandidater" col="30" row ="6" maxlength="1000" placeholder="Votre texte" required></textarea>
                             </div>
-                            
+
+                            <div class="form-group">
+                                <label for="">Rôle</label>
+                                <div class="row" style="margin: auto;">
+                                    <div class="col-6">
+                                        <input type="radio" class="form-check-input" name="roleCandidater" value="Participer physiquement" checked>
+                                        <label class="form-check-label" for="Participer physiquement">Participer physiquement</label>
+                                    </div>
+                                    <div class="col-6">
+                                        <input type="radio" class="form-check-input" name="roleCandidater" value="Participer financièrement">
+                                        <label class="form-check-label" for="Participer financièrement">Participer financièrement</label>
+                                    </div>
+                                </div>
+                            </div>
+
                             <input type="hidden" id="idAlerteCandidater" name="idAlerteCandidater">
                             <input type="hidden" id="idEspeceCandidater" name="idEspeceCandidater">                            
                         </div>

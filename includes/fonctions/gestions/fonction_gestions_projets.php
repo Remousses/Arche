@@ -1,14 +1,14 @@
 <?php
-    function profileUtilisateur(){
+    function profilUtilisateur(){
         $tabAlerte = array();
         $nbAlerte = array();
         $nbProjet = array();
 
-        $profile = DBconnexion()->prepare('SELECT Id_projet, Nom_projet, Date_debut, Date_fin, alerte.Id_alerte, Nom_alerte, alerte.Statut FROM projet, alerte WHERE Id_utilisateur = ' . $_SESSION['Id_utilisateur'] . ' AND projet.Id_alerte = alerte.Id_alerte ORDER BY alerte.Id_alerte, alerte.Statut, Date_debut');
-        $profile->execute();
+        $profil = DBconnexion()->prepare('SELECT Id_projet, Nom_projet, Date_debut, Date_fin, alerte.Id_alerte, Nom_alerte, alerte.Statut FROM projet, alerte WHERE Id_utilisateur LIKE "%|' . $_SESSION['Id_utilisateur'] . '|%" AND projet.Id_alerte = alerte.Id_alerte ORDER BY alerte.Id_alerte, alerte.Statut, Date_debut');
+        $profil->execute();
 
-        if($profile->rowCount() > 0){
-            while ($donnees = $profile->fetch()) {
+        if($profil->rowCount() > 0){
+            while ($donnees = $profil->fetch()) {
                 if(!in_array($donnees['Statut'], $tabAlerte)){
                     array_push($tabAlerte, $donnees['Statut']);
                     
@@ -45,13 +45,12 @@
                     </div>';
             }
 
-            $profile->closeCursor();
+            $profil->closeCursor();
 
         }else{
-            $profile->closeCursor();
-            echo '<script>document.location.href="index.php?message=ErreurProfile";</script>';
+            $profil->closeCursor();
+            echo '<script>document.location.href="index.php?message=erreurProfil";</script>';
         }
-        
     }
 
     function getAllProjetParAlerte(){

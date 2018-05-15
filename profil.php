@@ -22,7 +22,7 @@
                             <li class="breadcrumb-item active">Alertes</li>
                         </ol>
                         <?php
-                            profileUtilisateur();
+                            profilUtilisateur();
                         ?>
                     </div>
 

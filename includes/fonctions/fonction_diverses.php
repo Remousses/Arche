@@ -28,7 +28,7 @@
                 break;
 
             case 'succesAlerte':
-                messageBox('success', 'L\'alerte à été créée.');
+                messageBox('success', 'L\'alerte a été créée.');
                 break;
             
             case 'erreurAlerte':
@@ -44,7 +44,7 @@
                 break;
 
             case 'succesApprouverAlerte':
-                messageBox('success', 'L\'alerte à été approuvée.');
+                messageBox('success', 'L\'alerte a été approuvée.');
                 break;
 
             case 'erreurApprouverAlerte':
@@ -52,30 +52,38 @@
                 break;
 
             case 'succesArchiverAlerte':
-                messageBox('success', 'L\'alerte à été archiver.');
+                messageBox('success', 'L\'alerte a été archiver.');
                 break;
 
             case 'erreurArchiverAlerte':
                 messageBox('danger', 'L\'alerte n\'a pas été archiver.');
                 break;
+
+            case 'succesApprouverCandidature':
+                messageBox('success', 'La candidature a été approuvée.');
+                break;
+
+            case 'erreurApprouverCandidature':
+                messageBox('danger', 'La candidature n\'a pas été approuvée.');
+                break;
+
+            case 'succesArchiverCandidature':
+                messageBox('success', 'La candidature a été archiver.');
+                break;
+
+            case 'erreurArchiverCandidature':
+                messageBox('danger', 'La candidature n\'a pas été archiver.');
+                break;
             
             case 'succesEspece':
-                messageBox('success', 'L\'espèces à été créée.');
+                messageBox('success', 'L\'espèce a été créée.');
                 break;
             
-            case 'succesCandidature':
-                messageBox('success', 'Votre demande de candidature va être prise en compte.');
-                break;
-            
-            case 'erreurCandidature':
-                messageBox('danger', 'Erreur lors de la demande de candidature.');
+            case 'succesProjet':
+                messageBox('success', 'Le projet a été créée.');
                 break;
 
-            case 'existeCandidature':
-                messageBox('warning', 'Vous avez déjà candidater à cette alerte.');
-                break;
-
-            case 'ErreurProfile':
+            case 'erreurProfil':
                 messageBox('warning', 'Vous n\'avez aucun projet en cours.');
                 break;
 

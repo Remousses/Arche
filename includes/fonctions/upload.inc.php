@@ -18,13 +18,14 @@
 			$nomFichier = $fichier['name']; // Recuperation du nom complet du fichier
 			$detailFichier = pathinfo($fichier['name']); // Recuperation des details du fichier
 			$extensionFichier = $detailFichier['extension']; // Recuperation de l'extension du fichier
-	
+			$destination_CP = iconv('UTF-8', 'CP1252', $repertoireDestination.$nomFichier); // Encodage
+			
 			if ($tailleFichier <= $tailleMax){
 				// Verification de la taille du fichier, ici <= $tailleMax
 	
 				if (in_array($extensionFichier, $extensionsPossibles)){
 					// Verification de l'extension
-					$resultat = move_uploaded_file($fichier['tmp_name'], $repertoireDestination.$nomFichier);
+					$resultat = move_uploaded_file($fichier['tmp_name'], $destination_CP);
 					return $resultat; //Retour du resultat de l'ecriture du fichier
 				}else{
 					// L'extension n'est pas autorisee

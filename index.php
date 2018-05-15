@@ -8,7 +8,7 @@
 		<?php require_once 'includes/head.php'; ?>
 	</head>
 	
-	<body class="fixed-nav sticky-footer bg-dark <?php echo !(isset($_SESSION['Id_groupe'])) ? 'sidenav-toggled' : ''; ?>" id="page-top">
+	<body class="fixed-nav sticky-footer bg-dark" id="page-top">
         <?php 
             require_once 'includes/menu.php';
         ?>
@@ -24,14 +24,14 @@
 					<li class="breadcrumb-item">
 						<a href="./">Accueil</a>
 					</li>
-					<li class="breadcrumb-item active">Arche De Noé</li>
+					<li class="breadcrumb-item active">Arche de Noé</li>
 				</ol>
 				<div class="row">
 					<div class="col-12">
 						<h1>Qui Sommes Nous ?</h1>
 						<br>
 						<div class="text-center">
-							<img src="images/imgage_accueil.jpeg"/>
+							<img class="image_accueil" src="images/imgage_accueil.jpeg"/>
 						</div>
 						<br><br>
 

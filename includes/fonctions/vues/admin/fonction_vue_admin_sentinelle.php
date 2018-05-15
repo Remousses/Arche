@@ -1,7 +1,7 @@
 <?php
     function creerAlerte(){
 ?>      <div class="card card-login mx-auto mt-5">
-            <div class="card-header">Création d'un alerte</div>
+            <div class="card-header">Création d'une alerte</div>
             <div class="card-body">
                 <form id="form" action="includes/fonctions/fonction_creation.php" method="post">
                     <div class="form-group">
@@ -38,9 +38,15 @@
                         <div class="modal-body">
                             <?php
                                 if(isset($_GET['message'])){
-                                    if($_GET['message'] == 'erreurEspece'){
+                                    $message = $_GET['message'];
+                                    $script = '<script src="js/modal.js"></script>';
+
+                                    if($message == 'erreurEspece'){
                                         messageBox('danger', 'L\'espece n\'a pas été créée, le nom d\'espèce ou la phohto existe déjà.');
-                                        echo '<script src="js/modal.js"></script>';
+                                        echo $script;
+                                    }else if($message == 'erreurPhotoEspece'){
+                                        messageBox('danger', 'Problème avec votre photo.');
+                                        echo $script;
                                     }
                                 }
                             ?>
@@ -49,12 +55,13 @@
                                     <div class="col-12">
                                         <div class="row">
                                             <div class="col-6">
-                                                <!-- <div class="form-group">
+                                                <div class="form-group">
                                                     <label for="regne">Règne</label>
-                                                    <select class="form-control" name="regne">
+                                                    <input class="form-control" type="text" name="regne" maxlength="30" value="<?php echo isset($_GET['regne']) ? $_GET['regne'] : ''; ?>" placeholder="Entrer un nom de règne" required/>
+                                                    <!--<select class="form-control" name="regne">
                                                         <?php //selectEspece('regne'); ?>
-                                                    </select>
-                                                </div> -->
+                                                    </select>-->
+                                                </div>
                                                 <div class="form-group">
                                                     <label for="embranchement">Embranchement</label>
                                                     <input class="form-control" type="text" name="embranchement" maxlength="30" value="<?php echo isset($_GET['embranchement']) ? $_GET['embranchement'] : ''; ?>" placeholder="Entrer un nom d'embranchement" required/>
