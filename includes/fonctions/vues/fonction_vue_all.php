@@ -147,8 +147,9 @@
     }
 
     function voirProjets($nbProjet, $idProjet, $idAlerte, $nomProjet, $dateDebutProjet, $dateFinProjet, $activite, $realisation, $dateDebutTache, $dateFinTache){
-        $texte = '<p class="card-text small">Tâche : ' . $activite . ' réalisé par ......... à définir ' . $realisation . '</p>
-        <p class="card-text small">Du ' . $dateDebutTache . ' au ' . $dateFinTache . '</p>';
+        $texte = '<p class="card-text small">Tâche : ' . $activite . '
+        <br>Avancement : ' . $realisation . '
+        <br>Délais : Du ' . $dateDebutTache . ' au ' . $dateFinTache . '</p>';
         
         echo '<div class="card mb-3">
                     <div class="card-body"> ';
