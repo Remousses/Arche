@@ -41,14 +41,20 @@
                 $projets->closeCursor();
                 header('Location: ../../all_alertes.php?message=erreurRepartition_' . $idAlerte . '#alerte' . $idAlerte);
             }
-        
+            echo 'sizeof($tabCandidat)) : ' . sizeof($tabCandidat);
+        echo '<br>sizeof($tabProjet) : ' . sizeof($tabProjet);
+        var_dump($tabProjet);
+        var_dump($tabCandidat);
             for ($idProjet = 1, $cad = 0; $cad < sizeof($tabCandidat); $idProjet++, $cad++) {
                 $idUtilisateur = $tabCandidat[$cad];
-    
+                echo '<br>$tabCandidat[$cad] : ' . $tabCandidat[$cad];
+    echo '<br>$idProjet : ' . $idProjet;
                 if($idProjet == sizeof($tabProjet)){
                     $idProjet = 0;
-                    $narrateur = $connexion->prepare('UPDATE utilisateur SET Id_groupe = ' . getIdGroupeNarrateur() . ' WHERE Id_utilisateur = ' . $idUtilisateur);
-                    $narrateur->execute();
+                    // $narrateur = $connexion->prepare('UPDATE utilisateur SET Id_groupe = ' . getIdGroupeNarrateur() . ' WHERE Id_utilisateur = ' . $idUtilisateur);
+                    // $narrateur->execute();
+                    // $narrateur->closeCursor();
+                    // $_SESSION['Id_groupe'] = getIdGroupeNarrateur();
                 }
     
                 if($idProjet == 0){
@@ -57,23 +63,23 @@
                     $id = $tabProjet[$idProjet - 1];
                 }
                 
-                $projet = $connexion->prepare('UPDATE projet SET Id_utilisateur = CONCAT(Id_utilisateur, "|' . $idUtilisateur . '| ") WHERE Id_projet = ' . $id);
-                $majCandidature = $connexion->prepare('UPDATE candidater_alerte SET Statut = 2 WHERE Id_utilisateur = ' . $idUtilisateur . ' AND Role = "Participer physiquement" AND Id_alerte = ' . $idAlerte);
+                // $projet = $connexion->prepare('UPDATE projet SET Id_utilisateur = CONCAT(Id_utilisateur, "|' . $idUtilisateur . '| ") WHERE Id_projet = ' . $id);
+                // $majCandidature = $connexion->prepare('UPDATE candidater_alerte SET Statut = 2 WHERE Id_utilisateur = ' . $idUtilisateur . ' AND Role = "Participer physiquement" AND Id_alerte = ' . $idAlerte);
                 
-                if($projet->execute() && $projet->rowCount() > 0 && $majCandidature->execute() && $majCandidature->rowCount() > 0){
-                    $majCandidature->closeCursor();
-                    $projet->closeCursor();
-                    header('Location: ../../all_alertes.php?message=succesRepartition_' . $idAlerte . '#alerte' . $idAlerte);
-                }else{
-                    $majCandidature->closeCursor();
-                    $projet->closeCursor();
-                    header('Location: ../../all_alertes.php?message=erreurRepartition_' . $idAlerte . '#alerte' . $idAlerte);
-                }
+                // if($projet->execute() && $projet->rowCount() > 0 && $majCandidature->execute() && $majCandidature->rowCount() > 0){
+                //     $majCandidature->closeCursor();
+                //     $projet->closeCursor();
+                    //header('Location: ../../all_alertes.php?message=succesRepartition_' . $idAlerte . '#alerte' . $idAlerte);
+                // }else{
+                //     $majCandidature->closeCursor();
+                //     $projet->closeCursor();
+                    //header('Location: ../../all_alertes.php?message=erreurRepartition_' . $idAlerte . '#alerte' . $idAlerte);
+                // }
             }
         }else{
-            header('Location: ../../all_alertes.php?message=erreurRepartition_' . $idAlerte . '#alerte' . $idAlerte);
+            //header('Location: ../../all_alertes.php?message=erreurRepartition_' . $idAlerte . '#alerte' . $idAlerte);
         }
     }else{
-        header('Location: ../../index.php?message=erreurPage');
+        //header('Location: ../../index.php?message=erreurPage');
     }
 ?>

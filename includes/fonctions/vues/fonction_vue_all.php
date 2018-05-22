@@ -165,7 +165,7 @@
 
             if($_SESSION['Id_groupe'] == getIdGroupeComite()){               
 
-                echo '<a class="mr-3 d-inline-block" href="#">Archiver, etc comme pour alerte avec le différent statut</a>';
+                echo '<a class="mr-3 d-inline-block" href="#">Archiver</a>'; //, etc comme pour alerte avec le différent statut
             }
 
             echo '</div>
