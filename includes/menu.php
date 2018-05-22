@@ -13,10 +13,16 @@
             <span class="nav-link-text">Alertes</span>
           </a>
         </li>
-        <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Livres de sauvetage">
-          <a class="nav-link" href="#"><!--livre.php-->
+        <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Taxinomie du vivant">
+          <a class="nav-link nav-link" href="taxinomie.php" >
+            <i class="fa fa-fw fa-list-alt"></i>
+            <span class="nav-link-text">Taxinomie du vivant</span>
+          </a>
+        </li>
+        <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Livre de sauvetage">
+          <a class="nav-link" href="livre.php">
             <i class="fa fa-fw fa-book"></i>
-            <span class="nav-link-text">Livres de sauvetage</span>
+            <span class="nav-link-text">Livre de sauvetage</span>
           </a>
         </li>
         <?php
@@ -35,7 +41,7 @@
             if($_SESSION['Id_groupe'] == getIdGroupeRessourcesHumaines()){
         ?>
         <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Salariés">
-          <a class="nav-link" href="#"><!--salaries.php-->
+          <a class="nav-link" href="salaries.php">
             <i class="fa fa-fw fa-table"></i>
             <span class="nav-link-text">Salariés</span>
           </a>
@@ -46,13 +52,13 @@
             if($_SESSION['Id_groupe'] == getIdGroupePersonnelPermanent() || $_SESSION['Id_groupe'] == getIdGroupeMissionnaire() || $_SESSION['Id_groupe'] == getIdGroupeComite()){
         ?>
         <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Sites de stockages">
-          <a class="nav-link nav-link" href="#" ><!--site_stockages.php-->
+          <a class="nav-link nav-link" href="site_stockages.php" >
             <i class="fa fa-fw fa-sitemap"></i>
             <span class="nav-link-text">Sites de stockages</span>
           </a>
         </li>
         <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Gestion des lots">
-          <a class="nav-link" href="#"><!--lots.php-->
+          <a class="nav-link" href="lots.php">
             <i class="fa fa-fw fa-link"></i>
             <span class="nav-link-text">Gestion des lots</span>
           </a>
@@ -63,7 +69,7 @@
             if($_SESSION['Id_groupe'] == getIdGroupeAdministrateur() || $_SESSION['Id_groupe'] == getIdGroupeComite()){
         ?>
         <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Gestion des utilisateurs">
-          <a class="nav-link nav-link" href="#"><!--gestion_utilisateurs.php-->
+          <a class="nav-link nav-link" href="gestion_utilisateurs.php">
             <i class="fa fa-fw fa-wrench"></i>
             <span class="nav-link-text">Gestion des utilisateurs</span>
           </a>

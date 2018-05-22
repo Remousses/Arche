@@ -177,38 +177,37 @@
     }
 
     if(isset($_POST['candidaterAlerte'])){
-        if(!empty($_POST['informationsCandidater'])){
+        if(!empty($_POST['informationsCandidater']) && !empty($_POST['roleCandidater'])){
             $informationsCandidater = htmlentities($_POST['informationsCandidater'], ENT_QUOTES, "UTF-8"); // le htmlentities() passera les guillemets en entités HTML, ce qui empêchera les injections SQL
+            $roleCandidater = htmlentities($_POST['roleCandidater'], ENT_QUOTES, "UTF-8");
             $date = date("Y-m-d");
             $idAlerte = $_POST['idAlerteCandidater'];
             $idEspece = $_POST['idEspeceCandidater'];
-            var_dump($_POST['idAlerteCandidater']);
-            var_dump($_POST['idEspeceCandidater']);
-
+            
             $candidatureExiste = DBconnexion()->prepare('SELECT * FROM candidater_alerte, alerte WHERE Id_utilisateur = ' . $_SESSION['Id_utilisateur'] . ' AND candidater_alerte.Id_alerte = ' . $idAlerte . ' AND alerte.Id_alerte = candidater_alerte.Id_alerte');
-            var_dump($candidatureExiste);
+
             if($candidatureExiste->execute()){
                 $candidatureExiste->closeCursor();
                 
                 if($candidatureExiste->rowCount() == 0){
-                    $candidaterAlerte = DBconnexion()->prepare('INSERT INTO candidater_alerte (Informations_candidater, Date_candidater, Id_alerte, Id_espece, Id_utilisateur) 
-                    VALUE ("' . $informationsCandidater . '", "' . $date . '", ' . $idAlerte . ', ' . $idEspece . ', ' . $_SESSION['Id_utilisateur'] . ')');
-                    
+                    $candidaterAlerte = DBconnexion()->prepare('INSERT INTO candidater_alerte (Informations_candidater, Role, Statut, Date_candidater, Id_alerte, Id_espece, Id_utilisateur) 
+                    VALUE ("' . $informationsCandidater . '", "' . $roleCandidater . '", 0, "' . $date . '", ' . $idAlerte . ', ' . $idEspece . ', ' . $_SESSION['Id_utilisateur'] . ')');
+                    var_dump($candidaterAlerte);
                     if($candidaterAlerte->execute()){
                         $candidaterAlerte->closeCursor();
-                        header('Location: ../../all_alertes.php?message=succesCandidature');
+                        header('Location: ../../all_alertes.php?message=succesCandidature_' . $idAlerte);
                     }else{
                         $candidaterAlerte->closeCursor();
-                        header('Location: ../../all_alertes.php?message=erreurCandidature');
+                        header('Location: ../../all_alertes.php?message=erreurCandidature_' . $idAlerte);
                     }
                 }else{
-                    header('Location: ../../all_alertes.php?message=existeCandidature');
+                    header('Location: ../../all_alertes.php?message=existeCandidature_' . $idAlerte);
                 }
             }else{
                 $candidatureExiste->closeCursor();
             }
         }else{
-            header('Location: ../../all_alertes.php?message=erreurCandidater');
+            header('Location: ../../all_alertes.php?message=erreurCandidature_' . $idAlerte);
         }
     }
 ?>
