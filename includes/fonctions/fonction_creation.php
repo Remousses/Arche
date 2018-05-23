@@ -195,19 +195,19 @@
                     var_dump($candidaterAlerte);
                     if($candidaterAlerte->execute()){
                         $candidaterAlerte->closeCursor();
-                        header('Location: ../../all_alertes.php?message=succesCandidature_' . $idAlerte);
+                        header('Location: ../../all_alertes.php?message=succesCandidature_' . $idAlerte . '#alerte' . $idAlerte);
                     }else{
                         $candidaterAlerte->closeCursor();
-                        header('Location: ../../all_alertes.php?message=erreurCandidature_' . $idAlerte);
+                        header('Location: ../../all_alertes.php?message=erreurCandidature_' . $idAlerte . '#alerte' . $idAlerte);
                     }
                 }else{
-                    header('Location: ../../all_alertes.php?message=existeCandidature_' . $idAlerte);
+                    header('Location: ../../all_alertes.php?message=existeCandidature_' . $idAlerte . '#alerte' . $idAlerte);
                 }
             }else{
                 $candidatureExiste->closeCursor();
             }
         }else{
-            header('Location: ../../all_alertes.php?message=erreurCandidature_' . $idAlerte);
+            header('Location: ../../all_alertes.php?message=erreurCandidature_' . $idAlerte . '#alerte' . $idAlerte);
         }
     }
 ?>

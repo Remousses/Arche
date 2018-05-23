@@ -4,7 +4,10 @@
 <!DOCTYPE html>
 <html lang="fr">
 	<head>
-		<?php require_once 'includes/head.php'; ?>
+		<?php 
+			require_once 'includes/head.php';
+			verificationIdGroupe('all_alertes.php');
+		?>
 		<style>
 			#modal{
 				width: 600px;

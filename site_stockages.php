@@ -4,7 +4,10 @@
 <!DOCTYPE html>
   <html lang="fr">
     <head>
-        <?php require_once 'includes/head.php'; ?>
+        <?php
+          require_once 'includes/head.php';
+          verificationIdGroupe('site_stockages.php');
+        ?>
     </head>
     
     <body class="fixed-nav sticky-footer bg-dark" id="page-top">

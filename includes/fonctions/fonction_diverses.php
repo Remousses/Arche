@@ -23,9 +23,9 @@
                 messageBox('danger', 'Veuillez réessayer.');
                 break;
 
-            case 'erreurPage':
+            /*case 'erreurPage':
                 messageBox('danger', 'Cette page n\'existe pas. Vous avez été redirigez vers la page d\'accueil.');
-                break;
+                break;*/
 
             case 'succesAlerte':
                 messageBox('success', 'L\'alerte a été créée.');
@@ -125,5 +125,23 @@
             }
             
         //}
+    }
+
+    function verificationIdGroupe($page){
+        if(isset($_SESSION['Id_utilisateur'])){
+            $verificationIdGroupe = DBconnexion()->prepare('SELECT Id_groupe FROM utilisateur WHERE Id_utilisateur = ' . $_SESSION['Id_utilisateur']);
+            $verificationIdGroupe->execute();
+            $donnees = $verificationIdGroupe->fetch();
+
+            if($verificationIdGroupe->rowCount() > 0){
+                // on ouvre la session avec $_SESSION:
+                //unset($_SESSION['Id_groupe']);
+                $_SESSION['Id_groupe'] = $donnees['Id_groupe']; // mise en session de l'id du groupe de l'utilisateur
+                $verificationIdGroupe->closeCursor();
+            }else{
+                $verificationIdGroupe->closeCursor();
+                echo '<script>document.location.href="' . $page . '?message=erreurVerificationIdGroupe";</script>';
+            }
+        }
     }
 ?>

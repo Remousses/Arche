@@ -42,14 +42,10 @@
                 $projets->closeCursor();
                 header('Location: ../../all_alertes.php?message=erreurRepartition_' . $idAlerte . '#alerte' . $idAlerte);
             }
-        echo '<br>sizeof($tabProjet) : ' . sizeof($tabProjet);
-            echo 'sizeof($tabCandidat)) : ' . sizeof($tabCandidat);
-        var_dump($tabProjet);
-        var_dump($tabCandidat);
+
             for ($idProjet = 1, $cad = 0; $cad < sizeof($tabCandidat); $idProjet++, $cad++) {
                 $idUtilisateur = $tabCandidat[$cad];
-                echo '<br>$tabCandidat[$cad] : ' . $tabCandidat[$cad];
-    echo '<br>$idProjet : ' . $idProjet;
+
                 if(sizeof($tabProjet) == 1){
                     if($idProjet == 1){
                         ajoutNarrateur($connexion, $idUtilisateur);
@@ -60,21 +56,16 @@
                 }
     
                 if(sizeof($tabProjet) == 1){
-                    echo 'if';
                     $id = $tabProjet[0];
                 }else if($idProjet == 0){
-                    echo 'else if';
                     $id = $tabProjet[sizeof($tabProjet) - 1];
                 }else{
-                    echo 'else';
                     $id = $tabProjet[$idProjet - 1];
                 }
-                echo '<br>id : ' . $id . '<br>';
                 
                 $projet = $connexion->prepare('UPDATE projet SET Id_utilisateur = CONCAT(Id_utilisateur, "|' . $idUtilisateur . '| ") WHERE Id_projet = ' . $id);
                 $majCandidature = $connexion->prepare('UPDATE candidater_alerte SET Statut = 2 WHERE Id_utilisateur = ' . $idUtilisateur . ' AND Role = "Participer physiquement" AND Id_alerte = ' . $idAlerte);
-                var_dump($projet);
-                var_dump($majCandidature);
+                
                 if($projet->execute() && $projet->rowCount() > 0 && $majCandidature->execute() && $majCandidature->rowCount() > 0){
                     $majCandidature->closeCursor();
                     $projet->closeCursor();
@@ -93,12 +84,8 @@
     }
 
     function ajoutNarrateur($connexion, $idUtilisateur){
-        $narrateur = DBConnexion()->prepare('UPDATE utilisateur SET Id_groupe = ' . getIdGroupeNarrateur() . ' WHERE Id_utilisateur = ' . $idUtilisateur);
+        $narrateur = $connexion->prepare('UPDATE utilisateur SET Id_groupe = ' . getIdGroupeNarrateur() . ' WHERE Id_utilisateur = ' . $idUtilisateur);
         $narrateur->execute();
         $narrateur->closeCursor();
-        echo 'ok';
-        if($_SESSION['Id_utilisateur'] == $idUtilisateur){
-            $_SESSION['Id_groupe'] = getIdGroupeNarrateur();
-        }
     }
 ?>

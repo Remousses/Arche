@@ -9,10 +9,12 @@
         
         while ($donnees = $reponse->fetch()) {
             if(!($donnees['Id_alerte'] == "")){
-                $texte = '<a class="mr-3 d-inline-block" href="voir_projets.php?idAlerte=' . $donnees['Id_alerte'] . '&idEspece=' . $donnees['Id_espece'] . '">Voir les projets</a>';
+                $texte = '';
                 $statut = '';
 
                 if(isset($_SESSION['Id_groupe'])){
+                    $texte = '<a class="mr-3 d-inline-block" href="voir_projets.php?idAlerte=' . $donnees['Id_alerte'] . '&idEspece=' . $donnees['Id_espece'] . '">Voir les projets</a>';
+
                     if($_SESSION['Id_groupe'] == getIdGroupeComite()){
                         if($donnees['Statut'] == 0){
                             $statut = 'Attente';

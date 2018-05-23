@@ -11,9 +11,11 @@
                 
                 if($approuver->execute()){
                     $approuver->closeCursor();
+                    echo 'a';
                     header('Location: ../../all_alertes.php?message=succesApprouverAlerte');
                 }else{
                     $approuver->closeCursor();
+                    echo 'b';
                     header('Location: ../../all_alertes.php?message=erreurApprouverAlerte');
                 }
             }else if(isset($_GET['approuverCandidature']) && !empty($_GET['idAlerte']) && intval($_GET['idAlerte']) != 0 && !empty($_GET['idUtilisateur']) && intval($_GET['idUtilisateur']) != 0){                
@@ -53,7 +55,7 @@
                 header('Location: ../../index.php?message=erreurPage');
             }
         }else{
-            header('Location: ../../index.php?message=erreurPage');
+           header('Location: ../../index.php?message=erreurPage');
         }
     }else{
         header('Location: ../../index.php?message=erreurPage');

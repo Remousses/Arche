@@ -37,7 +37,7 @@
                     if(!in_array($donnees['Id_projet'], $nbProjet)){
                         array_push($nbProjet, $donnees['Id_projet']);
                         echo '<p class="card-text small">Nom du projet : ' . $donnees['Nom_projet'] . '</p>
-                            <p class="card-text small">Du ' . $donnees['Date_debut'] . ' au ' . $donnees['Date_fin'] . '</p>';
+                            <p class="card-text small">Du ' . dateFr($donnees['Date_debut']) . ' au ' . dateFr($donnees['Date_fin']) . '</p>';
                     }
                 }
 

@@ -170,8 +170,8 @@
 
             echo '</div>
                     <div class="card-footer small text-muted">
-                        <span class="mr-3 d-inline-block">Posté le ' . $dateDebutProjet . '</span>
-                        <span class="mr-3 d-inline-block">Fini le ' . $dateFinProjet . '</span>';
+                        <span class="mr-3 d-inline-block">Posté le ' . dateFr($dateDebutProjet) . '</span>
+                        <span class="mr-3 d-inline-block">Fini le ' . dateFr($dateFinProjet) . '</span>';
         }else{
              echo $texte;
         }
