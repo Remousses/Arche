@@ -71,19 +71,30 @@
             <div class="card-body">';
             
         if(isset($_GET['message'])){
-            $message = $_GET['message'];
-            if($message == 'erreurProjet_' . $idAlerte){
-                messageBox('danger', 'Cette alerte n\'a pas de projets en cours. Vous avez été redirigez vers la page des alertes.');
-            }else if($message == 'succesCandidature_' . $idAlerte){
-                messageBox('success', 'Votre demande de candidature va être prise en compte.');
-            }else if($message == 'erreurCandidature_' . $idAlerte){
-                messageBox('danger', 'Erreur lors de la demande de candidature.');
-            }else if($message == 'existeCandidature_' . $idAlerte){
-                messageBox('warning', 'Vous avez déjà candidater à cette alerte.');
-            }else if($message == 'succesRepartition_' . $idAlerte){
-                messageBox('success', 'La répartition a été effectuée.');
-            }else if($message == 'erreurRepartition_' . $idAlerte){
-                messageBox('danger', 'La répartition n\'a pas été effectuée.');
+            switch ($_GET['message']){
+                case 'erreurProjet_' . $idAlerte :
+                    messageBox('danger', 'Cette alerte n\'a pas de projets en cours. Vous avez été redirigez vers la page des alertes.');
+                    break;
+                case 'succesCandidature_' . $idAlerte:
+                    messageBox('success', 'Votre demande de candidature va être prise en compte.');
+                    break;
+                case 'erreurCandidature_' . $idAlerte:
+                    messageBox('danger', 'Erreur lors de la demande de candidature.');
+                    break;
+                case 'existeCandidature_' . $idAlerte:
+                    messageBox('warning', 'Vous avez déjà candidater à cette alerte.');
+                    break;
+                case 'succesRepartition_' . $idAlerte:
+                    messageBox('success', 'La répartition a été effectuée. L\'alerte va être supprimée');
+
+                    if(isset($_GET['archiverAlerte'])){
+                        echo  $_GET['archiverAlerte'] == true ? archiverAlerte($idAlerte) : '';
+                    }
+
+                    break;
+                case 'erreurRepartition_' . $idAlerte:
+                    messageBox('danger', 'La répartition n\'a pas été effectuée.');
+                    break;
             }
         }
 

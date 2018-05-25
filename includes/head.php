@@ -22,6 +22,7 @@
 <?php
     require_once 'param/infos_id_groupe.php';
     require_once 'includes/fonctions/fonction_diverses.php';
+    require_once 'includes/fonctions/function_suppression.php';
     require_once 'includes/fonctions/upload.inc.php';
     require_once 'includes/fonctions/vues/fonction_vue_all.php';
     require_once 'includes/fonctions/vues/admin/fonction_vue_admin_comite.php';

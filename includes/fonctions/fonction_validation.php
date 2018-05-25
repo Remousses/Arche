@@ -25,7 +25,6 @@
                 if($approuver->execute() && $missionnaire->execute()){
                     $missionnaire->closeCursor();
                     $approuver->closeCursor();
-                    $_SESSION['Id_groupe'] = getIdGroupeMissionnaire();
                     header('Location: ../../candidatures.php?message=succesApprouverCandidature');
                 }else{
                     $approuver->closeCursor();

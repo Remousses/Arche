@@ -33,7 +33,7 @@
                                 if($donneesNbProjet['nbProjet'] > 0){
                                     $repartition = $donneesNbParticipant['nbParticipant'] / $donneesNbProjet['nbProjet'];
 
-                                    if($repartition >= 3){
+                                    if($repartition >= 1){
                                         $texte .= '<a class="mr-3 d-inline-block" href="includes/fonctions/fonction_repartition.php?idAlerte=' . $donnees['Id_alerte'] . '&nbProjet=' . $donneesNbProjet['nbProjet'] . '&nbParticipant=' . $donneesNbParticipant['nbParticipant'] . '">Répartition des candidats</a>';
                                     }
                                 }

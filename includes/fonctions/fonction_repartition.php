@@ -3,11 +3,10 @@
     require_once '../../param/infos_id_groupe.php';
 
     if(isset($_GET['idAlerte']) && isset($_GET['nbProjet']) && isset($_GET['nbParticipant'])){
-        $max = 3;
         $idAlerte = $_GET['idAlerte'];
         $repartition = $_GET['nbParticipant'] / $_GET['nbProjet'];
         
-        if($repartition >= $max){
+        if($repartition >= 1){
             $connexion = DBConnexion();
             $candidats = $connexion->prepare('SELECT Id_utilisateur FROM candidater_alerte WHERE Role = "Participer physiquement" And Statut = 1 AND Id_alerte = ' . $idAlerte);
             $tab = array();
@@ -69,7 +68,7 @@
                 if($projet->execute() && $projet->rowCount() > 0 && $majCandidature->execute() && $majCandidature->rowCount() > 0){
                     $majCandidature->closeCursor();
                     $projet->closeCursor();
-                    header('Location: ../../all_alertes.php?message=succesRepartition_' . $idAlerte . '#alerte' . $idAlerte);
+                    header('Location: ../../all_alertes.php?archiverAlerte=true&message=succesRepartition_' . $idAlerte . '#alerte' . $idAlerte);
                 }else{
                     $majCandidature->closeCursor();
                     $projet->closeCursor();
