@@ -76,14 +76,17 @@
                             <?php selectTache(); ?>
                         </select>
                     </div>
+
+                    <input type="hidden" name="idAlerte" value="<?php echo isset($_GET['idAlerte']) ? $_GET['idAlerte'] : ''; ?>">
+                    <input type="hidden" name="idEspece" value="<?php echo isset($_GET['idEspece']) ? $_GET['idEspece'] : ''; ?>">
                     
-                    <button class="btn btn-primary btn-block" type="submit" name="creerProjet" disabled>Créer un projet</button>
+                    <button class="btn btn-primary btn-block" type="submit" name="creerProjet">Créer un projet</button>
                     <a class="btn btn-secondary btn-block text-white" data-toggle="modal" data-target="#nouvelleTache">Créer une nouvelle tâche</a>
                 </form>
             </div>
         </div>
 
-        <!-- Modal nouvelle espèce -->
+        <!-- Modal nouvelle tâche -->
         <div class="modal fade" id="nouvelleTache" tabindex="-1" role="dialog" aria-labelledby="nouvelleTacheLabel" aria-hidden="true">
             <div class="modal-dialog" role="document">
                 <div id="modal" class="modal-content">
@@ -109,7 +112,7 @@
                                 <input class="form-control" type="text" name="activite" maxlength="30" value="<?php echo isset($_GET['activite']) ? $_GET['activite'] : ''; ?>" placeholder="Entrer un nom d'une activité" required/>
                             </div>
                             
-                            <button class="btn btn-primary btn-block" type="submit" name="creerTache" disabled>Créer une tâche</button>
+                            <button class="btn btn-primary btn-block" type="submit" name="creerTache">Créer une tâche</button>
                         </form>
                     </div>
                 </div>

@@ -1,6 +1,7 @@
 <?php
     session_start();
     include_once 'param/infos_id_groupe.php';
+    
     if(isset($_SESSION['Id_groupe']) && $_SESSION['Id_groupe'] == getIdGroupeComite()){
 ?>
   <!DOCTYPE html>

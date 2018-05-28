@@ -115,6 +115,22 @@
         return $dateFr;
     }
 
+    function dateEn($var){
+        $dateEn = "";
+        $tab = explode("/", $var);
+        
+        if(array_key_exists(0, $tab) && array_key_exists(1, $tab)  && array_key_exists(2, $tab)){
+            if(strlen($tab[2]) == 4 && intval($tab[2]) > 0
+                && strlen($tab[1]) == 2 && intval($tab[1]) > 0
+                && strlen($tab[0]) == 2 && intval($tab[0]) > 0){
+                
+                $dateEn = date($tab[2]."-".$tab[1]."-".$tab[0]);
+            }
+        }
+
+        return $dateEn;
+    }
+
     function pagePrecedente(){
         define('pageprecedente', $_SERVER["HTTP_REFERER"], true);
 	
@@ -137,8 +153,7 @@
             $donnees = $verificationIdGroupe->fetch();
 
             if($verificationIdGroupe->rowCount() > 0){
-                // on ouvre la session avec $_SESSION:
-                //unset($_SESSION['Id_groupe']);
+                // Mise à jour de la session
                 $_SESSION['Id_groupe'] = $donnees['Id_groupe']; // mise en session de l'id du groupe de l'utilisateur
                 $verificationIdGroupe->closeCursor();
             }else{

@@ -1,5 +1,6 @@
 <?php 
     require_once 'connexionDB.php';
+    require_once 'fonction_diverses.php';
 
     if(isset($_POST['inscriptionUtilisateur'])){
         if(!empty($_POST['nomUtilisateurInscription']) && !empty($_POST['prenomUtilisateurInscription']) 
@@ -35,17 +36,9 @@
             $tabNomAlerte = array();
             
             $rechercheNomAlerte = $connexion->prepare('SELECT Nom_alerte FROM alerte WHERE Statut BETWEEN 0 AND 1');
-            $rechercheNomAlerte->execute();
             
-            while($donnee = $rechercheNomAlerte->fetch()){
-                if(!in_array($donnee['Nom_alerte'], $tabNomAlerte)){
-                    array_push($tabNomAlerte, $donnee['Nom_alerte']);
-                }
-            }
-            
-            $rechercheNomAlerte->closeCursor();
-            
-            if(!in_array($nomAlerte, $tabNomAlerte)){
+            if($rechercheNomAlerte->execute() && $rechercheNomAlerte->rowwCount() > 0){
+                $rechercheNomAlerte->closeCursor();
                 $creerAlerte = $connexion->prepare('INSERT INTO alerte SET Nom_alerte = "' . $nomAlerte . '", 
                 Informations_alerte = "' . $informationsAlerte . '", Date_alerte = "' . $date . '", Statut = 0, 
                 Id_espece = (SELECT Id_espece FROM espece WHERE Nom_espece = "' . $nomEspece . '")');
@@ -62,11 +55,10 @@
                     header('Location: ../../all_alertes.php?nomAlerte=' . $nomAlerte . '&informationsAlerte=' . $informationsAlerte . '&nomEspece=' . $nomEspece . '&message=erreurAlerte');
                 }
             }else{
+                $rechercheNomAlerte->closeCursor();
                 header('Location: ../../all_alertes.php?nomAlerte=' . $nomAlerte . '&informationsAlerte=' . $informationsAlerte . '&nomEspece=' . $nomEspece . '&message=existeAlerte');
             }
-        }else{
-            header('Location: ../../all_alertes.php?nomAlerte=' . $nomAlerte . '&informationsAlerte=' . $informationsAlerte . '&nomEspece=' . $nomEspece . '&message=existeAlerte');
-        }        
+        }       
     }
 
     if(isset($_POST['nouvelleEspece'])){
@@ -87,20 +79,11 @@
             $espece = htmlentities($_POST['espece'], ENT_QUOTES, "UTF-8");
             $lienErreur = 'Location: ../../all_alertes.php?regne=' . $regne . '&embranchement=' . $embranchement . '&classe=' . $classe . '&ordre=' . $ordre . '&famille=' . $famille . '&genre=' . $genre . '&espece=' . $espece . '&message=erreurEspece';
             $connexion = DBconnexion();
-            // $tabNomEspece = array();
-            
-            // $rechercheNomEspece = $connexion->prepare('SELECT Nom_espece FROM espece');
-            // $rechercheNomEspece->execute();
-            
-            // while($donnee = $rechercheNomEspece->fetch()){
-            //     if(!in_array($donnee['Nom_espece'], $tabNomEspece)){
-            //         array_push($tabNomEspece, $donnee['Nom_espece']);
-            //     }
-            // }
-            
-            // $rechercheNomEspece->closeCursor();
-            
-            //if(!in_array($espece, $tabNomEspece)){
+
+            $rechercheEspece = $connexion->prepare('SELECT Nom_espece FROM espece WHERE Nom_espece = ' . $espece);
+
+            if($rechercheEspece->execute() && $rechercheEspece->rowCount() > 0){
+                $rechercheEspece->closeCursor();
                 $selectRegne = '(SELECT Id_regne FROM regne WHERE Nom_regne = "' . $regne . '")';
                 $selectEmbranchement = '(SELECT Id_embranchement FROM embranchement WHERE Nom_embranchement = "' . $embranchement . '")';
                 $selectClasse = '(SELECT Id_classe FROM classe WHERE Nom_classe = "' . $classe . '")';
@@ -170,9 +153,45 @@
                     $nouveauRegne->closeCursor();
                     header($lienErreur);
                 }
-            // }else{
-            //     header($lienErreur);
-            // }
+            }else{
+                $rechercheEspece->closeCursor();
+                header($lienErreur);
+            }
+        }
+    }
+
+    if(isset($_POST['creerProjet'])){
+        if(!empty($_POST['nomProjet']) && !empty($_POST['dateDebut']) && !empty($_POST['dateFin'])  && !empty($_POST['activite'])){
+            $nomProjet = htmlentities($_POST['nomProjet'], ENT_QUOTES, "UTF-8"); // le htmlentities() passera les guillemets en entités HTML, ce qui empêchera les injections SQL
+            $dateDebut = htmlentities($_POST['dateDebut'], ENT_QUOTES, "UTF-8");
+            $dateFin = htmlentities($_POST['dateFin'], ENT_QUOTES, "UTF-8");
+            $activite = htmlentities($_POST['activite'], ENT_QUOTES, "UTF-8");
+            $idAlerte = htmlentities($_POST['idAlerte'], ENT_QUOTES, "UTF-8");
+            $idEspece = htmlentities($_POST['idEspece'], ENT_QUOTES, "UTF-8");
+            $connexion = DBconnexion();
+
+            $rechercherNomProjet = $connexion->prepare('SELECT Nom_espece FROM espece WHERE Nom_espece = ' . $espece);
+
+            if($rechercherNomProjet->execute() && $rechercherNomProjet->rowCount() > 0){
+                
+            }
+
+            if(dateEn($dateDebut) != "" && dateEn($dateFin) != "" && intval($idAlerte) > 0 && intval($idEspece) > 0){
+                $creerProjet = $connexion->prepare('INSERT INTO projet (Nom_projet, Date_debut, Date_fin, Statut, Id_alerte, Id_utilisateur)
+                    VALUES ("' . $nomProjet . '", "' . $dateDebut . '", "' . $dateFin . '", 1, "' . $idAlerte . '", "")');
+
+                    if($creerProjet->execute() && $creerProjet->rowCount() > 0){
+                        $creerProjet->closeCursor();
+                    }else{
+                        $creerProjet->closeCursor();
+                        header('Location: ../../projet.php?idAlerte=' . $idAlerte . '&idEspece=' . $idEspece . '&nomProjet=' . $nomProjet . '
+                            &dateDebut=' . $dateDebut . '&dateFin=' . $dateFin . '&idAlerte=' . $activite . '&message=succesProjet');
+                    }
+
+            }else{
+                header('Location: ../../projet.php?idAlerte=' . $idAlerte . '&idEspece=' . $idEspece . '&nomProjet=' . $nomProjet . '
+                    &dateDebut=' . $dateDebut . '&dateFin=' . $dateFin . '&idAlerte=' . $activite . '&message=erreurProjet');
+            }
         }
     }
 
@@ -192,7 +211,7 @@
                 if($candidatureExiste->rowCount() == 0){
                     $candidaterAlerte = DBconnexion()->prepare('INSERT INTO candidater_alerte (Informations_candidater, Role, Statut, Date_candidater, Id_alerte, Id_espece, Id_utilisateur) 
                     VALUE ("' . $informationsCandidater . '", "' . $roleCandidater . '", 0, "' . $date . '", ' . $idAlerte . ', ' . $idEspece . ', ' . $_SESSION['Id_utilisateur'] . ')');
-                    var_dump($candidaterAlerte);
+                    
                     if($candidaterAlerte->execute()){
                         $candidaterAlerte->closeCursor();
                         header('Location: ../../all_alertes.php?message=succesCandidature_' . $idAlerte . '#alerte' . $idAlerte);

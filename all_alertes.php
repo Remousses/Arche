@@ -15,7 +15,7 @@
 		</style>
 	</head>
 	
-	<body class="fixed-nav sticky-footer bg-dark <?php /*echo !(isset($_SESSION['Id_groupe'])) ? 'sidenav-toggled' : '';*/ ?>" id="page-top">
+	<body class="fixed-nav sticky-footer bg-dark" id="page-top">
 		<?php 
             require_once 'includes/menu.php';
 		?>
