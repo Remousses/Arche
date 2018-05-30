@@ -7,7 +7,7 @@
 <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css">
 <link href="vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
 <link href="vendor/datatables/dataTables.bootstrap4.css" rel="stylesheet" type="text/css">
-    <link href="https://cdn.jsdelivr.net/npm/gijgo@1.9.6/css/gijgo.min.css" rel="stylesheet" type="text/css" />
+<link href="https://cdn.jsdelivr.net/npm/gijgo@1.9.6/css/gijgo.min.css" rel="stylesheet" type="text/css" />
 <link href="css/sb-admin.css" rel="stylesheet" type="text/css">
 
 <script src="vendor/jquery/jquery.min.js"></script>
