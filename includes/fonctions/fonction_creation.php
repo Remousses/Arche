@@ -1,14 +1,15 @@
 <?php 
     require_once 'connexionDB.php';
     require_once 'fonction_diverses.php';
+    require_once 'upload.inc.php';
 
     if(isset($_POST['inscriptionUtilisateur'])){
         if(!empty($_POST['nomUtilisateurInscription']) && !empty($_POST['prenomUtilisateurInscription']) 
         && !empty($_POST['mdpUtilisateurInscription'])) {
             
-            $nomUtilisateur = htmlentities($_POST['nomUtilisateurInscription'], ENT_QUOTES, "UTF-8"); // le htmlentities() passera les guillemets en entités HTML, ce qui empêchera les injections SQL
-            $prenomUtilisateur = htmlentities($_POST['prenomUtilisateurInscription'], ENT_QUOTES, "UTF-8");
-            $mdpUtilisateur = htmlentities($_POST['mdpUtilisateurInscription'], ENT_QUOTES, "UTF-8");
+            $nomUtilisateur = htmlspecialchars($_POST['nomUtilisateurInscription'], ENT_QUOTES, "UTF-8"); // le htmlspecialchars() passera les guillemets en entités HTML, ce qui empêchera les injections SQL
+            $prenomUtilisateur = htmlspecialchars($_POST['prenomUtilisateurInscription'], ENT_QUOTES, "UTF-8");
+            $mdpUtilisateur = htmlspecialchars($_POST['mdpUtilisateurInscription'], ENT_QUOTES, "UTF-8");
             
             $inscription = DBconnexion()->prepare('INSERT INTO utilisateur (Nom_utilisateur, Prenom_utilisateur, Mdp_utilisateur, Id_groupe) 
             VALUES ("' . $nomUtilisateur . '", "' . $prenomUtilisateur . '", "' . $mdpUtilisateur . '", 1)');
@@ -28,35 +29,36 @@
 
     if(isset($_POST['creerAlerte'])){
         if(!empty($_POST['nomAlerte']) && !empty($_POST['informationsAlerte']) && !empty($_POST['nomEspece'])) {
-            $nomAlerte = htmlentities($_POST['nomAlerte'], ENT_QUOTES, "UTF-8"); // le htmlentities() passera les guillemets en entités HTML, ce qui empêchera les injections SQL
-            $informationsAlerte = htmlentities($_POST['informationsAlerte'], ENT_QUOTES, "UTF-8");
-            $nomEspece = htmlentities($_POST['nomEspece'], ENT_QUOTES, "UTF-8");
+            $nomAlerte = htmlspecialchars($_POST['nomAlerte'], ENT_QUOTES, "UTF-8"); // le htmlspecialchars() passera les guillemets en entités HTML, ce qui empêchera les injections SQL
+            $informationsAlerte = htmlspecialchars($_POST['informationsAlerte'], ENT_QUOTES, "UTF-8");
+            $nomEspece = htmlspecialchars($_POST['nomEspece'], ENT_QUOTES, "UTF-8");
             $date = date("Y-m-d");
             $connexion = DBconnexion();
             $tabNomAlerte = array();
             
-            $rechercheNomAlerte = $connexion->prepare('SELECT Nom_alerte FROM alerte WHERE Statut BETWEEN 0 AND 1');
-            
-            if($rechercheNomAlerte->execute() && $rechercheNomAlerte->rowwCount() > 0){
+            $rechercheNomAlerte = $connexion->prepare('SELECT Nom_alerte FROM alerte WHERE Statut BETWEEN 0 AND 1 AND Nom_alerte = "' . $nomAlerte . '"');
+            var_dump(parse_url($url, PHP_URL_QUERY));
+
+            if($rechercheNomAlerte->execute() && $rechercheNomAlerte->rowCount() == 0){
                 $rechercheNomAlerte->closeCursor();
                 $creerAlerte = $connexion->prepare('INSERT INTO alerte SET Nom_alerte = "' . $nomAlerte . '", 
                 Informations_alerte = "' . $informationsAlerte . '", Date_alerte = "' . $date . '", Statut = 0, 
                 Id_espece = (SELECT Id_espece FROM espece WHERE Nom_espece = "' . $nomEspece . '")');
-                
+                var_dump($creerAlerte);
                 if($creerAlerte->execute()){
                     $creerAlerte->closeCursor();
                     if($creerAlerte->rowCount() > 0){
-                        header('Location: ../../all_alertes.php?message=succesAlerte');
+                        //header('Location: ../../all_alertes.php?message=succesAlerte');
                     }else{
-                        header('Location: ../../all_alertes.php?message=erreurAlerte');
+                        //header('Location: ../../all_alertes.php?message=erreurAlerte');
                     }
                 }else{
                     $creerAlerte->closeCursor();
-                    header('Location: ../../all_alertes.php?nomAlerte=' . $nomAlerte . '&informationsAlerte=' . $informationsAlerte . '&nomEspece=' . $nomEspece . '&message=erreurAlerte');
+                    //header('Location: ../../all_alertes.php?nomAlerte=' . $nomAlerte . '&informationsAlerte=' . $informationsAlerte . '&nomEspece=' . $nomEspece . '&message=erreurAlerte');
                 }
             }else{
                 $rechercheNomAlerte->closeCursor();
-                header('Location: ../../all_alertes.php?nomAlerte=' . $nomAlerte . '&informationsAlerte=' . $informationsAlerte . '&nomEspece=' . $nomEspece . '&message=existeAlerte');
+                //header('Location: ../../all_alertes.php?nomAlerte=' . $nomAlerte . '&informationsAlerte=' . $informationsAlerte . '&nomEspece=' . $nomEspece . '&message=existeAlerte');
             }
         }       
     }
@@ -70,19 +72,19 @@
                 echo '<h1>Erreur, vous n\'avez pas saisi tous les champs</h1>';
             }
             
-            $regne = htmlentities($_POST['regne'], ENT_QUOTES, "UTF-8"); // le htmlentities() passera les guillemets en entités HTML, ce qui empêchera les injections SQL
-            $embranchement = htmlentities($_POST['embranchement'], ENT_QUOTES, "UTF-8");
-            $classe = htmlentities($_POST['classe'], ENT_QUOTES, "UTF-8");
-            $ordre = htmlentities($_POST['ordre'], ENT_QUOTES, "UTF-8");
-            $famille = htmlentities($_POST['famille'], ENT_QUOTES, "UTF-8");
-            $genre = htmlentities($_POST['genre'], ENT_QUOTES, "UTF-8");
-            $espece = htmlentities($_POST['espece'], ENT_QUOTES, "UTF-8");
+            $regne = htmlspecialchars($_POST['regne'], ENT_QUOTES, "UTF-8"); // le htmlspecialchars() passera les guillemets en entités HTML, ce qui empêchera les injections SQL
+            $embranchement = htmlspecialchars($_POST['embranchement'], ENT_QUOTES, "UTF-8");
+            $classe = htmlspecialchars($_POST['classe'], ENT_QUOTES, "UTF-8");
+            $ordre = htmlspecialchars($_POST['ordre'], ENT_QUOTES, "UTF-8");
+            $famille = htmlspecialchars($_POST['famille'], ENT_QUOTES, "UTF-8");
+            $genre = htmlspecialchars($_POST['genre'], ENT_QUOTES, "UTF-8");
+            $espece = htmlspecialchars($_POST['espece'], ENT_QUOTES, "UTF-8");
             $lienErreur = 'Location: ../../all_alertes.php?regne=' . $regne . '&embranchement=' . $embranchement . '&classe=' . $classe . '&ordre=' . $ordre . '&famille=' . $famille . '&genre=' . $genre . '&espece=' . $espece . '&message=erreurEspece';
             $connexion = DBconnexion();
 
-            $rechercheEspece = $connexion->prepare('SELECT Nom_espece FROM espece WHERE Nom_espece = ' . $espece);
+            $rechercheEspece = $connexion->prepare('SELECT Nom_espece FROM espece WHERE Nom_espece = "' . $espece . '"');
 
-            if($rechercheEspece->execute() && $rechercheEspece->rowCount() > 0){
+            if($rechercheEspece->execute() && $rechercheEspece->rowCount() == 0){
                 $rechercheEspece->closeCursor();
                 $selectRegne = '(SELECT Id_regne FROM regne WHERE Nom_regne = "' . $regne . '")';
                 $selectEmbranchement = '(SELECT Id_embranchement FROM embranchement WHERE Nom_embranchement = "' . $embranchement . '")';
@@ -162,17 +164,17 @@
 
     if(isset($_POST['creerProjet'])){
         if(!empty($_POST['nomProjet']) && !empty($_POST['dateDebut']) && !empty($_POST['dateFin'])  && !empty($_POST['activite'])){
-            $nomProjet = htmlentities($_POST['nomProjet'], ENT_QUOTES, "UTF-8"); // le htmlentities() passera les guillemets en entités HTML, ce qui empêchera les injections SQL
-            $dateDebut = htmlentities($_POST['dateDebut'], ENT_QUOTES, "UTF-8");
-            $dateFin = htmlentities($_POST['dateFin'], ENT_QUOTES, "UTF-8");
-            $activite = htmlentities($_POST['activite'], ENT_QUOTES, "UTF-8");
-            $idAlerte = htmlentities($_POST['idAlerte'], ENT_QUOTES, "UTF-8");
-            $idEspece = htmlentities($_POST['idEspece'], ENT_QUOTES, "UTF-8");
+            $nomProjet = htmlspecialchars($_POST['nomProjet'], ENT_QUOTES, "UTF-8"); // le htmlspecialchars() passera les guillemets en entités HTML, ce qui empêchera les injections SQL
+            $dateDebut = htmlspecialchars($_POST['dateDebut'], ENT_QUOTES, "UTF-8");
+            $dateFin = htmlspecialchars($_POST['dateFin'], ENT_QUOTES, "UTF-8");
+            $activite = htmlspecialchars($_POST['activite'], ENT_QUOTES, "UTF-8");
+            $idAlerte = htmlspecialchars($_POST['idAlerte'], ENT_QUOTES, "UTF-8");
+            $idEspece = htmlspecialchars($_POST['idEspece'], ENT_QUOTES, "UTF-8");
             $connexion = DBconnexion();
 
             $rechercherNomProjet = $connexion->prepare('SELECT Nom_espece FROM espece WHERE Nom_espece = ' . $espece);
 
-            if($rechercherNomProjet->execute() && $rechercherNomProjet->rowCount() > 0){
+            if($rechercherNomProjet->execute() && $rechercherNomProjet->rowCount() == 0){
                 
             }
 
@@ -197,8 +199,8 @@
 
     if(isset($_POST['candidaterAlerte'])){
         if(!empty($_POST['informationsCandidater']) && !empty($_POST['roleCandidater'])){
-            $informationsCandidater = htmlentities($_POST['informationsCandidater'], ENT_QUOTES, "UTF-8"); // le htmlentities() passera les guillemets en entités HTML, ce qui empêchera les injections SQL
-            $roleCandidater = htmlentities($_POST['roleCandidater'], ENT_QUOTES, "UTF-8");
+            $informationsCandidater = htmlspecialchars($_POST['informationsCandidater'], ENT_QUOTES, "UTF-8"); // le htmlspecialchars() passera les guillemets en entités HTML, ce qui empêchera les injections SQL
+            $roleCandidater = htmlspecialchars($_POST['roleCandidater'], ENT_QUOTES, "UTF-8");
             $date = date("Y-m-d");
             $idAlerte = $_POST['idAlerteCandidater'];
             $idEspece = $_POST['idEspeceCandidater'];
