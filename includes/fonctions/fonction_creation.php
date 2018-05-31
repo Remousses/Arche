@@ -37,7 +37,6 @@
             $tabNomAlerte = array();
             
             $rechercheNomAlerte = $connexion->prepare('SELECT Nom_alerte FROM alerte WHERE Statut BETWEEN 0 AND 1 AND Nom_alerte = "' . $nomAlerte . '"');
-            var_dump(parse_url($url, PHP_URL_QUERY));
 
             if($rechercheNomAlerte->execute() && $rechercheNomAlerte->rowCount() == 0){
                 $rechercheNomAlerte->closeCursor();
@@ -48,17 +47,17 @@
                 if($creerAlerte->execute()){
                     $creerAlerte->closeCursor();
                     if($creerAlerte->rowCount() > 0){
-                        //header('Location: ../../all_alertes.php?message=succesAlerte');
+                        header('Location: ../../all_alertes.php?message=succesAlerte');
                     }else{
-                        //header('Location: ../../all_alertes.php?message=erreurAlerte');
+                        header('Location: ../../all_alertes.php?message=erreurAlerte');
                     }
                 }else{
                     $creerAlerte->closeCursor();
-                    //header('Location: ../../all_alertes.php?nomAlerte=' . $nomAlerte . '&informationsAlerte=' . $informationsAlerte . '&nomEspece=' . $nomEspece . '&message=erreurAlerte');
+                    header('Location: ../../all_alertes.php?nomAlerte=' . urlencode($nomAlerte) . '&informationsAlerte=' . urlencode($informationsAlerte) . '&nomEspece=' . $nomEspece . '&message=erreurAlerte');
                 }
             }else{
                 $rechercheNomAlerte->closeCursor();
-                //header('Location: ../../all_alertes.php?nomAlerte=' . $nomAlerte . '&informationsAlerte=' . $informationsAlerte . '&nomEspece=' . $nomEspece . '&message=existeAlerte');
+                header('Location: ../../all_alertes.php?nomAlerte=' . urlencode($nomAlerte) . '&informationsAlerte=' . urlencode($informationsAlerte) . '&nomEspece=' . $nomEspece . '&message=existeAlerte');
             }
         }       
     }
@@ -79,7 +78,7 @@
             $famille = htmlspecialchars($_POST['famille'], ENT_QUOTES, "UTF-8");
             $genre = htmlspecialchars($_POST['genre'], ENT_QUOTES, "UTF-8");
             $espece = htmlspecialchars($_POST['espece'], ENT_QUOTES, "UTF-8");
-            $lienErreur = 'Location: ../../all_alertes.php?regne=' . $regne . '&embranchement=' . $embranchement . '&classe=' . $classe . '&ordre=' . $ordre . '&famille=' . $famille . '&genre=' . $genre . '&espece=' . $espece . '&message=erreurEspece';
+            $lienErreur = 'Location: ../../all_alertes.php?regne=' . urlencode($regne) . '&embranchement=' . urlencode($embranchement) . '&classe=' . urlencode($classe) . '&ordre=' . urlencode($ordre) . '&famille=' . urlencode($famille) . '&genre=' . urlencode($genre) . '&espece=' . urlencode($espece) . '&message=erreurEspece';
             $connexion = DBconnexion();
 
             $rechercheEspece = $connexion->prepare('SELECT Nom_espece FROM espece WHERE Nom_espece = "' . $espece . '"');
@@ -157,7 +156,7 @@
                 }
             }else{
                 $rechercheEspece->closeCursor();
-                header($lienErreur);
+                header('Location: ../../all_alertes.php?regne=' . urlencode($regne) . '&embranchement=' . urlencode($embranchement) . '&classe=' . urlencode($classe) . '&ordre=' . urlencode($ordre) . '&famille=' . urlencode($famille) . '&genre=' . urlencode($genre) . '&espece=' . urlencode($espece) . '&message=existeEspece');
             }
         }
     }

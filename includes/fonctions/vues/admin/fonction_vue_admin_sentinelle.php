@@ -38,15 +38,26 @@
                         <div class="modal-body">
                             <?php
                                 if(isset($_GET['message'])){
-                                    $message = $_GET['message'];
                                     $script = '<script src="js/modal.js"></script>';
 
-                                    if($message == 'erreurEspece'){
-                                        messageBox('danger', 'L\'espece n\'a pas été créée, le nom d\'espèce ou la phohto existe déjà.');
-                                        echo $script;
-                                    }else if($message == 'erreurPhotoEspece'){
-                                        messageBox('danger', 'Problème avec votre photo.');
-                                        echo $script;
+                                    switch($_GET['message']){
+                                        case 'existeEspece':
+                                            messageBox('warning', 'Le nom de l\'alerte existe déjà.');
+                                            echo $script;
+                                            break;
+                                        
+                                        case 'erreurEspece':
+                                            messageBox('danger', 'L\'espece n\'a pas été créée, le nom d\'espèce ou la phohto existe déjà.');
+                                            echo $script;
+                                            break;
+
+                                        case 'erreurPhotoEspece':
+                                            messageBox('danger', 'Problème avec votre photo.');
+                                            echo $script;
+                                            break;
+                                        
+                                        default:
+                                            break;
                                     }
                                 }
                             ?>
