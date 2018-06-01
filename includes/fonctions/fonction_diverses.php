@@ -85,6 +85,14 @@
             case 'succesProjet':
                 messageBox($success, 'Le projet a été créée.');
                 break;
+            
+            case 'erreurProjet':
+                messageBox($danger, 'Le projet n\'a pas été créée.');
+                break;
+
+            case 'existeProjet':
+                messageBox($warning, 'Il se peut que le nom du projet existe déjà ou bien que cette tâche y soit déjà affectée.');
+                break;
 
             case 'erreurProfil':
                 messageBox($warning, 'Vous n\'avez aucun projet en cours.');

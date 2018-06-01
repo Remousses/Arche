@@ -81,17 +81,17 @@
                     <input type="hidden" name="idEspece" value="<?php echo isset($_GET['idEspece']) ? $_GET['idEspece'] : ''; ?>">
                     
                     <button class="btn btn-primary btn-block" type="submit" name="creerProjet">Créer un projet</button>
-                    <a class="btn btn-secondary btn-block text-white" data-toggle="modal" data-target="#nouvelleTache">Créer une nouvelle tâche</a>
+                    <!-- <a class="btn btn-secondary btn-block text-white" data-toggle="modal" data-target="#ajouterTache">Créer une nouvelle tâche</a> -->
                 </form>
             </div>
         </div>
 
         <!-- Modal nouvelle tâche -->
-        <div class="modal fade" id="nouvelleTache" tabindex="-1" role="dialog" aria-labelledby="nouvelleTacheLabel" aria-hidden="true">
+        <div class="modal fade" id="ajouterTache" tabindex="-1" role="dialog" aria-labelledby="ajouterTacheLabel" aria-hidden="true">
             <div class="modal-dialog" role="document">
                 <div id="modal" class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="nouvelleTacheLabel">Création d'un nouvelle tâche</h5>
+                        <h5 class="modal-title" id="ajouterTacheLabel">Création d'un nouvelle tâche</h5>
                         <button class="close" type="button" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">×</span>
                         </button>

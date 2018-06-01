@@ -160,29 +160,34 @@
     function voirProjets($nbProjet, $idProjet, $idAlerte, $nomProjet, $dateDebutProjet, $dateFinProjet, $activite, $realisation, $dateDebutTache, $dateFinTache){
         $texte = '<p class="card-text small">Tâche : ' . $activite . '
         <br>Avancement : ' . $realisation . '
-        <br>Délais : Du ' . $dateDebutTache . ' au ' . $dateFinTache . '</p>';
+        <br>Délais : Du ' . dateFr($dateDebutTache) . ' au ' . dateFr($dateFinTache) . '</p>';
         
         echo '<div class="card mb-3">
                     <div class="card-body"> ';
 
         if(!in_array($idProjet, $nbProjet)){
             array_push($nbProjet, $idProjet);
-                    echo '<h6 class="card-title mb-1"><a class="mr-3 d-inline-block" data-toggle="modal" data-target="#participationAlerte">' . $nomProjet . '</a></h6>
+            echo '<h6 class="card-title mb-1">' . $nomProjet . '</h6>
                         ' . $texte . '
-                    </div>
-                    <hr class="my-0">
-                <div class="card-body py-2 small">
-                    <a class="mr-3 d-inline-block" data-toggle="modal" data-target="#don" disabled>Faire un don</a>';
+                    </div>';
 
             if($_SESSION['Id_groupe'] == getIdGroupeComite()){               
 
-                echo '<a class="mr-3 d-inline-block" href="#">Archiver</a>'; //, etc comme pour alerte avec le différent statut
+                echo '<hr class="my-0">
+                    <div class="card-body py-2 small">
+                    <a class="mr-3 d-inline-block" href="#">Archiver</a>
+                    <a href="#" class="mr-3 d-inline-block" data-toggle="modal" data-target="#ajouterTache">Ajouter une nouvelle tâche</a>
+                    </div>';//, etc comme pour alerte avec le différent statut
+            }else if($_SESSION['Id_groupe'] == getIdGroupeParrainFinancier()){
+                echo '<hr class="my-0">
+                    <div class="card-body py-2 small">
+                    <a href="#" class="mr-3 d-inline-block" data-toggle="modal" data-target="#don" disabled>Faire un don</a>
+                    </div>';
             }
 
-            echo '</div>
-                    <div class="card-footer small text-muted">
-                        <span class="mr-3 d-inline-block">Posté le ' . dateFr($dateDebutProjet) . '</span>
-                        <span class="mr-3 d-inline-block">Fini le ' . dateFr($dateFinProjet) . '</span>';
+            echo '<div class="card-footer small text-muted">
+                <span class="mr-3 d-inline-block">Posté le ' . dateFr($dateDebutProjet) . '</span>
+                <span class="mr-3 d-inline-block">Fini le ' . dateFr($dateFinProjet) . '</span>';
         }else{
              echo $texte;
         }
@@ -191,42 +196,5 @@
         </div>';
 
         return $nbProjet;
-    }
-
-    function infoProjet($tabAlerte, $nbAlerte, $nbProjet, $idAlerte, $nomAlerte, $idProjet, $nomProjet, $dateDebut, $dateFin, $statut){
-        if(!in_array($statut, $tabAlerte)){
-            array_push($tabAlerte, $statut);
-            var_dump($tabAlerte);
-            echo '<ol class="breadcrumb">
-            <li class="breadcrumb-item">
-            <a href="profil.php">Profil</a>
-            </li>
-            <li class="breadcrumb-item active">Projets ';
-
-            if($statut == 1){
-                echo 'En cours';
-            }else if($statut == 2){
-                echo 'Terminée';
-            }
-        }
-
-        echo '</li>
-            </ol>
-            <div class="card mb-3"">
-                <div class="card-body">';
-
-        if(!in_array($idAlerte, $nbAlerte)){
-            array_push($nbAlerte, $idAlerte);
-            echo '<h6 class="card-title mb-1">Nom de l\'alerte : ' . $nomAlerte . '</h6>';
-            
-            if(!in_array($idProjet, $nbProjet)){
-                array_push($nbProjet, $idProjet);
-                echo '<p class="card-text small">Nom du projet : ' . $nomProjet . '</p>
-                    <p class="card-text small">Du ' . $dateDebut . ' au ' . $dateFin . '</p>';
-            }
-        }
-
-        echo '</div>
-            </div>';
     }
 ?>

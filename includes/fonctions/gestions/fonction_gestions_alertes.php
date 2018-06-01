@@ -59,7 +59,7 @@
                         modalCandidater($donnees['Id_alerte'], $donnees['Id_espece']);
                     
                     }else if($_SESSION['Id_groupe'] == getIdGroupeVisiteur() && $donnees['Statut'] == 1){
-                        $texte .= '<a class="mr-3 d-inline-block" data-toggle="modal" onclick="candidater(' . $donnees['Id_alerte'] . ', ' . $donnees['Id_espece'] . ');" data-target="#candidater">Candidater</a>';
+                        $texte .= '<a href="#" class="mr-3 d-inline-block" data-toggle="modal" onclick="candidater(' . $donnees['Id_alerte'] . ', ' . $donnees['Id_espece'] . ');" data-target="#candidater">Candidater</a>';
 
                         $tabAlerte = voirAlertes($tabAlerte, $statut, $donnees['Id_alerte'], $donnees['Nom_alerte'], $donnees['Informations_alerte'], $donnees['Nom_espece'], $donnees['Id_espece'], $donnees['Photo'], $donnees['Date_alerte'], $texte);
                         modalCandidater($donnees['Id_alerte'], $donnees['Id_espece']);
