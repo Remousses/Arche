@@ -28,7 +28,6 @@ $(document).ready(function(){
             //     document.location.href = pages[i] + "#" + $(".dataTables_filter input").val();
             //     console.log(pages[i] + "#" + $(".dataTables_filter input").val());
             // });
-            
             break;
         }
     }
@@ -41,13 +40,15 @@ $(document).ready(function(){
     //     $('#eventForm').formValidation('revalidateField', 'date');
     // });
     
-    var options={
+    var options = {
       format: 'dd/mm/yyyy',
       autoclose: true,
     };
 
-    $('#dateDebut').datepicker(options);
-    $('#dateFin').datepicker(options);
+    $('#dateDebutProjet').datepicker(options);
+    $('#dateFinProjet').datepicker(options);
+    $('#dateDebutTache').datepicker(options);
+    $('#dateFinTache').datepicker(options);
 });
 
 function getAncre(){
@@ -68,6 +69,10 @@ function recherche(){
 function candidater(idAlerte, idEspece){
     $('#idAlerteCandidater').val(idAlerte);
     $('#idEspeceCandidater').val(idEspece);
+}
+
+function ajouterTache(idProjet){
+    $('#idProjet').val(idProjet);
 }
 
 // function miseAJour() {

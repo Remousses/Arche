@@ -63,12 +63,12 @@
                         <input class="form-control" type="text" name="nomProjet" maxlength="30" value="<?php echo isset($_GET['nomProjet']) ? $_GET['nomProjet'] : ''; ?>" placeholder="Entrer un nom de projet" required/>
                     </div>
                     <div class="form-group">
-                        <label for="dateDebut">Date de début</label>
-                        <input class="form-control" type="text" name="dateDebut" id="dateDebut" value="<?php echo isset($_GET['dateDebut']) ? $_GET['dateDebut'] : ''; ?>" placeholder="mm/jj/aaaa" required/>
+                        <label for="dateDebutProjet">Date de début</label>
+                        <input style="background-color: white;" class="form-control" type="text" name="dateDebutProjet" id="dateDebutProjet" value="<?php echo isset($_GET['dateDebutProjet']) ? $_GET['dateDebutProjet'] : ''; ?>" placeholder="jj/mm/aaaa" required/>
                     </div>
                     <div class="form-group">
-                        <label for="dateFin">Date de fin</label>
-                        <input class="form-control" type="text" name="dateFin" id="dateFin" value="<?php echo isset($_GET['dateFin']) ? $_GET['dateFin'] : ''; ?>" placeholder="mm/jj/aaaa" required/>
+                        <label for="dateFinProjet">Date de fin</label>
+                        <input style="background-color: white;" class="form-control" type="text" name="dateFinProjet" id="dateFinProjet" value="<?php echo isset($_GET['dateFinProjet']) ? $_GET['dateFinProjet'] : ''; ?>" placeholder="jj/mm/aaaa" required/>
                     </div>
                     <div class="form-group">
                         <label for="activite">Activité</label>
@@ -100,10 +100,20 @@
                     <div class="modal-body">
                         <?php
                             if(isset($_GET['message'])){
-                                if($_GET['message'] == 'erreurTache'){
-                                    messageBox('danger', 'La tâche n\'a pas été créée.');
-                                    echo '<script src="js/modal.js"></script>';
-                                }
+                                $script = '<script src="js/modal.js"></script>';
+
+                                switch($_GET['message']){
+                                    case 'erreurTache':
+                                        messageBox('danger', 'La tâche n\'a pas été créée.');
+                                        echo $script;
+                                        break;
+                                    case 'existeTache':
+                                        messageBox('warning', 'Cette tâche à déjà été affectée');
+                                        echo $script;
+                                        break;
+                                    default:
+                                        break;
+                                } 
                             }
                         ?>
                         <form id="form" action="includes/fonctions/fonction_creation.php" method="post">
@@ -111,7 +121,19 @@
                                 <label for="activite">Nom de l'activité</label>
                                 <input class="form-control" type="text" name="activite" maxlength="30" value="<?php echo isset($_GET['activite']) ? $_GET['activite'] : ''; ?>" placeholder="Entrer un nom d'une activité" required/>
                             </div>
+                            <div class="form-group">
+                                <label for="dateDebutTache">Date de début</label>
+                                <input style="background-color: white;" class="form-control" type="text" name="dateDebutTache" id="dateDebutTache" value="<?php echo isset($_GET['dateDebutTache']) ? $_GET['dateDebutTache'] : ''; ?>" placeholder="jj/mm/aaaa" required/>
+                            </div>
+                            <div class="form-group">
+                                <label for="dateFinTache">Date de fin</label>
+                                <input style="background-color: white;" class="form-control" type="text" name="dateFinTache" id="dateFinTache" value="<?php echo isset($_GET['dateFinTache']) ? $_GET['dateFinTache'] : ''; ?>" placeholder="jj/mm/aaaa" required/>
+                            </div>
                             
+                            <input type="hidden" name="idAlerte"  value="<?php echo $_GET['idAlerte']; ?>">
+                            <input type="hidden" name="idEspece" value="<?php echo $_GET['idEspece']; ?>">
+                            <input type="hidden" id="idProjet" name="idProjet" value="<?php echo isset($_GET['idProjet']) ? $_GET['idProjet'] : ''; ?>">
+
                             <button class="btn btn-primary btn-block" type="submit" name="creerTache">Créer une tâche</button>
                         </form>
                     </div>

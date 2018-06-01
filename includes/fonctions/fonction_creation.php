@@ -162,10 +162,10 @@
     }
 
     if(isset($_POST['creerProjet'])){
-        if(!empty($_POST['nomProjet']) && !empty($_POST['dateDebut']) && !empty($_POST['dateFin'])  && !empty($_POST['activite'])){
+        if(!empty($_POST['nomProjet']) && !empty($_POST['dateDebutProjet']) && !empty($_POST['dateFinProjet'])  && !empty($_POST['activite'])){
             $nomProjet = htmlspecialchars($_POST['nomProjet'], ENT_QUOTES, "UTF-8"); // le htmlspecialchars() passera les guillemets en entités HTML, ce qui empêchera les injections SQL
-            $dateDebut = htmlspecialchars($_POST['dateDebut'], ENT_QUOTES, "UTF-8");
-            $dateFin = htmlspecialchars($_POST['dateFin'], ENT_QUOTES, "UTF-8");
+            $dateDebut = htmlspecialchars($_POST['dateDebutProjet'], ENT_QUOTES, "UTF-8");
+            $dateFin = htmlspecialchars($_POST['dateFinProjet'], ENT_QUOTES, "UTF-8");
             $activite = htmlspecialchars($_POST['activite'], ENT_QUOTES, "UTF-8");
             $idAlerte = htmlspecialchars($_POST['idAlerte'], ENT_QUOTES, "UTF-8");
             $idEspece = htmlspecialchars($_POST['idEspece'], ENT_QUOTES, "UTF-8");
@@ -180,7 +180,7 @@
                     
                     $creerProjet = $connexion->prepare('INSERT INTO projet (Nom_projet, Date_debut, Date_fin, Statut, Id_alerte, Id_utilisateur)
                         VALUES ("' . $nomProjet . '", "' . dateEn($dateDebut) . '", "' . dateEn($dateFin) . '", 1, "' . $idAlerte . '", "")');
-                    $creerTache = $connexion->prepare('INSERT INTO  tache SET Activite = "' . $activite . '", Realisation = "Début", Date_debut = "' . dateEn($dateDebut) . '", Date_fin = "' . dateEn($dateFin) . '", Id_projet = (SELECT Id_projet FROM projet WHERE Nom_projet = "' . $nomProjet . '")');
+                    $creerTache = $connexion->prepare('INSERT INTO tache SET Activite = "' . $activite . '", Realisation = "Début", Date_debut = "' . dateEn($dateDebut) . '", Date_fin = "' . dateEn($dateFin) . '", Id_projet = (SELECT Id_projet FROM projet WHERE Nom_projet = "' . $nomProjet . '")');
                      
                     if($creerProjet->execute() && $creerProjet->rowCount() > 0 && $creerTache->execute() && $creerTache->rowCount() > 0 ){
                         $creerTache->closeCursor();
@@ -189,15 +189,51 @@
                     }else{
                         $creerTache->closeCursor();
                         $creerProjet->closeCursor();
-                        header('Location: ../../voir_projets.php?idAlerte=' . $idAlerte . '&idEspece=' . $idEspece . '&nomProjet=' . urlencode($nomProjet) . '&dateDebut=' . $dateDebut . '&dateFin=' . $dateFin . '&message=erreurProjet');
+                        header('Location: ../../voir_projets.php?idAlerte=' . $idAlerte . '&idEspece=' . $idEspece . '&nomProjet=' . urlencode($nomProjet) . '&dateDebutProjet=' . $dateDebut . '&dateFinProjet=' . $dateFin . '&message=erreurProjet');
                     }
     
                 }else{
-                    header('Location: ../../voir_projets.php?idAlerte=' . $idAlerte . '&idEspece=' . $idEspece . '&nomProjet=' . urlencode($nomProjet) . '&dateDebut=' . $dateDebut . '&dateFin=' . $dateFin . '&message=erreurProjet');
+                    header('Location: ../../voir_projets.php?idAlerte=' . $idAlerte . '&idEspece=' . $idEspece . '&nomProjet=' . urlencode($nomProjet) . '&dateDebutProjet=' . $dateDebut . '&dateFinProjet=' . $dateFin . '&message=erreurProjet');
                 }
             }else{
                 $rechercherNomProjet->closeCursor();
-                header('Location: ../../voir_projets.php?idAlerte=' . $idAlerte . '&idEspece=' . $idEspece . '&nomProjet=' . urlencode($nomProjet) . '&dateDebut=' . $dateDebut . '&dateFin=' . $dateFin . '&message=existeProjet');
+                header('Location: ../../voir_projets.php?idAlerte=' . $idAlerte . '&idEspece=' . $idEspece . '&nomProjet=' . urlencode($nomProjet) . '&dateDebutProjet=' . $dateDebut . '&dateFinProjet=' . $dateFin . '&message=existeProjet');
+            }
+        }
+    }
+
+    if(isset($_POST['creerTache'])){
+        if(!empty($_POST['activite']) && !empty($_POST['dateDebutTache']) && !empty($_POST['dateFinTache'])){
+            $activite = htmlspecialchars($_POST['activite'], ENT_QUOTES, "UTF-8");
+            $dateDebut = htmlspecialchars($_POST['dateDebutTache'], ENT_QUOTES, "UTF-8");
+            $dateFin = htmlspecialchars($_POST['dateFinTache'], ENT_QUOTES, "UTF-8");
+            $idAlerte = $_POST['idAlerte'];
+            $idEspece = $_POST['idEspece'];
+            $idProjet = $_POST['idProjet'];
+            $connexion = DBconnexion();
+
+            $rechercherNomProjet = $connexion->prepare('SELECT Nom_projet FROM projet,tache WHERE projet.Id_projet = ' . $idProjet . ' AND Activite = "' . $activite . '"');
+            var_dump($rechercherNomProjet); 
+            if($rechercherNomProjet->execute() && $rechercherNomProjet->rowCount() == 0){
+                $rechercherNomProjet->closeCursor();
+
+                if(dateEn($dateDebut) != "" && dateEn($dateFin) != "" && intval($idAlerte) > 0 && intval($idEspece) > 0){
+                    $creerTache = $connexion->prepare('INSERT INTO tache (Activite, Realisation, Date_debut, Date_fin, Id_projet) VALUES ("' . $activite . '", "Début", "' . dateEn($dateDebut) . '", "' . dateEn($dateFin) . '", ' . $idProjet . ')');
+                    var_dump($creerTache); 
+                    if($creerTache->execute() && $creerTache->rowCount() > 0 ){
+                        $creerTache->closeCursor();
+                        header('Location: ../../voir_projets.php?idAlerte=' . $idAlerte . '&idEspece=' . $idEspece . '&message=succesTache');
+                    }else{
+                        $creerTache->closeCursor();
+                        header('Location: ../../voir_projets.php?idAlerte=' . $idAlerte . '&idEspece=' . $idEspece . '&idProjet=' . $idProjet . '&activite=' . urlencode($activite) . '&dateDebutTache=' . $dateDebut . '&dateFinTache=' . $dateFin . '&message=erreurTache');
+                    }
+    
+                }else{
+                    header('Location: ../../voir_projets.php?idAlerte=' . $idAlerte . '&idEspece=' . $idEspece . '&idProjet=' . $idProjet . '&activite=' . urlencode($activite) . '&dateDebutTache=' . $dateDebut . '&dateFinTache=' . $dateFin . '&message=erreurTache');
+                }
+            }else{
+                $rechercherNomProjet->closeCursor();
+                header('Location: ../../voir_projets.php?idAlerte=' . $idAlerte . '&idEspece=' . $idEspece . '&idProjet=' . $idProjet . '&activite=' . urlencode($activite) . '&dateDebutTache=' . $dateDebut . '&dateFinTache=' . $dateFin . '&message=existeTache');
             }
         }
     }

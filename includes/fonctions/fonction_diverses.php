@@ -83,15 +83,19 @@
                 break;
             
             case 'succesProjet':
-                messageBox($success, 'Le projet a été créée.');
+                messageBox($success, 'Le projet a été créé.');
                 break;
             
             case 'erreurProjet':
-                messageBox($danger, 'Le projet n\'a pas été créée.');
+                messageBox($danger, 'Le projet n\'a pas été créé.');
                 break;
 
             case 'existeProjet':
                 messageBox($warning, 'Il se peut que le nom du projet existe déjà ou bien que cette tâche y soit déjà affectée.');
+                break;
+
+            case 'succesTache':
+                messageBox($success, 'La tâche a été créée.');
                 break;
 
             case 'erreurProfil':
