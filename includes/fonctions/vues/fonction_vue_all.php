@@ -65,7 +65,7 @@
         }
         
         echo '<div class="card mb-3" id="alerte' . $idAlerte . '">
-            <a href="' . (empty($_SESSION) ? 'connexion.php' : 'voir_projets.php?idAlerte=' . $idAlerte . '&idEspece=' . $idEspece) . '">
+            <a href="' . (empty($_SESSION) ? 'connexion.php' : 'voir_projets.php?nomAlerte=' . $nomAlerte . '&idAlerte=' . $idAlerte . '&idEspece=' . $idEspece) . '">
                 <div class="center"><img class="image_alerte" src="images/especes/' . $photo .'" alt="' . $nomEspece . '"/></div> <br>
             </a>
             <div class="card-body">';
@@ -98,7 +98,7 @@
             }
         }
 
-        echo '<h6 class="card-title mb-1"><a href="' . (empty($_SESSION) ? 'connexion.php' : 'voir_projets.php?idAlerte=' . $idAlerte . '&idEspece=' . $idEspece) . '">' . $nomAlerte . '</a></h6>
+        echo '<h6 class="card-title mb-1"><a href="' . (empty($_SESSION) ? 'connexion.php' : 'voir_projets.php?' . $nomAlerte . '&idAlerte=' . $idAlerte . '&idEspece=' . $idEspece) . '">' . $nomAlerte . '</a></h6>
                 <p class="card-text small">' . $informations .'</p>
                 </div>
                 <hr class="my-0">
@@ -130,15 +130,15 @@
                             </div>
 
                             <div class="form-group">
-                                <label for="">Rôle</label>
+                                <label for="role">Rôle</label>
                                 <div class="row" style="margin: auto;">
                                     <div class="col-6">
                                         <input type="radio" class="form-check-input" name="roleCandidater" value="Participer physiquement" checked>
-                                        <label class="form-check-label" for="Participer physiquement">Participer physiquement</label>
+                                        <label class="form-check-label" for="ParticiperPhysiquement">Participer physiquement</label>
                                     </div>
                                     <div class="col-6">
                                         <input type="radio" class="form-check-input" name="roleCandidater" value="Participer financièrement">
-                                        <label class="form-check-label" for="Participer financièrement">Participer financièrement</label>
+                                        <label class="form-check-label" for="ParticiperFinancièrement">Participer financièrement</label>
                                     </div>
                                 </div>
                             </div>
@@ -175,7 +175,7 @@
 
                 echo '<hr class="my-0">
                     <div class="card-body py-2 small">
-                    <a class="mr-3 d-inline-block" href="#">Archiver</a>
+                    <a class="mr-3 d-inline-block" href="includes/fonctions/fonction_validation.php?archiverProjet=' . $idProjet . '">Archiver</a>
                     <a href="#" class="mr-3 d-inline-block" data-toggle="modal" onclick="ajouterTache(' . $idProjet . ');" data-target="#ajouterTache">Ajouter une nouvelle tâche</a>
                     </div>';//, etc comme pour alerte avec le différent statut
             }else if($_SESSION['Id_groupe'] == getIdGroupeParrainFinancier()){

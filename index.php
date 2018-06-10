@@ -29,6 +29,17 @@
 					</li>
 					<li class="breadcrumb-item active">Arche de Noé</li>
 				</ol>
+				<?php 
+					$parametreUrl = parse_url($_SERVER['HTTP_REFERER'], PHP_URL_QUERY);
+					
+					$tab = explode("&", $parametreUrl);
+
+					parse_str($_SERVER['HTTP_REFERER'], $output);
+					$test = array_values($output);
+					var_dump($test);
+					echo $test[0];
+					var_dump($tab);
+				?>
 				<div class="row">
 					<div class="col-12">
 						<h1>Qui Sommes Nous ?</h1>

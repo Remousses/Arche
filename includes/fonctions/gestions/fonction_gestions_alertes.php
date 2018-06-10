@@ -13,7 +13,7 @@
                 $statut = '';
 
                 if(isset($_SESSION['Id_groupe'])){
-                    $texte = '<a class="mr-3 d-inline-block" href="voir_projets.php?idAlerte=' . $donnees['Id_alerte'] . '&idEspece=' . $donnees['Id_espece'] . '">Voir les projets</a>';
+                    $texte = '<a class="mr-3 d-inline-block" href="voir_projets.php?nomAlerte=' . $donnees['Nom_alerte'] . '&idAlerte=' . $donnees['Id_alerte'] . '&idEspece=' . $donnees['Id_espece'] . '">Voir les projets</a>';
 
                     if($_SESSION['Id_groupe'] == getIdGroupeComite()){
                         if($donnees['Statut'] == 0){

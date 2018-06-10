@@ -29,9 +29,11 @@
 				?>
 				<ol class="breadcrumb">
 					<li class="breadcrumb-item">
-					<a href="./">Accueil</a>
+						<a href="./">Accueil</a>
 					</li>
-					<li class="breadcrumb-item active">Alertes</li>
+					<li class="breadcrumb-item active">
+						<a href="all_alertes.php">Alertes</a>
+					</li>
 				</ol>
 				  
 				<?php

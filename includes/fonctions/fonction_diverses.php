@@ -55,11 +55,19 @@
                 break;
 
             case 'succesArchiverAlerte':
-                messageBox($success, 'L\'alerte a été archiver.');
+                messageBox($success, 'Tous les éléments de l\'alerte ont été archiver.');
                 break;
 
             case 'erreurArchiverAlerte':
                 messageBox($danger, 'L\'alerte n\'a pas été archiver.');
+                break;
+            
+            case 'succesArchiverProjet':
+                messageBox($success, 'Tous les éléments du projet ont été archiver.');
+                break;
+
+            case 'erreurArchiverProjet':
+                messageBox($danger, 'Le projet n\'a pas été archiver.');
                 break;
 
             case 'succesApprouverCandidature':
@@ -86,16 +94,20 @@
                 messageBox($success, 'Le projet a été créé.');
                 break;
             
+            case 'existeProjet':
+                messageBox($warning, 'Il se peut que le nom du projet existe déjà ou bien que cette tâche lui soit déjà affectée.');
+                break;
+
+            case 'erreurDateProjet':
+                messageBox($danger, 'La date du projet n\'est pas valide.');
+                break;
+
             case 'erreurProjet':
                 messageBox($danger, 'Le projet n\'a pas été créé.');
                 break;
 
-            case 'existeProjet':
-                messageBox($warning, 'Il se peut que le nom du projet existe déjà ou bien que cette tâche y soit déjà affectée.');
-                break;
-
             case 'succesTache':
-                messageBox($success, 'La tâche a été créée.');
+                messageBox($success, 'La tâche a été ajoutée.');
                 break;
 
             case 'erreurProfil':
@@ -173,5 +185,10 @@
                 echo '<script>document.location.href="' . $page . '?message=erreurVerificationIdGroupe";</script>';
             }
         }
+    }
+
+    function parametreUrl(){
+        parse_str($_SERVER['HTTP_REFERER'], $parametreUrl);
+        return array_values($parametreUrl);
     }
 ?>

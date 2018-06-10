@@ -56,15 +56,15 @@
     function getAllProjetParAlerte(){
         $nbProjet = array();
         $projetParAlerte = DBconnexion()->prepare('SELECT projet.Id_projet AS IdProjet, Nom_projet, projet.Date_debut AS DateDebutProjet, projet.Date_fin AS DateFinProjet, alerte.Id_alerte AS IdAlerte, Activite, Realisation, tache.Date_debut AS DateDebutTache, tache.Date_fin AS DateFinTache FROM alerte, projet, tache WHERE alerte.Id_alerte = ' . $_GET['idAlerte'] . ' AND alerte.Id_alerte = projet.Id_alerte AND projet.Id_projet = tache.Id_projet ORDER BY projet.Id_projet, DateDebutProjet, DateDebutTache');
-        $projetParAlerte->execute();
-
-        if($projetParAlerte->rowCount() > 0){
+        
+        if($projetParAlerte->execute() && $projetParAlerte->rowCount() > 0){
             while ($donnees = $projetParAlerte->fetch()) {
                 $nbProjet = voirProjets($nbProjet, $donnees['IdProjet'], $donnees['IdAlerte'], $donnees['Nom_projet'], $donnees['DateDebutProjet'], $donnees['DateFinProjet'], $donnees['Activite'], $donnees['Realisation'], $donnees['DateDebutTache'], $donnees['DateFinTache']);
             }
 
             $projetParAlerte->closeCursor();
-        }else{
+            
+        }else if($_SESSION['Id_groupe'] != getIdGroupeComite()){
             $projetParAlerte->closeCursor();
             echo '<script language="Javascript">
                     document.location.replace("all_alertes.php?message=erreurProjet_' . $_GET['idAlerte'] . '#alerte' . $_GET['idAlerte'] . '");

@@ -13,6 +13,41 @@ $(document).ready(function(){
         $(this).find('input:first').focus();
     });
 
+    $('#retourCreerTache').click(function(){
+        $('#nouvelleTache').modal('toggle');
+    });
+
+    $('#choixTache1').click(function(){
+        $('#selectActiviteDiv').removeClass("d-none");
+        $('#nouvelleActiviteDiv').addClass("d-none");
+        $('#nouvelleActivite').removeAttr('required');
+        $('#selectActivite').removeAttr('disabled');
+        $('#nouvelleActivite').attr('disabled', 'true');
+    });
+
+    $('#choixTache2').click(function(){
+        $('#nouvelleActiviteDiv').removeClass("d-none");
+        $('#selectActiviteDiv').addClass("d-none");
+        $('#nouvelleActivite').removeAttr('disabled');
+        $('#selectActivite').attr('disabled', 'true');
+        $('#nouvelleActivite').attr('required', 'true');
+    });
+
+    // $('#nouvelleActivite').click(function(event){
+    //     event.preventDefault();
+    //     console.log('nouvelleActivite on click');
+    //     $('#selectActivite').attr('disabled', true);
+    //     $(this).attr('enabled', true);
+    //     $(this).prev("input[disabled]").prop("disabled", 'false').focus();
+    // });
+
+    // $('#selectActivite').click(function(event){
+    //     event.preventDefault();
+    //     console.log('selectActivite on click');
+    //     $('#nouvelleActivite').attr('disabled', true);
+    //     $(this).attr('enabled', true);
+    // });
+
     $(window).on('hashchange', function(){
         getAncre();
     });

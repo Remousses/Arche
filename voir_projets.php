@@ -30,9 +30,9 @@
 						<li class="breadcrumb-item">
 							<a href="all_alertes.php">Alertes</a>
 						</li>
-						<li class="breadcrumb-item active">Projets</li>
+						<li class="breadcrumb-item active"><?php echo $_GET['nomAlerte']; ?></li>
 					</ol>
-				
+					
 					<?php
 						// Participation à un projet
 						if(isset($_SESSION['Id_groupe'])){

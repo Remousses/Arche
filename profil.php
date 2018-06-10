@@ -17,9 +17,11 @@
                     <div class="container-fluid">
                         <ol class="breadcrumb">
                             <li class="breadcrumb-item">
-                            <a href="./">Accueil</a>
+                                <a href="./">Accueil</a>
                             </li>
-                            <li class="breadcrumb-item active">Alertes</li>
+                            <li class="breadcrumb-item active">
+                                <a href="profil.php">Profil</a>
+                            </li>
                         </ol>
                         <?php
                             profilUtilisateur();
