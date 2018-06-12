@@ -41,7 +41,6 @@
                             </table>
                         </div>
                     </div>
-                <div class="card-footer small text-muted">Mis à jour le <span id="date"></span></div>
             </div>
             <?php 
               require_once 'includes/footer.php';

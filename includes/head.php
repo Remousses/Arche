@@ -33,4 +33,5 @@
     require_once 'includes/fonctions/gestions/fonction_gestions_alertes.php';
     require_once 'includes/fonctions/gestions/fonction_gestions_candidatures.php';
     require_once 'includes/fonctions/gestions/fonction_gestions_projets.php';
+    require_once 'includes/fonctions/gestions/fonction_gestions_taximonie.php';
 ?>

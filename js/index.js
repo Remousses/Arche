@@ -25,6 +25,7 @@ $(document).ready(function(){
         $('#nouvelleActivite').attr('disabled', 'true');
     });
 
+    // active 
     $('#choixTache2').click(function(){
         $('#nouvelleActiviteDiv').removeClass("d-none");
         $('#selectActiviteDiv').addClass("d-none");
@@ -33,48 +34,21 @@ $(document).ready(function(){
         $('#nouvelleActivite').attr('required', 'true');
     });
 
-    // $('#nouvelleActivite').click(function(event){
-    //     event.preventDefault();
-    //     console.log('nouvelleActivite on click');
-    //     $('#selectActivite').attr('disabled', true);
-    //     $(this).attr('enabled', true);
-    //     $(this).prev("input[disabled]").prop("disabled", 'false').focus();
-    // });
-
-    // $('#selectActivite').click(function(event){
-    //     event.preventDefault();
-    //     console.log('selectActivite on click');
-    //     $('#nouvelleActivite').attr('disabled', true);
-    //     $(this).attr('enabled', true);
-    // });
-
     $(window).on('hashchange', function(){
         getAncre();
     });
 
-    // on récupère l'ancre dans l'URL
+    // récupère l'ancre dans l'URL
     var pageCourante = $(location).attr('href');
     var pages = ['candidatures.php', 'salaries.php'];
 
     for (var i = 0; i < pages.length; i++) {
         if (pageCourante.includes(pages[i])) {
             getAncre();
-            // $('#approuver').on('click',function(){
-            //     document.location.href = pages[i] + "#" + $(".dataTables_filter input").val();
-            //     console.log(pages[i] + "#" + $(".dataTables_filter input").val());
-            // });
             break;
         }
     }
 
-    // $('#datePicker') .datepicker({
-    //     format: 'mm/dd/yyyy'
-    // })
-    // .on('changeDate', function(e) {
-    //     // Revalidate the date field
-    //     $('#eventForm').formValidation('revalidateField', 'date');
-    // });
-    
     var options = {
       format: 'dd/mm/yyyy',
       autoclose: true,
@@ -109,25 +83,3 @@ function candidater(idAlerte, idEspece){
 function ajouterTache(idProjet){
     $('#idProjet').val(idProjet);
 }
-
-// function miseAJour() {
-//     var currentTime = new Date();
-//     var jour = currentTime.getDate();
-//     var mois = currentTime.getMonth() + 1;
-//     var annee = currentTime.getFullYear();
-//     var heuFres = currentTime.getHours();
-//     var minutes = currentTime.getMinutes();
-
-//     if(minutes >= 0 && minutes <= 9){
-//         minutes = "0" + minutes;
-//     }
-
-//     $("#date").append(jour + "/" + mois + "/" + annee + " à " + heures + ":" + minutes);
-// }
-
-// function tailleInput(id){
-//     var id = id.getAttribute("id");
-//     var textLength = document.getElementById(id).value.length;
-//     var tailleMax = document.getElementById(id).getAttribute("maxlength");
-//     document.getElementById("tailleMax").innerHTML = textLength + "/" + tailleMax;
-// }
