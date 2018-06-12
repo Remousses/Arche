@@ -6,7 +6,7 @@
                 <form id="form" action="includes/fonctions/fonction_creation.php" method="post">
                     <div class="form-group">
                         <label for="nomAlerte">Nom de l'alerte</label>
-                        <input class="form-control" type="text" name="nomAlerte" maxlength="30" value="<?php echo isset($_GET['nomAlerte']) ? $_GET['nomAlerte'] : ''; ?>" placeholder="Entrer un nom d'alerte" required/>
+                        <input class="form-control" type="text" name="nomAlerte" maxlength="100" value="<?php echo isset($_GET['nomAlerte']) ? $_GET['nomAlerte'] : ''; ?>" placeholder="Entrer un nom d'alerte" required/>
                     </div>
                     <div class="form-group">
                         <label for="informationsAlerte">Informations sur l'alerte</label>
@@ -68,41 +68,41 @@
                                             <div class="col-6">
                                                 <div class="form-group">
                                                     <label for="regne">Règne</label>
-                                                    <input class="form-control" type="text" name="regne" maxlength="30" value="<?php echo isset($_GET['regne']) ? $_GET['regne'] : ''; ?>" placeholder="Entrer un nom de règne" required/>
+                                                    <input class="form-control" type="text" name="regne" maxlength="50" value="<?php echo isset($_GET['regne']) ? $_GET['regne'] : ''; ?>" placeholder="Entrer un nom de règne" required/>
                                                     <!--<select class="form-control" name="regne">
                                                         <?php //selectEspece('regne'); ?>
                                                     </select>-->
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="embranchement">Embranchement</label>
-                                                    <input class="form-control" type="text" name="embranchement" maxlength="30" value="<?php echo isset($_GET['embranchement']) ? $_GET['embranchement'] : ''; ?>" placeholder="Entrer un nom d'embranchement" required/>
+                                                    <input class="form-control" type="text" name="embranchement" maxlength="50" value="<?php echo isset($_GET['embranchement']) ? $_GET['embranchement'] : ''; ?>" placeholder="Entrer un nom d'embranchement" required/>
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="classe">Classe</label>
-                                                    <input class="form-control" type="text" name="classe" maxlength="30" value="<?php echo isset($_GET['classe']) ? $_GET['classe'] : ''; ?>" placeholder="Entrer un nom de classe" required/>
+                                                    <input class="form-control" type="text" name="classe" maxlength="50" value="<?php echo isset($_GET['classe']) ? $_GET['classe'] : ''; ?>" placeholder="Entrer un nom de classe" required/>
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="ordre">Ordre</label>
-                                                    <input class="form-control" type="text" name="ordre" maxlength="30" value="<?php echo isset($_GET['ordre']) ? $_GET['ordre'] : ''; ?>" placeholder="Entrer un nom d'ordre" required/>
+                                                    <input class="form-control" type="text" name="ordre" maxlength="50" value="<?php echo isset($_GET['ordre']) ? $_GET['ordre'] : ''; ?>" placeholder="Entrer un nom d'ordre" required/>
                                                 </div>
                                             </div>
 
                                             <div class="col-6">
                                                 <div class="form-group">
                                                     <label for="famille">Famille</label>
-                                                    <input class="form-control" type="text" name="famille" maxlength="30" value="<?php echo isset($_GET['famille']) ? $_GET['famille'] : ''; ?>" placeholder="Entrer un nom de famille" required/>
+                                                    <input class="form-control" type="text" name="famille" maxlength="50" value="<?php echo isset($_GET['famille']) ? $_GET['famille'] : ''; ?>" placeholder="Entrer un nom de famille" required/>
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="genre">Genre</label>
-                                                    <input class="form-control" type="text" name="genre" maxlength="30" value="<?php echo isset($_GET['genre']) ? $_GET['genre'] : ''; ?>" placeholder="Entrer un nom de genre" required/>
+                                                    <input class="form-control" type="text" name="genre" maxlength="50" value="<?php echo isset($_GET['genre']) ? $_GET['genre'] : ''; ?>" placeholder="Entrer un nom de genre" required/>
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="espece">Espèce</label>
-                                                    <input class="form-control" type="text" name="espece" maxlength="30" value="<?php echo isset($_GET['espece']) ? $_GET['espece'] : ''; ?>" placeholder="Entrer un nom d'espece" required/>
+                                                    <input class="form-control" type="text" name="espece" maxlength="50" value="<?php echo isset($_GET['espece']) ? $_GET['espece'] : ''; ?>" placeholder="Entrer un nom d'espece" required/>
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="espece">Photo</label>
-                                                    <input class="form-control" type="file" name="photo" maxlength="30" value="<?php echo isset($_GET['photo']) ? $_GET['photo'] : ''; ?>" required/>
+                                                    <input class="form-control" type="file" name="photo" maxlength="50" value="<?php echo isset($_GET['photo']) ? $_GET['photo'] : ''; ?>" required/>
                                                 </div>                                        
                                             </div>
                                         </div>

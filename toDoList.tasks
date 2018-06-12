@@ -6,3 +6,5 @@
 ☐ Taxonomie pas static
 ☐ livre de sauvetage
 ☐ problème archiver projets
+☐ changer longueur Nom_projet dans la table projet et Nom_alerte de la table alerte à 100
+☐ changer la longueur des noms de la taximonie dans la bdd à 50

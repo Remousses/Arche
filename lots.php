@@ -16,14 +16,13 @@
         ?>
   <div class="content-wrapper">
     <div class="container-fluid">
-      <!-- Breadcrumbs-->
       <ol class="breadcrumb">
         <li class="breadcrumb-item">
           <a href="#">Accueil</a>
         </li>
         <li class="breadcrumb-item active">Salariés</li>
       </ol>
-      <!-- Example DataTables Card-->
+      
       <div class="card mb-3">
         <div class="card-header">
           <i class="fa fa-table"></i> Liste des salariés</div>

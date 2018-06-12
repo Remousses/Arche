@@ -95,7 +95,7 @@
                 break;
             
             case 'existeProjet':
-                messageBox($warning, 'Il se peut que le nom du projet existe déjà ou bien que cette tâche lui soit déjà affectée.');
+                messageBox($warning, 'Ce nom de projet existe déjà pour cette alerte.');
                 break;
 
             case 'erreurDateProjet':

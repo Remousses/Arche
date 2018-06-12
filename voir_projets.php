@@ -34,7 +34,6 @@
 					</ol>
 					
 					<?php
-						// Participation à un projet
 						if(isset($_SESSION['Id_groupe'])){
 							if($_SESSION['Id_groupe'] == getIdGroupeComite()){
 								creerProjet();

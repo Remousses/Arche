@@ -16,14 +16,13 @@
         ?>
   <div class="content-wrapper">
     <div class="container-fluid">
-      <!-- Breadcrumbs-->
       <ol class="breadcrumb">
         <li class="breadcrumb-item">
           <a href="#">Accueil</a>
         </li>
         <li class="breadcrumb-item active">Livre de sauvetage</li>
       </ol>
-  <div class="card mb-3">
+        <div class="card mb-3">
               <a href="#">
                 <div class="center"><img src="images/especes/Partula Clara.jpg" /></div><br>
               </a>
