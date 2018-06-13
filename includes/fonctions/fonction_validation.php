@@ -33,21 +33,26 @@
                     $approuver->closeCursor();
                     header('Location: ../../candidatures.php?message=erreurApprouverCandidature');
                 }
-            }else if(!empty($_GET['archiverAlerte']) && intval($_GET['archiverAlerte']) > 0){                
+            }else if(!empty($_GET['archiverAlerte']) && intval($_GET['archiverAlerte']) > 0){
                 $archiverAlerte = $connexion->prepare('UPDATE alerte SET Statut = 2 WHERE Id_alerte = ' . $_GET['archiverAlerte']);
-                $archiverProjet = $connexion->prepare('UPDATE projet SET Statut = 2 WHERE Id_alerte = ' . $_GET['archiverAlerte']);
-                
-                if($archiverAlerte->execute() && $archiverAlerte->rowCount() > 0 && $archiverProjet->execute() && $archiverProjet->rowCount() > 0){
+                $rechercheProjet = $connexion->prepare('SELECT Nom_projet FROM projet WHERE Id_alerte = ' . $_GET['archiverAlerte']);
+
+                if($rechercheProjet->execute() && $rechercheProjet->rowCount() > 0){
+                    $archiverProjet = $connexion->prepare('UPDATE projet SET Statut = 2 WHERE Id_alerte = ' . $_GET['archiverAlerte']);
+                    $archiverProjet->execute();
                     $archiverProjet->closeCursor();
+                }
+                $rechercheProjet->closeCursor();
+                
+                if($archiverAlerte->execute() && $archiverAlerte->rowCount() > 0){
                     $archiverAlerte->closeCursor();
                     header('Location: ../../all_alertes.php?message=succesArchiverAlerte');
                 }else{
-                    $archiverProjet->closeCursor();
                     $archiverAlerte->closeCursor();
                     header('Location: ../../all_alertes.php?message=erreurArchiverAlerte');
                 }
             }else if(!empty($_GET['archiverProjet']) && intval($_GET['archiverProjet']) > 0){                
-                $archiverProjet = $connexion->prepare('UPDATE projet SET Statut = 2 WHERE Id_alerte = ' . $_GET['archiverAlerte']);
+                $archiverProjet = $connexion->prepare('UPDATE projet SET Statut = 2 WHERE Id_projet = ' . $_GET['archiverProjet']);
                 
                 if($archiverProjet->execute() && $archiverProjet->rowCount() > 0){
                     $archiverProjet->closeCursor();

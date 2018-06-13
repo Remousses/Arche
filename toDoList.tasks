@@ -1,13 +1,15 @@
 ✔ archiver alerte quand répartition @done (2018-6-3 17:32:41)
 ✔ quand le comité valide une candidature, suppression des autres candidatures de cette personne @done (2018-6-3 17:32:38)
 ✔ Problème d’apostrophe avec url -> ok @done (2018-6-3 17:32:02)
-☐ archiver alerte égale archiver projet
-☐ Candidater alerte, changer de dossier + faire un pop ouvert quand erreur
-☐ Taxonomie pas static
+✔ message d'erreur archiver alertes alors que ça n'a pas l'air @done (2018-6-13 23:01:18)
+✔ archiver alerte égale archiver projet @done (2018-6-13 23:01:37)
+☐ mauvaise redirection archiver projets
+☐ pas possible de mettre deux même nm de projet quand un est archiver
+☐ candidater alerte, changer de dossier + faire un pop ouvert quand erreur
+☐ taxonomie pas static
 ☐ livre de sauvetage
-☐ problème archiver projets
-☐ message d'erreur archiver alertes alors que ça n'a pas l'air
 ☐ "faire un don" visible que pour parrain financier
+☐ profil faire affichage comme projet
 
 
 

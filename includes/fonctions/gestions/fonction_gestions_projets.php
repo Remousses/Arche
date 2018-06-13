@@ -55,7 +55,7 @@
 
     function getAllProjetParAlerte(){
         $tabProjet = array();
-        $projetParAlerte = DBconnexion()->prepare('SELECT Id_projet, Nom_projet, Date_debut, Date_fin, alerte.Id_alerte FROM alerte, projet WHERE alerte.Id_alerte = ' . $_GET['idAlerte'] . ' AND alerte.Id_alerte = projet.Id_alerte ORDER BY Date_debut DESC');
+        $projetParAlerte = DBconnexion()->prepare('SELECT Id_projet, Nom_projet, Date_debut, Date_fin, alerte.Id_alerte FROM alerte, projet WHERE alerte.Id_alerte = ' . $_GET['idAlerte'] . ' AND projet.Statut = 1 AND alerte.Id_alerte = projet.Id_alerte ORDER BY Date_debut DESC');
         
         if($projetParAlerte->execute() && $projetParAlerte->rowCount() > 0){
             while ($donnees = $projetParAlerte->fetch()) {

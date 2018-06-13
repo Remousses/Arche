@@ -168,7 +168,7 @@
             echo '<h6 class="card-title mb-1">' . $nomProjet . '</h6>
                         ' . $texteTache . '
                     </div>';
-
+                    
             if($_SESSION['Id_groupe'] == getIdGroupeComite()){               
 
                 echo '<hr class="my-0">
