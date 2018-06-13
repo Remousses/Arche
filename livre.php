@@ -18,13 +18,38 @@
     <div class="container-fluid">
       <ol class="breadcrumb">
         <li class="breadcrumb-item">
-          <a href="#">Accueil</a>
+          <a href="./">Accueil</a>
         </li>
         <li class="breadcrumb-item active">Livre de sauvetage</li>
       </ol>
+      <div class="card card-login mx-auto mt-5 mb-5">
+        <div class="card-header">Ajouter un livre</div>
+        <div class="card-body">
+          <form>
+            <div class="form-group">
+              <label for="titre">Titre du livre</label>
+              <input class="form-control" type="text" name="titre" placeholder="Entrer le titre" required/>
+            </div>
+
+            <div class="form-group">
+              <label for="narration">Narration</label>
+              <textarea class="form-control" type="text" name="narration" cols="30" rows="6" maxlength="1000" placeholder="Entrer votre témoignage" required><?php echo isset($_GET['informationsAlerte']) ? $_GET['informationsAlerte'] : ''; ?></textarea>
+            </div>
+
+            <div class="form-group">
+              <label for="exampleInputImage">Image</label>
+              <input class="form-control" type="file" name="exampleInputInformation" required/>
+            </div>
+            <button class="btn btn-primary btn-block" type="submit" name="enregistrerLivre">Enregistrer</button>
+          </form>
+        </div>
+      </div>
+
         <div class="card mb-3">
               <a href="#">
-                <div class="center"><img src="images/especes/Partula Clara.jpg" /></div><br>
+                <div class="text-center p-4">
+                  <img class="image_livre" src="images/especes/Partula Clara.jpg" />
+                </div>
               </a>
               <div class="card-body">
                 <h6 class="card-title mb-1"><a href="#">Les escargots victimes de la lutte biologique</a></h6>
@@ -44,25 +69,6 @@ Incenderat autem audaces usque ad insaniam homines ad haec, quae nefariis egere 
                 </div>
               <div class="card-footer small text-muted">Postée le 3/01/2018</div>
             </div>
-            <div class="card-header">Ajouter un livre</div>
-      <div class="card-body">
-        <form>
-          <div class="form-group">
-            <div class="form-row">
-              <div class="col-md-6">
-                <label for="exampleInputName">Nom du livre</label>
-                <input class="form-control" id="exampleInputName" type="text" aria-describedby="nameHelp" placeholder="Entrer informations">
-              </div>
-		 <div class="col-md-6">
-                <label for="exampleInputImage">Image</label>
-                <input class="form-control" id="exampleInputInformation" type="file" aria-describedby="nameHelp">
-              </div>
-
-            </div>
-          </div>
-          <a class="btn btn-primary btn-block" href="login.html">Enregistrer</a>
-        </form>
-      </div>
       </div>
 			<?php 
 				require_once 'includes/footer.php';

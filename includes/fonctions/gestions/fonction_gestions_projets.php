@@ -54,12 +54,12 @@
     }
 
     function getAllProjetParAlerte(){
-        $nbProjet = array();
-        $projetParAlerte = DBconnexion()->prepare('SELECT projet.Id_projet AS IdProjet, Nom_projet, projet.Date_debut AS DateDebutProjet, projet.Date_fin AS DateFinProjet, alerte.Id_alerte AS IdAlerte, Activite, Realisation, tache.Date_debut AS DateDebutTache, tache.Date_fin AS DateFinTache FROM alerte, projet, tache WHERE alerte.Id_alerte = ' . $_GET['idAlerte'] . ' AND alerte.Id_alerte = projet.Id_alerte AND projet.Id_projet = tache.Id_projet ORDER BY projet.Id_projet, DateDebutProjet, DateDebutTache');
+        $tabProjet = array();
+        $projetParAlerte = DBconnexion()->prepare('SELECT Id_projet, Nom_projet, Date_debut, Date_fin, alerte.Id_alerte FROM alerte, projet WHERE alerte.Id_alerte = ' . $_GET['idAlerte'] . ' AND alerte.Id_alerte = projet.Id_alerte ORDER BY Date_debut DESC');
         
         if($projetParAlerte->execute() && $projetParAlerte->rowCount() > 0){
             while ($donnees = $projetParAlerte->fetch()) {
-                $nbProjet = voirProjets($nbProjet, $donnees['IdProjet'], $donnees['IdAlerte'], $donnees['Nom_projet'], $donnees['DateDebutProjet'], $donnees['DateFinProjet'], $donnees['Activite'], $donnees['Realisation'], $donnees['DateDebutTache'], $donnees['DateFinTache']);
+                $tabProjet = voirProjets($tabProjet, $donnees['Id_projet'], $donnees['Id_alerte'], $donnees['Nom_projet'], $donnees['Date_debut'], $donnees['Date_fin']);
             }
 
             $projetParAlerte->closeCursor();
@@ -70,5 +70,28 @@
                     document.location.replace("all_alertes.php?message=erreurProjet_' . $_GET['idAlerte'] . '#alerte' . $_GET['idAlerte'] . '");
             </script>';
         }
+    }
+
+    function getAllTacheParProjet($idProjet){
+        $tacheParProjet = DBconnexion()->prepare('SELECT Activite, Realisation, tache.Date_debut, tache.Date_fin FROM projet, tache WHERE Id_alerte = ' . $_GET['idAlerte'] . ' AND projet.Id_projet = ' . $idProjet . ' AND projet.Id_projet = tache.Id_projet ORDER BY tache.Date_debut DESC');
+        $texteTache = '';
+
+        if($tacheParProjet->execute() && $tacheParProjet->rowCount() > 0){
+            while ($donnees = $tacheParProjet->fetch()) {
+                $texteTache .= '<p class="card-text small">Tâche : ' . $donnees['Activite'] . '
+                <br>Avancement : ' . $donnees['Realisation'] . '
+                <br>Délais : Du ' . dateFr($donnees['Date_debut']) . ' au ' . dateFr($donnees['Date_fin']) . '</p>';
+            }
+
+            $tacheParProjet->closeCursor();
+            
+        }else if($_SESSION['Id_groupe'] != getIdGroupeComite()){
+            $tacheParProjet->closeCursor();
+            echo '<script language="Javascript">
+                    document.location.replace("all_alertes.php?message=erreurProjet_' . $_GET['idAlerte'] . '#alerte' . $_GET['idAlerte'] . '");
+            </script>';
+        }
+
+        return $texteTache;
     }
 ?>

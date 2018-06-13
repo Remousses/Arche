@@ -506,3 +506,7 @@ img.image_accueil{
     column-count: 2;
   }
 }
+
+td:hover {
+  background-color: #e9ecef;
+}

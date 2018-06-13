@@ -1,6 +1,6 @@
 <?php
     function creerAlerte(){
-?>      <div class="card card-login mx-auto mt-5">
+?>      <div class="card card-login mx-auto mt-5 mb-5">
             <div class="card-header">Création d'une alerte</div>
             <div class="card-body">
                 <form id="form" action="includes/fonctions/fonction_creation.php" method="post">
@@ -10,7 +10,7 @@
                     </div>
                     <div class="form-group">
                         <label for="informationsAlerte">Informations sur l'alerte</label>
-                        <textarea class="form-control" type="text" name="informationsAlerte" cols="30" rows ="6" maxlength="1000" placeholder="Entrer des informations" required><?php echo isset($_GET['informationsAlerte']) ? $_GET['informationsAlerte'] : ''; ?></textarea>
+                        <textarea class="form-control" type="text" name="informationsAlerte" cols="30" rows="6" maxlength="1000" placeholder="Entrer des informations" required><?php echo isset($_GET['informationsAlerte']) ? $_GET['informationsAlerte'] : ''; ?></textarea>
                     </div>
                     <div class="form-group">
                         <label for="nomEspece">Nom de l'espèce concernée</label>

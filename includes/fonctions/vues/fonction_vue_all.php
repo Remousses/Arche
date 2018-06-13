@@ -157,18 +157,16 @@
 <?php
     }
 
-    function voirProjets($nbProjet, $idProjet, $idAlerte, $nomProjet, $dateDebutProjet, $dateFinProjet, $activite, $realisation, $dateDebutTache, $dateFinTache){
-        $texte = '<p class="card-text small">Tâche : ' . $activite . '
-        <br>Avancement : ' . $realisation . '
-        <br>Délais : Du ' . dateFr($dateDebutTache) . ' au ' . dateFr($dateFinTache) . '</p>';
+    function voirProjets($tabProjet, $idProjet, $idAlerte, $nomProjet, $dateDebutProjet, $dateFinProjet){
+        $texteTache = getAllTacheParProjet($idProjet);
         
         echo '<div class="card mb-3">
                     <div class="card-body"> ';
 
-        if(!in_array($idProjet, $nbProjet)){
-            array_push($nbProjet, $idProjet);
+        if(!in_array($idProjet, $tabProjet)){
+            array_push($tabProjet, $idProjet);
             echo '<h6 class="card-title mb-1">' . $nomProjet . '</h6>
-                        ' . $texte . '
+                        ' . $texteTache . '
                     </div>';
 
             if($_SESSION['Id_groupe'] == getIdGroupeComite()){               
@@ -195,6 +193,6 @@
         echo '</div>
         </div>';
 
-        return $nbProjet;
+        return $tabProjet;
     }
 ?>

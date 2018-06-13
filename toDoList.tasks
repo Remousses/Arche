@@ -6,5 +6,13 @@
 ☐ Taxonomie pas static
 ☐ livre de sauvetage
 ☐ problème archiver projets
-☐ changer longueur Nom_projet dans la table projet et Nom_alerte de la table alerte à 100
-☐ changer la longueur des noms de la taximonie dans la bdd à 50
+☐ message d'erreur archiver alertes alors que ça n'a pas l'air
+☐ "faire un don" visible que pour parrain financier
+
+
+
+
+BDD :
+☐ changer longueur Nom_projet dans la table projet et Nom_alerte alerte à 100
+☐ changer longueur Narration et Titre dans la table livre_sauvetage à 1000 pour le premier et 100 pour le second
+☐ changer la longueur des noms de la taximonie à 50
