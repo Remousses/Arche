@@ -26,7 +26,7 @@
             // On ne récupère que les NB_VALUES premières valeurs du tableau précédent
             $tabCandidat = array_slice($tab, 0, NB_VALUES);
             
-            $projets = $connexion->prepare('SELECT Id_projet FROM projet WHERE Id_alerte = ' . $idAlerte);
+            $projets = $connexion->prepare('SELECT Id_projet FROM projet WHERE Id_alerte = ' . $idAlerte . ' AND Statut = 1');
             
             if($projets->execute() && $projets->rowCount() > 0){
                 $tabProjet = array();
@@ -68,7 +68,7 @@
                 if($projet->execute() && $projet->rowCount() > 0 && $majCandidature->execute() && $majCandidature->rowCount() > 0){
                     $majCandidature->closeCursor();
                     $projet->closeCursor();
-                    header('Location: ../../all_alertes.php?archiverAlerte=true&message=succesRepartition_' . $idAlerte . '#alerte' . $idAlerte);
+                    header('Location: ../../all_alertes.php?archiverAlerte=' . $idAlerte . '&message=succesRepartition');
                 }else{
                     $majCandidature->closeCursor();
                     $projet->closeCursor();

@@ -27,6 +27,7 @@
     require_once 'includes/fonctions/fonction_suppression.php';
     require_once 'includes/fonctions/upload.inc.php';
     require_once 'includes/fonctions/vues/fonction_vue_all.php';
+    require_once 'includes/fonctions/vues/fonction_vue_visiteur.php';
     require_once 'includes/fonctions/vues/admin/fonction_vue_admin_comite.php';
     require_once 'includes/fonctions/vues/admin/fonction_vue_admin_narrateur.php';
     require_once 'includes/fonctions/vues/admin/fonction_vue_admin_sentinelle.php';

@@ -114,6 +114,18 @@
                 messageBox($warning, 'Vous n\'avez aucun projet en cours.');
                 break;
 
+            case 'succesRepartition':
+                messageBox('success', 'La répartition a été effectuée. L\'alerte et tous ses éléments ont été supprimées');
+                break;
+
+            case 'erreurVerificationIdGroupe':
+                messageBox($danger, 'Echec lors de la vérification de votre groupe.');
+                break;
+                
+            case 'erreurVerificationUrlProjet':
+                messageBox($danger, 'Cette alerte n\'existe pas ou elle a été supprimée.');
+                break;
+                
             default:
                 break;
         }
@@ -158,16 +170,11 @@
     function pagePrecedente(){
         define('pageprecedente', $_SERVER["HTTP_REFERER"], true);
 	
-        /*if(pageprecedente == "gestions_produits.php" || pageprecedente == "gestions_boutiques.php"){
-            header('Location: index.php');
-        }else{*/
-            if(strpos(pageprecedente, '?')){
-                header('Location: ' . pageprecedente . '&message=succesDeconnexion');
-            }else{
-                header('Location: ' . pageprecedente . '?message=succesDeconnexion');
-            }
-            
-        //}
+        if(strpos(pageprecedente, '?')){
+            header('Location: ' . pageprecedente . '&message=succesDeconnexion');
+        }else{
+            header('Location: ' . pageprecedente . '?message=succesDeconnexion');
+        }
     }
 
     function verificationIdGroupe($page){
@@ -184,6 +191,18 @@
                 $verificationIdGroupe->closeCursor();
                 echo '<script>document.location.href="' . $page . '?message=erreurVerificationIdGroupe";</script>';
             }
+        }
+    }
+
+    function verificationUrlProjet($idAlerte, $idEspece){
+        $verificationUrlProjet = DBconnexion()->prepare('SELECT Id_alerte AS nbAlerte FROM alerte, espece WHERE Id_alerte = ' . $idAlerte . ' AND espece.Id_espece = ' . $idEspece . ' AND StatuT BETWEEN 0 AND 1');
+        $verificationUrlProjet->execute();
+
+        if($verificationUrlProjet->rowCount() > 0){
+            $verificationUrlProjet->closeCursor();
+        }else{
+            $verificationUrlProjet->closeCursor();
+            echo '<script>document.location.href="all_alertes.php?message=erreurVerificationUrlProjet";</script>';
         }
     }
 

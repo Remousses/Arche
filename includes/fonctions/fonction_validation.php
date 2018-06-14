@@ -1,6 +1,7 @@
 <?php
     session_start();
     require_once 'connexionDB.php';
+    require_once 'fonction_diverses.php';
     require_once '../../param/infos_id_groupe.php';
     
     if(strpos($_SERVER['PHP_SELF'], 'fonction_validation.php') !== false && isset($_SESSION['Id_groupe'])){
@@ -42,6 +43,7 @@
                     $archiverProjet->execute();
                     $archiverProjet->closeCursor();
                 }
+
                 $rechercheProjet->closeCursor();
                 
                 if($archiverAlerte->execute() && $archiverAlerte->rowCount() > 0){
@@ -53,13 +55,14 @@
                 }
             }else if(!empty($_GET['archiverProjet']) && intval($_GET['archiverProjet']) > 0){                
                 $archiverProjet = $connexion->prepare('UPDATE projet SET Statut = 2 WHERE Id_projet = ' . $_GET['archiverProjet']);
-                
+                $parametreUrl = parametreUrl();
+                var_dump($parametreUrl);
                 if($archiverProjet->execute() && $archiverProjet->rowCount() > 0){
                     $archiverProjet->closeCursor();
-                    header('Location: ../../all_alertes.php?message=succesArchiverProjet');
+                    header('Location: ../../voir_projets.php?nomAlerte=' . $parametreUrl[0] . '&idAlerte=' . $parametreUrl[1] . '&idEspece=' . $parametreUrl[2] . '&message=succesArchiverProjet');
                 }else{
                     $archiverProjet->closeCursor();
-                    header('Location: ../../all_alertes.php?message=erreurArchiverProjet');
+                    header('Location: ../../voir_projets.php?nomAlerte=' . $parametreUrl[0] . '&idAlerte=' . $parametreUrl[1] . '&idEspece=' . $parametreUrl[2] . '&message=erreurArchiverProjet');
                 }
             }else if(isset($_GET['archiverCandidature']) && !empty($_GET['idAlerte']) && intval($_GET['idAlerte']) > 0 && !empty($_GET['idUtilisateur']) && intval($_GET['idUtilisateur']) > 0){                
                 $archiver = $connexion->prepare('UPDATE candidater_alerte SET Statut = 2 WHERE Id_alerte = ' . $_GET['idAlerte'] .' AND Id_utilisateur = ' . $_GET['idUtilisateur']);

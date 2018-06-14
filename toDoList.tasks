@@ -1,16 +1,22 @@
-✔ archiver alerte quand répartition @done (2018-6-3 17:32:41)
-✔ quand le comité valide une candidature, suppression des autres candidatures de cette personne @done (2018-6-3 17:32:38)
+✔ archiver alerte quand répartition @done (2018-6-3 17:32:41) @done (2018-6-14 20:00:55)
+✔ quand le comité valide une candidature, suppression des autres candidatures de cette personne @done (2018-6-3 17:32:38) @done (2018-6-14 20:01:27)
 ✔ Problème d’apostrophe avec url -> ok @done (2018-6-3 17:32:02)
 ✔ message d'erreur archiver alertes alors que ça n'a pas l'air @done (2018-6-13 23:01:18)
 ✔ archiver alerte égale archiver projet @done (2018-6-13 23:01:37)
-☐ mauvaise redirection archiver projets
-☐ pas possible de mettre deux même nm de projet quand un est archiver
-☐ candidater alerte, changer de dossier + faire un pop ouvert quand erreur
+✔ mauvaise redirection archiver projets : parametreUrl pour archiverProjet @done (2018-6-14 20:02:14)
+✔ pas possible de mettre deux même nom de projet quand un est archiver @done (2018-6-14 21:47:49)
+✔ candidater alerte, changer de dossier @done (2018-6-14 22:05:10)
 ☐ taxonomie pas static
 ☐ livre de sauvetage
-☐ "faire un don" visible que pour parrain financier
+✔ "faire un don" visible que pour parrain financier @done (2018-6-14 20:02:31)
 ☐ profil faire affichage comme projet
-
+☐ afficher projet effectué par l'utilisateur
+✔ fonction_supprimer accessible que pour comite @done (2018-6-14 20:03:17)
+☐ gérer mieux répartition, ça a l'air okay
+☐ quand archiver alerte et projet, Id_groupe 1 pour tous c'est utilisateur
+☐ page profil vérifier si alerte et ou projet fini quand il y a participé même si visiteur : pour historique quand répartition qu'il
+sois missionnaire ou narrateur il reprend Id_groupe à 1 
+✔ mettre max repartition à 1 pour la soutenance @done (2018-6-14 20:04:13)
 
 
 

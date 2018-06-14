@@ -7,6 +7,7 @@
 		<head>
 			<?php
 				require_once 'includes/head.php';
+				verificationUrlProjet($_GET['idAlerte'], $_GET['idEspece']);
 				verificationIdGroupe('voir_projets.php');
 			?>
 		</head>
@@ -18,11 +19,6 @@
 		
 			<div class="content-wrapper">
 				<div class="container-fluid">
-					<?php
-						if(isset($_GET['message'])){
-							message();
-						}
-					?>
 					<ol class="breadcrumb">
 						<li class="breadcrumb-item">
 							<a href="./">Accueil</a>
@@ -38,6 +34,10 @@
 							if($_SESSION['Id_groupe'] == getIdGroupeComite()){
 								creerProjet();
 								echo '<br>';
+							}
+
+							if(isset($_GET['message'])){
+								message();
 							}
 							
 							getAllProjetParAlerte();

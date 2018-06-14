@@ -23,7 +23,7 @@
                         }else if($donnees['Statut'] == 1){
                             $statut = 'Approuvée';
 
-                            $nbProjet = DBconnexion()->prepare('SELECT COUNT(Id_projet) AS nbProjet FROM projet WHERE Id_alerte = ' . $donnees['Id_alerte']);
+                            $nbProjet = DBconnexion()->prepare('SELECT COUNT(Id_projet) AS nbProjet FROM projet WHERE Id_alerte = ' . $donnees['Id_alerte'] . ' AND Statut = 1');
                             $nbParticipant = DBconnexion()->prepare('SELECT COUNT(Id_utilisateur) AS nbParticipant FROM candidater_alerte WHERE Role = "Participer physiquement" And Statut = 1 AND Id_alerte = ' . $donnees['Id_alerte']);
                             
                             if($nbParticipant->execute() && $nbProjet->execute()){
@@ -32,7 +32,7 @@
                                 
                                 if($donneesNbProjet['nbProjet'] > 0){
                                     $repartition = $donneesNbParticipant['nbParticipant'] / $donneesNbProjet['nbProjet'];
-
+                                    
                                     if($repartition >= 1){
                                         $texte .= '<a class="mr-3 d-inline-block" href="includes/fonctions/fonction_repartition.php?idAlerte=' . $donnees['Id_alerte'] . '&nbProjet=' . $donneesNbProjet['nbProjet'] . '&nbParticipant=' . $donneesNbParticipant['nbParticipant'] . '">Répartition des candidats</a>';
                                     }
