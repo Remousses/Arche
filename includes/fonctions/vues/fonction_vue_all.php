@@ -82,4 +82,76 @@
 
         return $tabProjet;
     }
+
+    if (isset($_REQUEST['functionTaxinomie']) && $_REQUEST['functionTaxinomie'] != ''){
+        $_REQUEST['functionTaxinomie']($_REQUEST);
+    }
+
+    function voirTaxinomie($data){
+        require_once '../../fonctions/connexionDB.php';
+        $idEspece = $data['param']['id'];
+        
+        $taxinomie = connexionDB()->prepare('SELECT Nom_regne, Nom_embranchement, Nom_classe, Nom_ordre, Nom_famille, Nom_genre, Id_espece, Nom_espece, Photo FROM espece
+        LEFT JOIN regne ON espece.Id_regne = regne.Id_regne
+        LEFT JOIN embranchement ON espece.Id_embranchement = embranchement.Id_embranchement
+        LEFT JOIN classe ON espece.Id_classe = classe.Id_classe
+        LEFT JOIN ordre ON espece.Id_ordre = ordre.Id_ordre
+        LEFT JOIN famille ON espece.Id_famille = famille.Id_famille
+        LEFT JOIN genre ON espece.Id_genre = genre.Id_genre
+        WHERE espece.Id_espece = ' . $idEspece);
+
+        $taxinomie->execute();
+        $donnees = $taxinomie->fetch();
+?>
+        <div class="modal-header">
+            <h5 class="modal-title" id="taxinomieLabel"><?php echo $donnees['Nom_espece']; ?></h5>
+            <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">×</span>
+            </button>
+        </div>
+        <div class="modal-body">
+            <div class="row">
+                <div class="col-12">
+                        <div class="text-center pb-3">
+                            <img class="image_popup_taxinomie" src="images/especes/<?php echo $donnees['Photo']; ?>" alt="<?php echo $donnees['Nom_espece']; ?>">
+                        </div>
+                    <div class="row">
+                        <div class="col-6">
+                            <div>
+                                Règne : <?php echo $donnees['Nom_regne']; ?>
+                            </div>
+                            <br>
+                            <div>
+                                Embranchement : <?php echo $donnees['Nom_embranchement']; ?>
+                            </div>
+                            <br>
+                            <div>
+                                Classe : <?php echo $donnees['Nom_classe']; ?>
+                            </div>
+                            <br>
+                            <div>
+                                Ordre : <?php echo $donnees['Nom_ordre']; ?>
+                            </div>
+                        </div>
+
+                         <div class="col-6">
+                            <div>
+                                Famille : <?php echo $donnees['Nom_famille']; ?>
+                            </div>
+                            <br>
+                            <div>
+                                Genre : <?php echo $donnees['Nom_genre']; ?>
+                            </div>
+                            <br>
+                            <div>
+                                Espece : <?php echo $donnees['Nom_espece']; ?>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>                         
+        </div>
+<?php
+        $taxinomie ->closeCursor();
+    }
 ?>

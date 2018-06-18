@@ -26,6 +26,9 @@
         </div>
     </div>
 </div>
+<?php
+    $GLOBALS['connexion'] = null;
+?>
 
 
 <script src="js/sb-admin.min.js"></script>

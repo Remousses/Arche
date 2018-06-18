@@ -4,7 +4,7 @@
         $nbAlerte = array();
         $nbProjet = array();
 
-        $profil = DBconnexion()->prepare('SELECT Id_projet, Nom_projet, Date_debut, Date_fin, alerte.Id_alerte, Nom_alerte, alerte.Statut FROM projet, alerte WHERE Id_utilisateur LIKE "%|' . $_SESSION['Id_utilisateur'] . '|%" AND projet.Id_alerte = alerte.Id_alerte ORDER BY alerte.Id_alerte, alerte.Statut, Date_debut');
+        $profil = $GLOBALS['connexion']->prepare('SELECT Id_projet, Nom_projet, Date_debut, Date_fin, alerte.Id_alerte, Nom_alerte, alerte.Statut FROM projet, alerte WHERE Id_utilisateur LIKE "%|' . $_SESSION['Id_utilisateur'] . '|%" AND projet.Id_alerte = alerte.Id_alerte ORDER BY alerte.Id_alerte, alerte.Statut, Date_debut');
         $profil->execute();
 
         if($profil->rowCount() > 0){
@@ -55,7 +55,7 @@
 
     function getAllProjetParAlerte(){
         $tabProjet = array();
-        $projetParAlerte = DBconnexion()->prepare('SELECT Id_projet, Nom_projet, Date_debut, Date_fin, alerte.Id_alerte FROM alerte, projet WHERE alerte.Id_alerte = ' . $_GET['idAlerte'] . ' AND projet.Statut = 1 AND alerte.Id_alerte = projet.Id_alerte ORDER BY Date_debut DESC');
+        $projetParAlerte = $GLOBALS['connexion']->prepare('SELECT Id_projet, Nom_projet, Date_debut, Date_fin, alerte.Id_alerte FROM alerte, projet WHERE alerte.Id_alerte = ' . $_GET['idAlerte'] . ' AND projet.Statut = 1 AND alerte.Id_alerte = projet.Id_alerte ORDER BY Date_debut DESC');
         
         if($projetParAlerte->execute() && $projetParAlerte->rowCount() > 0){
             while ($donnees = $projetParAlerte->fetch()) {
@@ -73,7 +73,7 @@
     }
 
     function getAllTacheParProjet($idProjet){
-        $tacheParProjet = DBconnexion()->prepare('SELECT Activite, Realisation, tache.Date_debut, tache.Date_fin FROM projet, tache WHERE Id_alerte = ' . $_GET['idAlerte'] . ' AND projet.Id_projet = ' . $idProjet . ' AND projet.Id_projet = tache.Id_projet ORDER BY tache.Date_debut DESC');
+        $tacheParProjet = $GLOBALS['connexion']->prepare('SELECT Activite, Realisation, tache.Date_debut, tache.Date_fin FROM projet, tache WHERE Id_alerte = ' . $_GET['idAlerte'] . ' AND projet.Id_projet = ' . $idProjet . ' AND projet.Id_projet = tache.Id_projet ORDER BY tache.Date_debut DESC');
         $texteTache = '';
 
         if($tacheParProjet->execute() && $tacheParProjet->rowCount() > 0){

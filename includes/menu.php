@@ -52,7 +52,7 @@
             if($_SESSION['Id_groupe'] == getIdGroupePersonnelPermanent() || $_SESSION['Id_groupe'] == getIdGroupeMissionnaire() || $_SESSION['Id_groupe'] == getIdGroupeComite()){
         ?>
         <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Sites de stockages">
-          <a class="nav-link nav-link" href="site_stockages.php" >
+          <a class="nav-link nav-link" href="sites_stockage.php" >
             <i class="fa fa-fw fa-sitemap"></i>
             <span class="nav-link-text">Sites de stockages</span>
           </a>
@@ -69,7 +69,7 @@
             if($_SESSION['Id_groupe'] == getIdGroupeAdministrateur() || $_SESSION['Id_groupe'] == getIdGroupeComite()){
         ?>
         <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Gestion des utilisateurs">
-          <a class="nav-link nav-link" href="gestion_utilisateurs.php">
+          <a class="nav-link nav-link" href="utilisateurs.php">
             <i class="fa fa-fw fa-wrench"></i>
             <span class="nav-link-text">Gestion des utilisateurs</span>
           </a>

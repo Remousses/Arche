@@ -17,22 +17,24 @@
         <li class="breadcrumb-item">
           <a href="#">Accueil</a>
         </li>
-        <li class="breadcrumb-item active">Salariés</li>
+        <li class="breadcrumb-item active">Utilisateurs</li>
       </ol>
       
       <div class="card mb-3">
         <div class="card-header">
-          <i class="fa fa-table"></i> Liste des salariés
+          <i class="fa fa-table"></i> Liste des utilisateurs
         </div>
+        
         <div class="card-body">
           <div class="table-responsive">
-            <table class="table table-bordered table-hover-cells" id="dataTableSalarie" width="100%" cellspacing="0">
+            <table class="table table-bordered table-hover-cells" id="dataTableUtilisateur" width="100%" cellspacing="0">
               <?php
-                getSalarie();
+                getUtilisateur();
               ?>
             </table>
           </div>
         </div>
+      </div>
     </div>
 			<?php 
 				require_once 'includes/footer.php';

@@ -22,12 +22,14 @@
         </li>
         <li class="breadcrumb-item active">Taxinomie du vivant</li>
       </ol>
+      
       <div class="card mb-3">
         <div class="card-header">
-          <i class="fa fa-table"></i> Liste des espèces et leurs Taxinomie</div>
+          <i class="fa fa-table"></i> Liste des espèces et leurs Taxinomie
+        </div>
         <div class="card-body">
           <div class="table-responsive">
-            <table class="table table-bordered table-hover-cells" id="dataTable" width="100%" cellspacing="0">
+            <table class="table table-bordered table-hover-cells" id="dataTableTaxinomie" width="100%" cellspacing="0">
               <?php
                 getTaxinomie();
               ?>

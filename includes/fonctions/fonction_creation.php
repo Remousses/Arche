@@ -2,6 +2,7 @@
     require_once 'connexionDB.php';
     require_once 'fonction_diverses.php';
     require_once 'upload.inc.php';
+    $connexion = connexionDB();
 
     if(isset($_POST['inscriptionUtilisateur'])){
         if(!empty($_POST['nomUtilisateurInscription']) && !empty($_POST['prenomUtilisateurInscription']) 
@@ -11,7 +12,7 @@
             $prenomUtilisateur = htmlspecialchars($_POST['prenomUtilisateurInscription'], ENT_QUOTES, "UTF-8");
             $mdpUtilisateur = htmlspecialchars($_POST['mdpUtilisateurInscription'], ENT_QUOTES, "UTF-8");
             
-            $inscription = DBconnexion()->prepare('INSERT INTO utilisateur (Nom_utilisateur, Prenom_utilisateur, Mdp_utilisateur, Id_groupe) 
+            $inscription = $connexion->prepare('INSERT INTO utilisateur (Nom_utilisateur, Prenom_utilisateur, Mdp_utilisateur, Id_groupe) 
             VALUES ("' . $nomUtilisateur . '", "' . $prenomUtilisateur . '", "' . $mdpUtilisateur . '", 1)');
             
             if($inscription->execute()){
@@ -33,7 +34,7 @@
             $informationsAlerte = htmlspecialchars($_POST['informationsAlerte'], ENT_QUOTES, "UTF-8");
             $nomEspece = htmlspecialchars($_POST['nomEspece'], ENT_QUOTES, "UTF-8");
             $date = date("Y-m-d");
-            $connexion = DBconnexion();
+            $connexion = connexionDB();
             $tabNomAlerte = array();
             
             $rechercheNomAlerte = $connexion->prepare('SELECT Nom_alerte FROM alerte WHERE Statut BETWEEN 0 AND 1 AND Nom_alerte = "' . $nomAlerte . '"');
@@ -66,11 +67,6 @@
         if(!empty($_POST['regne']) && !empty($_POST['embranchement']) && !empty($_POST['classe']) && !empty($_POST['ordre']) && !empty($_POST['famille']) && !empty($_POST['genre']) && !empty($_POST['espece']) && !empty($_FILES['photo'])){
             $listExt = array ('png', 'jpg', 'jpeg', 'gif');
             $photo = $_FILES['photo'];
-
-            if (!(upload($photo, '10000000', $listExt, '../../images/especes/'))){
-                echo '<h1>Erreur, vous n\'avez pas saisi tous les champs</h1>';
-            }
-            
             $regne = htmlspecialchars($_POST['regne'], ENT_QUOTES, "UTF-8"); // le htmlspecialchars() passera les guillemets en entités HTML, ce qui empêchera les injections SQL
             $embranchement = htmlspecialchars($_POST['embranchement'], ENT_QUOTES, "UTF-8");
             $classe = htmlspecialchars($_POST['classe'], ENT_QUOTES, "UTF-8");
@@ -78,10 +74,15 @@
             $famille = htmlspecialchars($_POST['famille'], ENT_QUOTES, "UTF-8");
             $genre = htmlspecialchars($_POST['genre'], ENT_QUOTES, "UTF-8");
             $espece = htmlspecialchars($_POST['espece'], ENT_QUOTES, "UTF-8");
-            $lienErreur = 'Location: ../../all_alertes.php?regne=' . urlencode($regne) . '&embranchement=' . urlencode($embranchement) . '&classe=' . urlencode($classe) . '&ordre=' . urlencode($ordre) . '&famille=' . urlencode($famille) . '&genre=' . urlencode($genre) . '&espece=' . urlencode($espece) . '&message=erreurEspece';
-            $connexion = DBconnexion();
 
-            $rechercheEspece = $connexion->prepare('SELECT Nom_espece FROM espece WHERE Nom_espece = "' . $espece . '"');
+            if (!(upload($photo, '10000000', $listExt, '../../images/especes/'))){
+                header('Location: ../../all_alertes.php?regne=' . urlencode($regne) . '&embranchement=' . urlencode($embranchement) . '&classe=' . urlencode($classe) . '&ordre=' . urlencode($ordre) . '&famille=' . urlencode($famille) . '&genre=' . urlencode($genre) . '&espece=' . urlencode($espece) . '&message=erreurPhotoEspece');
+            }
+
+            $lienErreur = 'Location: ../../all_alertes.php?regne=' . urlencode($regne) . '&embranchement=' . urlencode($embranchement) . '&classe=' . urlencode($classe) . '&ordre=' . urlencode($ordre) . '&famille=' . urlencode($famille) . '&genre=' . urlencode($genre) . '&espece=' . urlencode($espece) . '&message=erreurEspece';
+            $connexion = connexionDB();
+
+            $rechercheEspece = $connexion->prepare('SELECT Nom_espece FROM espece WHERE Nom_espece = "' . $espece . '" OR Photo = "' . $photo['name'] . '"');
 
             if($rechercheEspece->execute() && $rechercheEspece->rowCount() == 0){
                 $rechercheEspece->closeCursor();
@@ -169,7 +170,7 @@
             $activite = htmlspecialchars($_POST['activite'], ENT_QUOTES, "UTF-8");
             $idAlerte = htmlspecialchars($_POST['idAlerte'], ENT_QUOTES, "UTF-8");
             $idEspece = htmlspecialchars($_POST['idEspece'], ENT_QUOTES, "UTF-8");
-            $connexion = DBconnexion();
+            $connexion = connexionDB();
             $rechercherNomProjet = $connexion->prepare('SELECT Nom_projet FROM projet WHERE Nom_projet = "' . $nomProjet . '" AND Id_alerte = ' . $idAlerte . ' AND projet.Statut = 1');
             $parametreUrl = parametreUrl();
 
@@ -215,7 +216,7 @@
             $idAlerte = $_POST['idAlerte'];
             $idEspece = $_POST['idEspece'];
             $idProjet = $_POST['idProjet'];
-            $connexion = DBconnexion();
+            $connexion = connexionDB();
 
             $rechercherNomProjet = $connexion->prepare('SELECT Nom_projet FROM projet, tache WHERE tache.Id_projet = ' . $idProjet . ' AND Activite = "' . $activite . '" AND tache.Id_projet = projet.Id_projet');
             $parametreUrl = parametreUrl();
@@ -250,13 +251,13 @@
             $idAlerte = $_POST['idAlerteCandidater'];
             $idEspece = $_POST['idEspeceCandidater'];
             
-            $candidatureExiste = DBconnexion()->prepare('SELECT * FROM candidater_alerte, alerte WHERE Id_utilisateur = ' . $_SESSION['Id_utilisateur'] . ' AND candidater_alerte.Id_alerte = ' . $idAlerte . ' AND alerte.Id_alerte = candidater_alerte.Id_alerte');
+            $candidatureExiste = $connexion->prepare('SELECT * FROM candidater_alerte, alerte WHERE Id_utilisateur = ' . $_SESSION['Id_utilisateur'] . ' AND candidater_alerte.Id_alerte = ' . $idAlerte . ' AND alerte.Id_alerte = candidater_alerte.Id_alerte AND candidater_alerte.Statut BETWEEN 0 AND 1');
 
             if($candidatureExiste->execute()){
                 $candidatureExiste->closeCursor();
                 
                 if($candidatureExiste->rowCount() == 0){
-                    $candidaterAlerte = DBconnexion()->prepare('INSERT INTO candidater_alerte (Informations_candidater, Role, Statut, Date_candidater, Id_alerte, Id_espece, Id_utilisateur) 
+                    $candidaterAlerte = $connexion->prepare('INSERT INTO candidater_alerte (Informations_candidater, Role, Statut, Date_candidater, Id_alerte, Id_espece, Id_utilisateur) 
                     VALUE ("' . $informationsCandidater . '", "' . $roleCandidater . '", 0, "' . $date . '", ' . $idAlerte . ', ' . $idEspece . ', ' . $_SESSION['Id_utilisateur'] . ')');
                     
                     if($candidaterAlerte->execute()){

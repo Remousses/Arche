@@ -1,13 +1,4 @@
 <?php
-    function statuerAlerte($idAlerte){
-        echo'<a href="includes/fonctions/fonction_validation.php?approuverAlerte=' . $idAlerte . '">V</a>
-            <a href="includes/fonctions/fonction_validation.php?archiverAlerte=' . $idAlerte . '">X</a><br>';
-    }
-
-    function gestionParticipantProjet($nbParticipant){
-        echo'<a href="includes/fonctions/gestions/fonction_gestions_projets.php?nbParticipantProjet=' . $nbParticipant . '">V</a>';
-    }
-
     function nouvellesAlertes(){
 ?>
         <li class="nav-item dropdown">
@@ -88,7 +79,7 @@
         <!-- Modal ajouter tâche -->
         <div class="modal fade" id="ajouterTache" tabindex="-1" role="dialog" aria-labelledby="ajouterTacheLabel" aria-hidden="true">
             <div class="modal-dialog" role="document">
-                <div id="modal" class="modal-content">
+                <div id="modalAjouterTache" class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title" id="ajouterTacheLabel">Ajout d'une tâche</h5>
                         <button class="close" type="button" data-dismiss="modal" aria-label="Close">
@@ -164,7 +155,7 @@
     }
 
     function selectTache(){
-        $allActivite = DBConnexion()->prepare('SELECT DISTINCT Activite FROM tache ORDER BY Activite');
+        $allActivite = $GLOBALS['connexion']->prepare('SELECT DISTINCT Activite FROM tache ORDER BY Activite');
         $allActivite->execute();
 
         while($donnees = $allActivite->fetch()){

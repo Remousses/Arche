@@ -5,7 +5,7 @@
 <!DOCTYPE html>
 <html lang="fr">
 	<head>
-		<?php 
+		<?php
 			require_once 'includes/head.php';
 			verificationIdGroupe('index.php'); 
 		?>

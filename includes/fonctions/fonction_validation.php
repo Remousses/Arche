@@ -6,7 +6,7 @@
     
     if(strpos($_SERVER['PHP_SELF'], 'fonction_validation.php') !== false && isset($_SESSION['Id_groupe'])){
         if($_SESSION['Id_groupe'] == getIdGroupeComite()){
-            $connexion = DBconnexion();
+            $connexion = connexionDB();
             if(!empty($_GET['approuverAlerte']) && intval($_GET['approuverAlerte']) != 0){
                 $approuver = $connexion->prepare('UPDATE alerte SET Statut = 1 WHERE Id_alerte = ' . $_GET['approuverAlerte']);
                 
@@ -18,12 +18,12 @@
                     header('Location: ../../all_alertes.php?message=erreurApprouverAlerte');
                 }
             }else if(isset($_GET['approuverCandidature']) && !empty($_GET['idAlerte']) && intval($_GET['idAlerte']) > 0 && !empty($_GET['idUtilisateur']) && intval($_GET['idUtilisateur']) > 0){                
-                $approuver = $connexion->prepare('UPDATE candidater_alerte SET Statut = 1 WHERE Id_alerte = ' . $_GET['idAlerte'] .' AND Id_utilisateur = ' . $_GET['idUtilisateur']);
+                $approuver = $connexion->prepare('UPDATE candidater_alerte SET Statut = 1 WHERE Id_alerte = ' . $_GET['idAlerte'] .' AND Id_utilisateur = ' . $_GET['idUtilisateur'] . ' AND Statut BETWEEN 0 AND 1');
                 $missionnaire = $connexion->prepare('UPDATE utilisateur SET Id_groupe = ' . getIdGroupeMissionnaire() . ' WHERE Id_utilisateur = ' . $_GET['idUtilisateur']);
                 $archiverCandidatures = $connexion->prepare('UPDATE candidater_alerte SET Statut = 2 WHERE Id_alerte != ' . $_GET['idAlerte'] .' AND Id_utilisateur = ' . $_GET['idUtilisateur']);
-                    
+                
                 if($approuver->execute() && $approuver->rowCount() > 0 && $missionnaire->execute() && $missionnaire->rowCount() > 0 
-                    && $archiverCandidatures->execute() && $archiverCandidatures->rowCount() > 0){
+                    && $archiverCandidatures->execute() && $archiverCandidatures->rowCount() >= 0){
                     $archiverCandidatures->closeCursor();
                     $missionnaire->closeCursor();
                     $approuver->closeCursor();
@@ -35,9 +35,8 @@
                     header('Location: ../../candidatures.php?message=erreurApprouverCandidature');
                 }
             }else if(!empty($_GET['archiverAlerte']) && intval($_GET['archiverAlerte']) > 0){
-                $archiverAlerte = $connexion->prepare('UPDATE alerte SET Statut = 2 WHERE Id_alerte = ' . $_GET['archiverAlerte']);
                 $rechercheProjet = $connexion->prepare('SELECT Nom_projet FROM projet WHERE Id_alerte = ' . $_GET['archiverAlerte']);
-
+                
                 if($rechercheProjet->execute() && $rechercheProjet->rowCount() > 0){
                     $archiverProjet = $connexion->prepare('UPDATE projet SET Statut = 2 WHERE Id_alerte = ' . $_GET['archiverAlerte']);
                     $archiverProjet->execute();
@@ -45,9 +44,22 @@
                 }
 
                 $rechercheProjet->closeCursor();
-                
-                if($archiverAlerte->execute() && $archiverAlerte->rowCount() > 0){
+                $archiverAlerte = $connexion->prepare('UPDATE alerte SET Statut = 2 WHERE Id_alerte = ' . $_GET['archiverAlerte']);
+                $archiverCandidatures = $connexion->prepare('UPDATE candidater_alerte SET Statut = 2 WHERE Id_alerte = ' . $_GET['archiverAlerte']);
+
+                if($archiverAlerte->execute() && $archiverAlerte->rowCount() > 0 && $archiverCandidatures->execute() && $archiverCandidatures->rowCount() >= 0){
                     $archiverAlerte->closeCursor();
+
+                    $utilisateur = $connexion->prepare('SELECT Id_utilisateur FROM candidater_alerte WHERE Id_alerte = 1');
+                    $utilisateur->execute();
+                    
+					while ($donnees = $utilisateur->fetch()){
+						$retourVisiteur = $connexion->prepare('UPDATE utilisateur SET Id_groupe = 1 WHERE Id_utilisateur = ' . $donnees['Id_utilisateur']);
+						$retourVisiteur->execute();
+						$retourVisiteur->closeCursor();
+					}
+
+					$utilisateur->closeCursor();
                     header('Location: ../../all_alertes.php?message=succesArchiverAlerte');
                 }else{
                     $archiverAlerte->closeCursor();
@@ -55,8 +67,22 @@
                 }
             }else if(!empty($_GET['archiverProjet']) && intval($_GET['archiverProjet']) > 0){                
                 $archiverProjet = $connexion->prepare('UPDATE projet SET Statut = 2 WHERE Id_projet = ' . $_GET['archiverProjet']);
+                $rechercheUtilisateurParProjet = $connexion->prepare('SELECT Id_utilisateur FROM projet WHERE Id_projet = ' . $_GET['archiverProjet']);
+                $rechercheUtilisateurParProjet->execute();
+                $donnees = $rechercheUtilisateurParProjet->fetch();
+                preg_match_all('#[0-9]+#', $donnees['Id_utilisateur'], $extraction);
+
+                foreach($extraction[0] as $idUtilisateur){
+                    $archiverCandidature = $connexion->prepare('UPDATE candidater_alerte SET Statut = 2 WHERE Id_alerte = ' . $_GET['archiverAlerte'] . ' AND Id_utilisateur = ' . $idUtilisateur);
+                    $retourVisiteur = $connexion->prepare('UPDATE utilisateur SET Id_groupe = 1 WHERE Id_utilisateur = ' . $idUtilisateur);
+                    $retourVisiteur->execute();
+                    $retourVisiteur->closeCursor();
+                    $archiverCandidature->execute();
+                    $archiverCandidature->closeCursor();
+                }
+                
                 $parametreUrl = parametreUrl();
-                var_dump($parametreUrl);
+                
                 if($archiverProjet->execute() && $archiverProjet->rowCount() > 0){
                     $archiverProjet->closeCursor();
                     header('Location: ../../voir_projets.php?nomAlerte=' . $parametreUrl[0] . '&idAlerte=' . $parametreUrl[1] . '&idEspece=' . $parametreUrl[2] . '&message=succesArchiverProjet');

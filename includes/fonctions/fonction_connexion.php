@@ -6,7 +6,7 @@
             $nom = htmlspecialchars($_POST['nom'], ENT_QUOTES, "UTF-8"); // le htmlspecialchars() passera les guillemets en entités HTML, ce qui empêchera les injections SQL
             $mdp = htmlspecialchars($_POST['mdp'], ENT_QUOTES, "UTF-8");
 
-            $connexion = DBconnexion()->prepare('SELECT Id_utilisateur, groupe.Id_groupe, Nom_groupe FROM utilisateur, groupe WHERE Nom_utilisateur = "' . $nom . '" AND Mdp_utilisateur = "' . $mdp . '" AND groupe.Id_groupe = utilisateur.Id_groupe');
+            $connexion = connexionDB()->prepare('SELECT Id_utilisateur, groupe.Id_groupe, Nom_groupe FROM utilisateur, groupe WHERE Nom_utilisateur = "' . $nom . '" AND Mdp_utilisateur = "' . $mdp . '" AND groupe.Id_groupe = utilisateur.Id_groupe');
             $connexion->execute();
             $donnees = $connexion->fetch();
             

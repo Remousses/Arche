@@ -2,12 +2,13 @@
     require_once 'connexionDB.php';
     require_once '../../param/infos_id_groupe.php';
 
+    $connexion = connexionDB();
+
     if(isset($_GET['idAlerte']) && isset($_GET['nbProjet']) && isset($_GET['nbParticipant'])){
         $idAlerte = $_GET['idAlerte'];
         $repartition = $_GET['nbParticipant'] / $_GET['nbProjet'];
         
         if($repartition >= 1){
-            $connexion = DBConnexion();
             $candidats = $connexion->prepare('SELECT Id_utilisateur FROM candidater_alerte WHERE Role = "Participer physiquement" And Statut = 1 AND Id_alerte = ' . $idAlerte);
             $tab = array();
     
@@ -62,13 +63,13 @@
                     $id = $tabProjet[$idProjet - 1];
                 }
                 
-                $projet = $connexion->prepare('UPDATE projet SET Id_utilisateur = CONCAT(Id_utilisateur, "|' . $idUtilisateur . '| ") WHERE Id_projet = ' . $id);
+                $projet = $connexion->prepare('UPDATE projet SET Id_utilisateur = CONCAT(Id_utilisateur, "[' . $idUtilisateur . '] ") WHERE Id_projet = ' . $id);
                 $majCandidature = $connexion->prepare('UPDATE candidater_alerte SET Statut = 2 WHERE Id_utilisateur = ' . $idUtilisateur . ' AND Role = "Participer physiquement" AND Id_alerte = ' . $idAlerte);
                 
                 if($projet->execute() && $projet->rowCount() > 0 && $majCandidature->execute() && $majCandidature->rowCount() > 0){
                     $majCandidature->closeCursor();
                     $projet->closeCursor();
-                    header('Location: ../../all_alertes.php?archiverAlerte=' . $idAlerte . '&message=succesRepartition');
+                    header('Location: ../../all_alertes.php?message=succesRepartition_' . $idAlerte . '#alerte' . $idAlerte);
                 }else{
                     $majCandidature->closeCursor();
                     $projet->closeCursor();

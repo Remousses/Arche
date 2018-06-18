@@ -19,9 +19,9 @@
             }
         }
         
-        echo '<div class="card mb-3" id="alerte' . $idAlerte . '">
+        echo '<div class="card mb-3 pt-3" id="alerte' . $idAlerte . '">
             <a href="' . (empty($_SESSION) ? 'connexion.php' : 'voir_projets.php?nomAlerte=' . $nomAlerte . '&idAlerte=' . $idAlerte . '&idEspece=' . $idEspece) . '">
-                <div class="center"><img class="image_alerte" src="images/especes/' . $photo .'" alt="' . $nomEspece . '"/></div> <br>
+                <div class="text-center"><img class="image_alerte" src="images/especes/' . $photo .'" alt="' . $nomEspece . '"/></div> <br>
             </a>
             <div class="card-body">';
             
@@ -39,13 +39,9 @@
                 case 'existeCandidature_' . $idAlerte:
                     messageBox('warning', 'Vous avez déjà candidater à cette alerte.');
                     break;
-                case 'succesRepartition':
-                    if(isset($_GET['archiverAlerte']) && getIdGroupeComite()){
-                        if(!empty($_GET['archiverAlerte']) && intval($_GET['archiverAlerte']) > 0){
-                            archiverAlerte($_GET['archiverAlerte']);
-                        }
-                    }
-
+                    
+                case 'succesRepartition_' . $idAlerte:
+                    messageBox('success', 'La répartition a été effectuée.');
                     break;
                 case 'erreurRepartition_' . $idAlerte:
                     messageBox('danger', 'La répartition n\'a pas été effectuée.');
@@ -53,7 +49,7 @@
             }
         }
 
-        echo '<h6 class="card-title mb-1"><a href="' . (empty($_SESSION) ? 'connexion.php' : 'voir_projets.php?' . $nomAlerte . '&idAlerte=' . $idAlerte . '&idEspece=' . $idEspece) . '">' . $nomAlerte . '</a></h6>
+        echo '<h6 class="card-title mb-1"><a href="' . (empty($_SESSION) ? 'connexion.php' : 'voir_projets.php?nomAlerte=' . $nomAlerte . '&idAlerte=' . $idAlerte . '&idEspece=' . $idEspece) . '">' . $nomAlerte . '</a></h6>
                 <p class="card-text small">' . $informations .'</p>
                 </div>
                 <hr class="my-0">

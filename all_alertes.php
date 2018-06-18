@@ -8,11 +8,6 @@
 			require_once 'includes/head.php';
 			verificationIdGroupe('all_alertes.php');
 		?>
-		<style>
-			#modal{
-				width: 600px;
-			}
-		</style>
 	</head>
 	
 	<body class="fixed-nav sticky-footer bg-dark" id="page-top">

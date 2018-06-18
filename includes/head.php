@@ -22,9 +22,10 @@
 <script src="js/index.js"></script>
 
 <?php
+    require_once 'includes/fonctions/connexionDB.php';
+    $GLOBALS['connexion'] = connexionDB();
     require_once 'param/infos_id_groupe.php';
     require_once 'includes/fonctions/fonction_diverses.php';
-    require_once 'includes/fonctions/fonction_suppression.php';
     require_once 'includes/fonctions/upload.inc.php';
     require_once 'includes/fonctions/vues/fonction_vue_all.php';
     require_once 'includes/fonctions/vues/fonction_vue_visiteur.php';
@@ -34,5 +35,8 @@
     require_once 'includes/fonctions/gestions/fonction_gestions_alertes.php';
     require_once 'includes/fonctions/gestions/fonction_gestions_candidatures.php';
     require_once 'includes/fonctions/gestions/fonction_gestions_projets.php';
-    require_once 'includes/fonctions/gestions/fonction_gestions_taximonie.php';
+    require_once 'includes/fonctions/gestions/fonction_gestions_salaries.php';
+    require_once 'includes/fonctions/gestions/fonction_gestions_sites_stockage.php';
+    require_once 'includes/fonctions/gestions/fonction_gestions_taxinomie.php';
+    require_once 'includes/fonctions/gestions/fonction_gestions_utilisateurs.php';
 ?>

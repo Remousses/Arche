@@ -27,7 +27,7 @@
             <!-- Modal nouvelle espèce -->
             <div class="modal fade" id="nouvelleEspece" tabindex="-1" role="dialog" aria-labelledby="nouvelleEspeceLabel" aria-hidden="true">
                 <div class="modal-dialog" role="document">
-                    <div id="modal" class="modal-content">
+                    <div id="modalCreerAlerte" class="modal-content">
                         <div class="modal-header">
                             <h5 class="modal-title" id="nouvelleEspeceLabel">Création d'un nouvelle espèce</h5>
                             <button class="close" type="button" data-dismiss="modal" aria-label="Close">
@@ -42,12 +42,12 @@
 
                                     switch($_GET['message']){
                                         case 'existeEspece':
-                                            messageBox('warning', 'Le nom de l\'alerte existe déjà.');
+                                            messageBox('warning', 'Le nom de l\'espèce ou la photo existe déjà.');
                                             echo $script;
                                             break;
                                         
                                         case 'erreurEspece':
-                                            messageBox('danger', 'L\'espece n\'a pas été créée, le nom d\'espèce ou la phohto existe déjà.');
+                                            messageBox('danger', 'L\'espèce n\'a pas été créée.');
                                             echo $script;
                                             break;
 
@@ -124,22 +124,11 @@
     }
 
     function selectEspece($table){
-        $allEspece = DBConnexion()->prepare('SELECT Nom_' . $table . ' FROM ' . $table . ' ORDER BY Nom_' . $table . '');
+        $allEspece = $GLOBALS['connexion']->prepare('SELECT Nom_' . $table . ' FROM ' . $table . ' ORDER BY Nom_' . $table . '');
         $allEspece->execute();
-        // $i = 1;
 
         while($donnees = $allEspece->fetch()){
-        //     $double = 0;
-        //     if(isset($_GET['nomEspece']) && $i == 1){
-        //         echo '<option value="' . $_GET['nomEspece'] . '">' . $_GET['nomEspece'] . '</option>';
-        //         $double = 1;
-        //     }
-            
-        //     if($double != 1){
-                echo '<option value="' .  $donnees['Nom_' . $table . ''] . '">' . $donnees['Nom_' . $table . ''] . '</option>';
-            
-           
-            // $i ++;
+            echo '<option value="' .  $donnees['Nom_' . $table . ''] . '">' . $donnees['Nom_' . $table . ''] . '</option>';
         }
 
         $allEspece->closeCursor();

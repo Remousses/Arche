@@ -323,14 +323,30 @@ footer.sticky-footer {
   line-height: 55px;
 }
 
-img.image_alerte{
-    width: 40%;
-    height: 40%;
+img.image_accueil, img.image_livre, img.image_alerte {
+  width: 40%;
+  height: 40%;
 }
 
-img.image_accueil{
-  width: 50%;
-  height: 50%;
+img.image_popup_taxinomie {
+  width: 70%;
+  height: 70%;
+}
+
+img.image_taxinomie {
+  height: 100%;
+}
+
+#activeHover:hover {
+  background-color: #e9ecef;
+}
+
+td.taxinomie {
+  height: 150px;
+}
+
+#modalCreerAlerte,#modalAjouterTache, #modalTaxinomie {
+  height: 100%;
 }
 
 @media (min-width: 576px) {
@@ -490,14 +506,13 @@ img.image_accueil{
 }
 
 @media (max-width: 992px) {
-  img.image_alerte {
-    height: 50%;
-    width: 50%;
-  }
-
-  img.image_accueil{
+  img.image_accueil, img.image_livre, img.image_alerte {
     width: 80%;
     height: 80%;
+  }
+
+  td.taxinomie {
+    height: 100px;
   }
 }
 
@@ -505,8 +520,4 @@ img.image_accueil{
   .card-columns {
     column-count: 2;
   }
-}
-
-td:hover {
-  background-color: #e9ecef;
 }

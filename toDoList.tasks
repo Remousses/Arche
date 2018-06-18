@@ -6,21 +6,36 @@
 ✔ mauvaise redirection archiver projets : parametreUrl pour archiverProjet @done (2018-6-14 20:02:14)
 ✔ pas possible de mettre deux même nom de projet quand un est archiver @done (2018-6-14 21:47:49)
 ✔ candidater alerte, changer de dossier @done (2018-6-14 22:05:10)
-☐ taxonomie pas static
-☐ livre de sauvetage
 ✔ "faire un don" visible que pour parrain financier @done (2018-6-14 20:02:31)
-☐ profil faire affichage comme projet
-☐ afficher projet effectué par l'utilisateur
 ✔ fonction_supprimer accessible que pour comite @done (2018-6-14 20:03:17)
-☐ gérer mieux répartition, ça a l'air okay
-☐ quand archiver alerte et projet, Id_groupe 1 pour tous c'est utilisateur
-☐ page profil vérifier si alerte et ou projet fini quand il y a participé même si visiteur : pour historique quand répartition qu'il
-sois missionnaire ou narrateur il reprend Id_groupe à 1 
+✔ gérer mieux répartition, ça a l'air okay @done (2018-6-17 17:25:38)
 ✔ mettre max repartition à 1 pour la soutenance @done (2018-6-14 20:04:13)
-
-
+✔ faire pop up taxinomie @done (2018-6-17 15:03:59)
+✔ éviter création alerte avec deux même image @done (2018-6-17 17:51:27)
+✔ taxonomie pas static @done (2018-6-15 19:12:40)
+✔ quand archiver alerte et projet, Id_groupe 1 pour tous c'est utilisateur et leurs statut dans candidater_alerte = 2 @done (2018-6-17 22:51:48)
+✔ page salarie @done (2018-6-18 00:10:19)
+✔ page utilisateurs @done (2018-6-18 00:10:24)
+✔ page site_stockage @done (2018-6-18 00:10:26)
+☐ faire condidtion page comme menu
+☐ profil faire affichage comme projet
+☐ afficher projet effectué par l'utilisateur, mettre narrateur ou missionnaire
+☐ page profil vérifier si alerte et ou projet fini quand il y a participé même si visiteur : pour historique quand répartition qu'il
+sois missionnaire ou narrateur il reprend Id_groupe à 1
+☐ livre de sauvetage
 
 BDD :
-☐ changer longueur Nom_projet dans la table projet et Nom_alerte alerte à 100
-☐ changer longueur Narration et Titre dans la table livre_sauvetage à 1000 pour le premier et 100 pour le second
-☐ changer la longueur des noms de la taximonie à 50
+✔ changer longueur Nom_projet dans la table projet et Nom_alerte alerte à 100 @done (2018-6-16 00:26:52)
+✔ changer longueur Narration et Titre dans la table livre_sauvetage à 1000 pour le premier et 100 pour le second @done (2018-6-16 00:29:30)
+✔ changer la longueur des noms de la taxinomie à 50 @done (2018-6-16 00:43:22)
+
+
+Amélioration:
+    - barre de recherche amélioré pour la page taxinomie
+
+
+Questions:
+    - barre de recherche dans le menu inutile ? Vu que page taxinomie ?
+    - candidater visible que quand projet > 0 ? Ou bien on peut quand même candidater ? De toute façon, la répartition des 
+    candidats ne peut ce faire que si nombre de participant / nombre de projet est supérieur à 1 (pour la soutenance sinon, ce 
+    sera au client de choisir)

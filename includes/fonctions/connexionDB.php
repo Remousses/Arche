@@ -1,5 +1,5 @@
 <?php
-	function DBConnexion() {
+	function connexionDB() {
 		$base = 'archedb';
 		$hote = 'localhost';
 		$utilisateur = 'root';
@@ -12,7 +12,7 @@
 		try {
 			$pdo_options [PDO::ATTR_ERRMODE] = PDO::ERRMODE_EXCEPTION;
 			$bdd = new PDO ( 'mysql:host=' . $hote . ';dbname=' . $base, $utilisateur, $mdp );
-			// Sp�cification de l'encodage (en cas de probleme d'affichage :
+			// Sp�cification de l'encodage (en cas de probleme d'affichage)
 			$bdd->exec ('SET NAMES utf8');
 			
 		} catch (Exception $e) {
@@ -21,4 +21,5 @@
 		
 		return $bdd;
 	}
+
 ?>

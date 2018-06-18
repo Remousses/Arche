@@ -114,10 +114,6 @@
                 messageBox($warning, 'Vous n\'avez aucun projet en cours.');
                 break;
 
-            case 'succesRepartition':
-                messageBox('success', 'La répartition a été effectuée. L\'alerte et tous ses éléments ont été supprimées');
-                break;
-
             case 'erreurVerificationIdGroupe':
                 messageBox($danger, 'Echec lors de la vérification de votre groupe.');
                 break;
@@ -179,7 +175,7 @@
 
     function verificationIdGroupe($page){
         if(isset($_SESSION['Id_utilisateur'])){
-            $verificationIdGroupe = DBconnexion()->prepare('SELECT Id_groupe FROM utilisateur WHERE Id_utilisateur = ' . $_SESSION['Id_utilisateur']);
+            $verificationIdGroupe = $GLOBALS['connexion']->prepare('SELECT Id_groupe FROM utilisateur WHERE Id_utilisateur = ' . $_SESSION['Id_utilisateur']);
             $verificationIdGroupe->execute();
             $donnees = $verificationIdGroupe->fetch();
 
@@ -195,7 +191,7 @@
     }
 
     function verificationUrlProjet($idAlerte, $idEspece){
-        $verificationUrlProjet = DBconnexion()->prepare('SELECT Id_alerte AS nbAlerte FROM alerte, espece WHERE Id_alerte = ' . $idAlerte . ' AND espece.Id_espece = ' . $idEspece . ' AND StatuT BETWEEN 0 AND 1');
+        $verificationUrlProjet = $GLOBALS['connexion']->prepare('SELECT Id_alerte AS nbAlerte FROM alerte, espece WHERE Id_alerte = ' . $idAlerte . ' AND espece.Id_espece = ' . $idEspece . ' AND StatuT BETWEEN 0 AND 1');
         $verificationUrlProjet->execute();
 
         if($verificationUrlProjet->rowCount() > 0){

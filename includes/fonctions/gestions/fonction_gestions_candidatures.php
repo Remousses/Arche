@@ -1,6 +1,6 @@
 <?php
     function nbNouvellesCandidatures(){
-        $nouvellesCandidatures = DBconnexion()->prepare('SELECT COUNT(Statut) AS nouvellesCandidatures FROM candidater_alerte WHERE Statut = 0');
+        $nouvellesCandidatures = $GLOBALS['connexion']->prepare('SELECT COUNT(Statut) AS nouvellesCandidatures FROM candidater_alerte WHERE Statut = 0');
         $nouvellesCandidatures->execute();
         $donnees = $nouvellesCandidatures->fetch();
 
@@ -16,7 +16,7 @@
     function voirNouvellesCandidatures(){
         echo '<div class="dropdown-divider"></div>';
 
-        $voirNouvellesCandidatures = DBconnexion()->prepare('SELECT Date_candidater, Nom_alerte, Nom_utilisateur, Prenom_utilisateur FROM candidater_alerte, utilisateur, alerte WHERE candidater_alerte.Statut = 0 AND candidater_alerte.Id_utilisateur = utilisateur.Id_utilisateur AND candidater_alerte.Id_alerte = alerte.Id_alerte ORDER BY Date_candidater DESC LIMIT 0,3');
+        $voirNouvellesCandidatures = $GLOBALS['connexion']->prepare('SELECT Date_candidater, Nom_alerte, Nom_utilisateur, Prenom_utilisateur FROM candidater_alerte, utilisateur, alerte WHERE candidater_alerte.Statut = 0 AND candidater_alerte.Id_utilisateur = utilisateur.Id_utilisateur AND candidater_alerte.Id_alerte = alerte.Id_alerte ORDER BY Date_candidater DESC LIMIT 0,3');
         $voirNouvellesCandidatures->execute();
 
         if($voirNouvellesCandidatures->rowCount() > 0){
@@ -34,7 +34,7 @@
     }
 
     function getCandidatures(){
-        $candidatures = DBconnexion()->prepare('SELECT Informations_candidater, Date_candidater, alerte.Id_alerte, Nom_alerte, utilisateur.Id_utilisateur, Nom_utilisateur, Prenom_utilisateur FROM candidater_alerte, utilisateur, alerte WHERE candidater_alerte.Statut = 0 AND candidater_alerte.Id_utilisateur = utilisateur.Id_utilisateur AND candidater_alerte.Id_alerte = alerte.Id_alerte ORDER BY Date_candidater DESC');
+        $candidatures = $GLOBALS['connexion']->prepare('SELECT Informations_candidater, Date_candidater, alerte.Id_alerte, Nom_alerte, utilisateur.Id_utilisateur, Nom_utilisateur, Prenom_utilisateur FROM candidater_alerte, utilisateur, alerte WHERE candidater_alerte.Statut = 0 AND candidater_alerte.Id_utilisateur = utilisateur.Id_utilisateur AND candidater_alerte.Id_alerte = alerte.Id_alerte ORDER BY Date_candidater DESC');
         $candidatures->execute();
 ?>      <thead>
             <tr>

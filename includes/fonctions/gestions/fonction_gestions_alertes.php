@@ -1,10 +1,8 @@
 <?php
-    require_once 'includes/fonctions/connexionDB.php';
-    
     function getAllAlertes() {
         $tabAlerte = array();
 
-        $reponse = DBconnexion()->prepare('SELECT Id_alerte, Nom_alerte, Informations_alerte, Date_alerte, Statut, espece.Id_espece, Nom_espece, Photo FROM alerte, espece WHERE alerte.Id_espece = espece.Id_espece AND Statut BETWEEN 0 AND 1 ORDER BY Statut');
+        $reponse = $GLOBALS['connexion']->prepare('SELECT Id_alerte, Nom_alerte, Informations_alerte, Date_alerte, Statut, espece.Id_espece, Nom_espece, Photo FROM alerte, espece WHERE alerte.Id_espece = espece.Id_espece AND Statut BETWEEN 0 AND 1 ORDER BY Statut');
         $reponse->execute();
         
         while ($donnees = $reponse->fetch()) {
@@ -23,8 +21,8 @@
                         }else if($donnees['Statut'] == 1){
                             $statut = 'Approuvée';
 
-                            $nbProjet = DBconnexion()->prepare('SELECT COUNT(Id_projet) AS nbProjet FROM projet WHERE Id_alerte = ' . $donnees['Id_alerte'] . ' AND Statut = 1');
-                            $nbParticipant = DBconnexion()->prepare('SELECT COUNT(Id_utilisateur) AS nbParticipant FROM candidater_alerte WHERE Role = "Participer physiquement" And Statut = 1 AND Id_alerte = ' . $donnees['Id_alerte']);
+                            $nbProjet = $GLOBALS['connexion']->prepare('SELECT COUNT(Id_projet) AS nbProjet FROM projet WHERE Id_alerte = ' . $donnees['Id_alerte'] . ' AND Statut = 1');
+                            $nbParticipant = $GLOBALS['connexion']->prepare('SELECT COUNT(Id_utilisateur) AS nbParticipant FROM candidater_alerte WHERE Role = "Participer physiquement" And Statut = 1 AND Id_alerte = ' . $donnees['Id_alerte']);
                             
                             if($nbParticipant->execute() && $nbProjet->execute()){
                                 $donneesNbProjet = $nbProjet->fetch();
@@ -84,7 +82,7 @@
     function voirNouvellesAlertes(){
         echo '<div class="dropdown-divider"></div>';
 
-        $voirNouvellesAlertes = DBconnexion()->prepare('SELECT Id_alerte, Nom_alerte, Informations_alerte, Date_alerte FROM alerte WHERE Statut = 0 ORDER BY Id_alerte DESC LIMIT 0,3');
+        $voirNouvellesAlertes = $GLOBALS['connexion']->prepare('SELECT Id_alerte, Nom_alerte, Informations_alerte, Date_alerte FROM alerte WHERE Statut = 0 ORDER BY Id_alerte DESC LIMIT 0,3');
         $voirNouvellesAlertes->execute();
 
         if($voirNouvellesAlertes->rowCount() > 0){
@@ -102,7 +100,7 @@
     }
 
     function nbNouvellesAlertes(){
-        $nbNouvellesAlertes = DBconnexion()->prepare('SELECT COUNT(Id_alerte) AS nbNouvellesAlertes FROM alerte WHERE Statut = 0');
+        $nbNouvellesAlertes = $GLOBALS['connexion']->prepare('SELECT COUNT(Id_alerte) AS nbNouvellesAlertes FROM alerte WHERE Statut = 0');
         $nbNouvellesAlertes->execute();
         $donnees = $nbNouvellesAlertes->fetch();
 
