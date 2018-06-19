@@ -62,7 +62,7 @@
                     <div class="card-body py-2 small">
                     <a class="mr-3 d-inline-block" href="includes/fonctions/fonction_validation.php?archiverProjet=' . $idProjet . '">Archiver</a>
                     <a href="#" class="mr-3 d-inline-block" data-toggle="modal" onclick="ajouterTache(' . $idProjet . ');" data-target="#ajouterTache">Ajouter une nouvelle tâche</a>
-                    </div>';//, etc comme pour alerte avec le différent statut
+                    </div>';
             }else if($_SESSION['Id_groupe'] == getIdGroupeParrainFinancier()){
                 echo '<hr class="my-0">
                     <div class="card-body py-2 small">

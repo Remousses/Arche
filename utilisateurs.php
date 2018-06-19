@@ -32,6 +32,11 @@
                 getUtilisateur();
               ?>
             </table>
+            <div class="text-center">
+            <?php
+              creerUtilisateur();
+            ?>
+            </div>
           </div>
         </div>
       </div>

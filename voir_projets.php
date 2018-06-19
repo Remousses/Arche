@@ -33,7 +33,6 @@
 						if(isset($_SESSION['Id_groupe'])){
 							if($_SESSION['Id_groupe'] == getIdGroupeComite()){
 								creerProjet();
-								echo '<br>';
 							}
 
 							if(isset($_GET['message'])){

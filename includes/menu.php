@@ -27,7 +27,7 @@
         </li>
         <?php
           if(!empty($_SESSION)){
-            if($_SESSION['Id_groupe'] == getIdGroupeMissionnaire() || $_SESSION['Id_groupe'] == getIdGroupeNarrateur()){
+            if($_SESSION['Id_groupe'] != getIdGroupeVisiteur()){
         ?>
         <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Profil">
           <a class="nav-link nav-link"  href="profil.php">
@@ -97,27 +97,14 @@
           </span>
           </a>
         </li>
-        <?php
-          if(isset($_SESSION['Id_groupe'])){
-            if($_SESSION['Id_groupe'] == getIdGroupeComite()){
-              nouvellesCandidatures();
-              nouvellesAlertes();
-            }
-          }
-        ?>
-        <li class="nav-item">
-          <form class="form-inline my-2 my-lg-0 mr-lg-2">
-            <div class="input-group">
-              <input class="form-control" type="text" placeholder="Recherche ..." disabled>
-              <span class="input-group-append">
-                <button class="btn btn-primary" type="button" disabled>
-                  <i class="fa fa-search"></i>
-                </button>
-              </span>
-            </div>
-          </form>
-        </li>
 <?php
+        if(isset($_SESSION['Id_groupe'])){
+          if($_SESSION['Id_groupe'] == getIdGroupeComite()){
+            nouvellesCandidatures();
+            nouvellesAlertes();
+          }
+        }
+
         if(!empty($_SESSION)){
 ?>
             <li class="nav-item">

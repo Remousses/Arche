@@ -27,7 +27,7 @@
                 break;
 
             case 'erreurPage':
-                messageBox($danger, 'Cette page n\'existe pas. Vous avez été redirigez vers la page d\'accueil.');
+                messageBox($warning, 'Cette page n\'existe pas. Vous avez été redirigez vers la page d\'accueil.');
                 break;
 
             case 'succesAlerte':

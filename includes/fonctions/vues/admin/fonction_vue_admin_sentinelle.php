@@ -3,7 +3,7 @@
 ?>      <div class="card card-login mx-auto mt-5 mb-5">
             <div class="card-header">Création d'une alerte</div>
             <div class="card-body">
-                <form id="form" action="includes/fonctions/fonction_creation.php" method="post">
+                <form action="includes/fonctions/fonction_creation.php" method="post">
                     <div class="form-group">
                         <label for="nomAlerte">Nom de l'alerte</label>
                         <input class="form-control" type="text" name="nomAlerte" maxlength="100" value="<?php echo isset($_GET['nomAlerte']) ? $_GET['nomAlerte'] : ''; ?>" placeholder="Entrer un nom d'alerte" required/>
@@ -61,7 +61,7 @@
                                     }
                                 }
                             ?>
-                            <form id="form" action="includes/fonctions/fonction_creation.php" method="post" enctype="multipart/form-data">
+                            <form action="includes/fonctions/fonction_creation.php" method="post" enctype="multipart/form-data">
                                 <div class="row">
                                     <div class="col-12">
                                         <div class="row">

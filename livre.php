@@ -25,7 +25,7 @@
       <div class="card card-login mx-auto mt-5 mb-5">
         <div class="card-header">Ajouter un livre</div>
         <div class="card-body">
-          <form>
+          <form action="includes/fonctions/fonction_creation.php" method="post">
             <div class="form-group">
               <label for="titre">Titre du livre</label>
               <input class="form-control" type="text" name="titre" placeholder="Entrer le titre" required/>
@@ -34,11 +34,6 @@
             <div class="form-group">
               <label for="narration">Narration</label>
               <textarea class="form-control" type="text" name="narration" cols="30" rows="6" maxlength="1000" placeholder="Entrer votre témoignage" required><?php echo isset($_GET['informationsAlerte']) ? $_GET['informationsAlerte'] : ''; ?></textarea>
-            </div>
-
-            <div class="form-group">
-              <label for="exampleInputImage">Image</label>
-              <input class="form-control" type="file" name="exampleInputInformation" required/>
             </div>
             <button class="btn btn-primary btn-block" type="submit" name="enregistrerLivre">Enregistrer</button>
           </form>

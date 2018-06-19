@@ -18,11 +18,12 @@
 ✔ page utilisateurs @done (2018-6-18 00:10:24)
 ✔ page site_stockage @done (2018-6-18 00:10:26)
 ☐ faire condidtion page comme menu
-☐ profil faire affichage comme projet
-☐ afficher projet effectué par l'utilisateur, mettre narrateur ou missionnaire
-☐ page profil vérifier si alerte et ou projet fini quand il y a participé même si visiteur : pour historique quand répartition qu'il
+✔ profil faire affichage comme projet @done (2018-6-19 22:19:18)
+✔ afficher projet effectué par l'utilisateur, (mettre narrateur ou missionnaire si possible) @done (2018-6-19 22:19:16)
+✔ page profil vérifier si alerte et ou projet fini quand il y a participé même si visiteur : pour historique quand répartition qu'il @done (2018-6-19 22:19:19)
 sois missionnaire ou narrateur il reprend Id_groupe à 1
 ☐ livre de sauvetage
+
 
 BDD :
 ✔ changer longueur Nom_projet dans la table projet et Nom_alerte alerte à 100 @done (2018-6-16 00:26:52)
@@ -34,8 +35,5 @@ Amélioration:
     - barre de recherche amélioré pour la page taxinomie
 
 
-Questions:
-    - barre de recherche dans le menu inutile ? Vu que page taxinomie ?
-    - candidater visible que quand projet > 0 ? Ou bien on peut quand même candidater ? De toute façon, la répartition des 
-    candidats ne peut ce faire que si nombre de participant / nombre de projet est supérieur à 1 (pour la soutenance sinon, ce 
-    sera au client de choisir)
+Soutenance, ce qu'ilne faut pas oublié de dire:
+    - recette avant prod

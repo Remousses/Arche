@@ -21,8 +21,8 @@
                     <td>' . $donnees['Prenom_salarie'] . '</td>
                     <td>' . $donnees['Poste'] . '</td>
                     <td>' . $donnees['Nom_site'] . '</td>
-                    <td class="text-center"><a href="includes/fonctions/fonction_validation.php?modifierSalarie=' . $donnees['Id_salarie'] . '"><i class="fa fa-edit"></i></a></td>
-                    <td class="text-center"><a href="includes/fonctions/fonction_validation.php?supprimerSalarie=' . $donnees['Id_salarie'] . '"><i class="fa fa-close"></i></a></td>
+                    <td class="text-center"><a href="includes/fonctions/fonction_modification.php?modifierSalarie=' . $donnees['Id_salarie'] . '"><i class="fa fa-edit"></i></a></td>
+                    <td class="text-center"><a href="includes/fonctions/fonction_suppression.php?supprimerSalarie=' . $donnees['Id_salarie'] . '"><i class="fa fa-close"></i></a></td>
                 </tr>';
         }
         $salaries->closeCursor();           

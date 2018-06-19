@@ -48,7 +48,7 @@
         <div class="card card-login mx-auto mt-5">
             <div class="card-header">Création d'un projet</div>
             <div class="card-body">
-                <form id="form" action="includes/fonctions/fonction_creation.php" method="post">
+                <form action="includes/fonctions/fonction_creation.php" method="post">
                     <div class="form-group">
                         <label for="nomProjet">Nom du projet</label>
                         <input class="form-control" type="text" name="nomProjet" maxlength="100" value="<?php echo isset($_GET['nomProjet']) ? $_GET['nomProjet'] : ''; ?>" placeholder="Entrer un nom de projet" required/>
@@ -110,7 +110,7 @@
                                 } 
                             }
                         ?>
-                        <form id="form" action="includes/fonctions/fonction_creation.php" method="post">
+                        <form action="includes/fonctions/fonction_creation.php" method="post">
                             <div class="form-group">
                                 <label for="choixTache">Que voulez vous faire ?</label>
                                 <div class="row" style="margin: auto;">
