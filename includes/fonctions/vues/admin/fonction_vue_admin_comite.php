@@ -37,21 +37,65 @@
 <?php
                 voirNouvellesCandidatures();                   
 ?>
-              <a class="dropdown-item small" href="candidatures.php">Voir les candidatures</a>
+              <a class="dropdown-item small" href="candidatures.php">Voir toutes les candidatures</a>
             </div>
           </li>
 <?php
     }
 
+    function getCandidatures(){
+        $candidatures = $GLOBALS['connexion']->prepare('SELECT Informations_candidater, Role, Date_candidater, alerte.Id_alerte, Nom_alerte, utilisateur.Id_utilisateur, Nom_utilisateur, Prenom_utilisateur FROM candidater_alerte, utilisateur, alerte WHERE candidater_alerte.Statut = 0 AND candidater_alerte.Id_utilisateur = utilisateur.Id_utilisateur AND candidater_alerte.Id_alerte = alerte.Id_alerte ORDER BY Date_candidater DESC');
+        $candidatures->execute();
+?>      <thead>
+            <tr>
+                <th>Nom</th>
+                <th>Prénom</th>
+                <th>Alerte</th>
+                <th>Informations</th>
+                <th>Date</th>
+                <th class="d-none"></th>
+                <th class="d-none"></th>
+                <th class="d-none"></th>
+            </tr>
+        </thead>
+        <tbody>
+<?php
+        while($donnees = $candidatures->fetch()){
+            echo '<tr>
+                    <td class="vertical_align">' . $donnees['Nom_utilisateur'] . '</td>
+                    <td class="vertical_align">' . $donnees['Prenom_utilisateur'] . '</td>	
+                    <td class="vertical_align">' . $donnees['Nom_alerte'] . '</td>
+                    <td class="vertical_align">' . $donnees['Informations_candidater'] . '</td>
+                    <td class="vertical_align">' . dateFr($donnees['Date_candidater']) . '</td>
+                    <td class="vertical_align">';
+
+                    if($donnees['Role'] == 'Participer physiquement'){
+                        echo '<img src="images/icons/users-workers.png" alt="' . $donnees['Role'] . '" height=15>';
+                    }else if($donnees['Role'] == 'Participer financièrement'){
+                        echo '<i class="fa fa-euro"></i>';
+                    }else{
+                        echo '<i class="fa fa-warning"></i>';
+                    }
+                    
+                    echo '</td>
+                    <td class="vertical_align"><a href="includes/fonctions/fonction_validation.php?idAlerte=' . $donnees['Id_alerte'] . '&role=' . $donnees['Role'] . '&idUtilisateur=' . $donnees['Id_utilisateur'] . '&approuverCandidature="><i class="fa fa-check"></i></a></td>
+                    <td class="vertical_align"><a href="includes/fonctions/fonction_validation.php?idAlerte=' . $donnees['Id_alerte'] . '&role=' . $donnees['Role'] . '&idUtilisateur=' . $donnees['Id_utilisateur'] . '&archiverCandidature="><i class="fa fa-close"></i></a></td>
+                </tr>';
+        }
+
+        $candidatures->closeCursor();        
+        echo '</tbody>';
+    }
+
     function creerProjet(){
 ?>
-        <div class="card card-login mx-auto mt-5">
+        <div class="card card-login mx-auto mt-5 mb-5">
             <div class="card-header">Création d'un projet</div>
             <div class="card-body">
                 <form action="includes/fonctions/fonction_creation.php" method="post">
                     <div class="form-group">
-                        <label for="nomProjet">Nom du projet</label>
-                        <input class="form-control" type="text" name="nomProjet" maxlength="100" value="<?php echo isset($_GET['nomProjet']) ? $_GET['nomProjet'] : ''; ?>" placeholder="Entrer un nom de projet" required/>
+                        <label class="col-12" for="nomProjet">Nom du projet <span class="small float-right text-muted" id="nomProjetTailleMax"></span></label>
+                        <input class="form-control" type="text" name="nomProjet" onkeypress="tailleInput('nomProjet', event);" maxlength="100" value="<?php echo isset($_GET['nomProjet']) ? $_GET['nomProjet'] : ''; ?>" placeholder="Entrer un nom de projet" required/>
                     </div>
                     <div class="form-group">
                         <label for="dateDebutProjet">Date de début</label>
@@ -130,7 +174,8 @@
                                 </select>
                             </div>
                             <div class="form-group d-none" id="nouvelleActiviteDiv">
-                                <input class="form-control" type="text" name="nouvelleActivite" id="nouvelleActivite" maxlength="30" value="<?php echo isset($_GET['nouvelleActivite']) ? $_GET['nouvelleActivite'] : ''; ?>" disabled placeholder="Entrer un nom d'une activité"/>
+                                <span class="small float-right text-muted" id="nouvelleActiviteTailleMax">
+                                <input class="form-control" type="text" name="nouvelleActivite" id="nouvelleActivite" onkeypress="tailleInput('nouvelleActivite', event);" maxlength="100" value="<?php echo isset($_GET['nouvelleActivite']) ? $_GET['nouvelleActivite'] : ''; ?>" disabled placeholder="Entrer un nom d'une activité"/>
                             </div>
                             <div class="form-group">
                                 <label for="dateDebutTache">Date de début</label>

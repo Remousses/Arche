@@ -76,24 +76,24 @@
                     <form action="includes/fonctions/fonction_creation.php" method="post">
                         <div class="modal-body">
                             <div class="form-group">
-                                <label for="informationsCandidater">Pourquoi vous intéressez-vous à cette alerte ?</label>
-                                <textarea class="form-control" type="text" name="informationsCandidater" col="30" row ="6" maxlength="1000" placeholder="Votre texte" required></textarea>
+                                <label class="col-12" for="informationsCandidater">Pourquoi vous intéressez-vous à cette alerte ? <span class="small float-right text-muted" id="informationsCandidaterTailleMax"></span></label>
+                                <textarea class="form-control" type="text" name="informationsCandidater" onkeypress="tailleTextarea('informationsCandidater', event);" col="30" row ="6" maxlength="1000" placeholder="Votre texte" required><?php echo isset($_GET['informationsCandidater']) ? $_GET['informationsCandidater'] : ''; ?></textarea>
                             </div>
 
                             <div class="form-group">
                                 <label for="role">Rôle</label>
                                 <div class="row" style="margin: auto;">
                                     <div class="col-6">
-                                        <input type="radio" class="form-check-input" name="roleCandidater" value="Participer physiquement" checked>
+                                        <input type="radio" class="form-check-input" name="roleCandidater" id="ParticiperPhysiquement" value="Participer physiquement" checked>
                                         <label class="form-check-label" for="ParticiperPhysiquement">Participer physiquement</label>
                                     </div>
                                     <div class="col-6">
-                                        <input type="radio" class="form-check-input" name="roleCandidater" value="Participer financièrement">
-                                        <label class="form-check-label" for="ParticiperFinancièrement">Participer financièrement</label>
+                                        <input type="radio" class="form-check-input" name="roleCandidater" id="ParticiperFinancierement" value="Participer financièrement">
+                                        <label class="form-check-label" for="ParticiperFinancierement">Participer financièrement</label>
                                     </div>
                                 </div>
                             </div>
-
+                            
                             <input type="hidden" id="idAlerteCandidater" name="idAlerteCandidater">
                             <input type="hidden" id="idEspeceCandidater" name="idEspeceCandidater">                            
                         </div>

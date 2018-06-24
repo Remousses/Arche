@@ -9,6 +9,19 @@
 			require_once 'includes/head.php';
 			verificationIdGroupe('index.php'); 
 		?>
+		<script>
+			var addToHomeConfig = {
+    animationIn: 'bubble',
+    animationOut: 'drop',
+    startDelay: 2000, // Display after 2 seconds
+    lifespan: 10000, // Displays for 10 seconds
+    expire: 10, // Displays every 10 minutes
+    touchIcon:true,
+    returningVisitor: false, // Display on the first visit if set to false
+};
+		</script>
+		
+	<script src="js/add2home.js"></script>
 	</head>
 	
 	<body class="fixed-nav sticky-footer bg-dark" id="page-top">

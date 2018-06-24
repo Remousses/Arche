@@ -6,8 +6,9 @@
         <!DOCTYPE html>
         <html lang="fr">
             <head>
-                <?php
+                <?php 
                     require_once 'includes/head.php';
+                    verificationIdGroupe('connexion.php');
                 ?>
             </head>
 
@@ -27,6 +28,6 @@
         </html>
 <?php
     }else{
-        header('Location: index.php?message=erreurConnexion');
+        header('Location: index.php?message=erreurPageConnexion');
     }
 ?>

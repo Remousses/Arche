@@ -17,9 +17,17 @@
                     $approuver->closeCursor();
                     header('Location: ../../all_alertes.php?message=erreurApprouverAlerte');
                 }
-            }else if(isset($_GET['approuverCandidature']) && !empty($_GET['idAlerte']) && intval($_GET['idAlerte']) > 0 && !empty($_GET['idUtilisateur']) && intval($_GET['idUtilisateur']) > 0){                
+            }else if(isset($_GET['approuverCandidature']) && isset($_GET['role']) && !empty($_GET['idAlerte']) && intval($_GET['idAlerte']) > 0 && !empty($_GET['idUtilisateur']) && intval($_GET['idUtilisateur']) > 0){
                 $approuver = $connexion->prepare('UPDATE candidater_alerte SET Statut = 1 WHERE Id_alerte = ' . $_GET['idAlerte'] .' AND Id_utilisateur = ' . $_GET['idUtilisateur'] . ' AND Statut BETWEEN 0 AND 1');
-                $missionnaire = $connexion->prepare('UPDATE utilisateur SET Id_groupe = ' . getIdGroupeMissionnaire() . ' WHERE Id_utilisateur = ' . $_GET['idUtilisateur']);
+                $idGroupe = null;
+
+                if($_GET['role'] == 'Participer physiquement'){
+                    $idGroupe = getIdGroupeMissionnaire();
+                }else if($_GET['role'] == 'Participer financièrement'){
+                    $idGroupe = getIdGroupeParrainFinancier();
+                }
+
+                $missionnaire = $connexion->prepare('UPDATE utilisateur SET Id_groupe = ' . $idGroupe . ' WHERE Id_utilisateur = ' . $_GET['idUtilisateur']);
                 $archiverCandidatures = $connexion->prepare('UPDATE candidater_alerte SET Statut = 2 WHERE Id_alerte != ' . $_GET['idAlerte'] .' AND Id_utilisateur = ' . $_GET['idUtilisateur']);
                 
                 if($approuver->execute() && $approuver->rowCount() > 0 && $missionnaire->execute() && $missionnaire->rowCount() > 0 

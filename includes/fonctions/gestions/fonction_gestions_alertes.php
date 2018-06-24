@@ -9,6 +9,7 @@
             if(!($donnees['Id_alerte'] == "")){
                 $texte = '';
                 $statut = '';
+                $nbInscrits = '';
 
                 if(isset($_SESSION['Id_groupe'])){
                     $texte = '<a class="mr-3 d-inline-block" href="voir_projets.php?nomAlerte=' . $donnees['Nom_alerte'] . '&idAlerte=' . $donnees['Id_alerte'] . '&idEspece=' . $donnees['Id_espece'] . '">Voir les projets</a>';
@@ -36,12 +37,13 @@
                                     }
                                 }
                             }
-
+                            
+                            $nbInscrits .= '<span class="mr-3 d-inline-block" href="#">' . getNbInscritsParProjet($donnees['Id_alerte']) . '</span>';
                             $nbProjet->closeCursor();
                             $nbParticipant->closeCursor();
                         }
 
-                        $texte .= '<a class="mr-3 d-inline-block" href="includes/fonctions/fonction_validation.php?archiverAlerte=' . $donnees['Id_alerte'] . '">Archiver</a>';
+                        $texte .= '<a class="mr-3 d-inline-block" href="includes/fonctions/fonction_validation.php?archiverAlerte=' . $donnees['Id_alerte'] . '">Archiver</a>' . $nbInscrits;
 
                         $tabAlerte = voirAlertes($tabAlerte, $statut, $donnees['Id_alerte'], $donnees['Nom_alerte'], $donnees['Informations_alerte'], $donnees['Nom_espece'], $donnees['Id_espece'], $donnees['Photo'], $donnees['Date_alerte'], $texte);
                         modalCandidater($donnees['Id_alerte'], $donnees['Id_espece']);
@@ -92,7 +94,7 @@
                     <div class="dropdown-message small">' . $donnees['Informations_alerte'] . '</div></a>';
             }
         }else{
-            echo '<a class="dropdown-item" href="#">Aucune nouvelle alerte</a>';
+            echo '<span class="dropdown-item">Aucune nouvelle alerte</span>';
         }
 
         $voirNouvellesAlertes->closeCursor();

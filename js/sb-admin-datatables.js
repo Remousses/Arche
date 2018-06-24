@@ -2,6 +2,7 @@
 $(document).ready(function() {
   $('#dataTableTaxinomie').DataTable();
   $('#dataTableLots').DataTable();
+  $('#dataTableMateriels').DataTable();
   $('#dataTableUtilisateur').DataTable();
   $('#dataTableSalarie').DataTable();
   $('#dataTableCandidature').DataTable();

@@ -4,7 +4,7 @@
   "theme_color": "#2196f3",
   "background_color": "#2196f3",
   "display": "standalone",
-  "start_url": "/archenoe",
+  "start_url": "/Arche",
   "icons": [
     {
       "src": "../images/icons/icon-72x72.png",
@@ -36,5 +36,6 @@
       "sizes": "192x192",
       "type": "image/png"
     }
-  ]
+  ],
+  "manifest_version": 2
 }

@@ -26,17 +26,12 @@
 					<li class="breadcrumb-item">
 						<a href="./">Accueil</a>
 					</li>
-					<li class="breadcrumb-item active">
-						<a href="all_alertes.php">Alertes</a>
-					</li>
+					<li class="breadcrumb-item active">Alertes</li>
 				</ol>
 				  
 				<?php
-					// Création d'une alerte
-					if(isset($_SESSION['Id_groupe'])){
-						if($_SESSION['Id_groupe'] == getIdGroupeSentinelle()){
-							creerAlerte();
-						}
+					if(isset($_SESSION['Id_groupe']) && $_SESSION['Id_groupe'] == getIdGroupeSentinelle()){
+						creerAlerte();
 					}
 				?>
 

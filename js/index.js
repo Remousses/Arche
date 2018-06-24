@@ -1,26 +1,37 @@
 $(document).ready(function(){
-    // récupère l'ancre dans l'URL
-    var pageCourante = $(location).attr('href');
-    var pages = ['candidatures.php', 'salaries.php'];
-
-    for (var i = 0; i < pages.length; i++) {
-        if (pageCourante.includes(pages[i])) {
-            getAncre();
-            break;
-        }
-    }
-
     var options = {
       format: 'dd/mm/yyyy',
       autoclose: true,
     };
+    var page = 'candidatures.php';
+    // récupère l'ancre dans l'URL
+    var pageCourante = $(location).attr('href');
 
+    if (pageCourante.includes(page)) {
+        getAncre();
+    }
+    
+    // affine la recherche si # différent de celui de base pour la page en paramètre
+    $(window).on('hashchange', function(){
+        if (pageCourante.includes(page)) {
+            getAncre();
+        }
+    });
+
+    // adaptation des datapicker avec les options voulues
+    $('#dateDebutProjet').datepicker(options);
+    $('#dateFinProjet').datepicker(options);
+    $('#dateDebutTache').datepicker(options);
+    $('#dateFinTache').datepicker(options);
+
+    // permet d'alterner la couleur du menu
     $('#toggleNavColor').click(function() {
         $('nav').toggleClass('navbar-dark navbar-light');
         $('nav').toggleClass('bg-dark bg-light');
         $('body').toggleClass('bg-dark bg-light');
     });
 
+    // permet de voir le modal et de positionner le curseur
     $('#candidater').on('shown.bs.modal', function() {
         $(this).find('textarea:first').focus();
     });
@@ -29,6 +40,7 @@ $(document).ready(function(){
         $(this).find('input:first').focus();
     });
 
+    // permet de faire apparaitre les informations voulues et de cacher les autres
     $('#choixTache1').click(function(){
         $('#selectActiviteDiv').removeClass('d-none');
         $('#nouvelleActiviteDiv').addClass('d-none');
@@ -45,21 +57,14 @@ $(document).ready(function(){
         $('#nouvelleActivite').attr('required', 'true');
     });
 
-    $(window).on('hashchange', function(){
-        getAncre();
-    });
-
+    // enleve le nombre de ligne du tableau
     $('#dataTableTaxinomie').DataTable({
         destroy: true,
-        info:     false
+        info: false
     });
-
-    $('#dateDebutProjet').datepicker(options);
-    $('#dateFinProjet').datepicker(options);
-    $('#dateDebutTache').datepicker(options);
-    $('#dateFinTache').datepicker(options);
 });
 
+// affine la recherche si # dans l'url
 function getAncre(){
     var ancre = window.location.hash;
     ancre = ancre.substring(1, ancre.length); // enlève le #
@@ -67,6 +72,38 @@ function getAncre(){
     $('#dataTableCandidature').DataTable().search(ancre).draw();
 }
 
+function tailleInput(name, event){
+    var e = event || window.event;
+    var tailleMax = $("input[name=" + name + "]").attr("maxlength");
+    console.log('ok');
+    if(e.keyCode == 8){
+        var textLength = $("input[name=" + name + "]").val().length - 1;
+    }else{
+        var textLength = $("input[name=" + name + "]").val().length + 1;
+    }
+    
+    if(textLength >= 0 && textLength <= tailleMax){
+        $("#" + name + "TailleMax").text(textLength + "/" + tailleMax);
+    }
+}
+
+function tailleTextarea(name, event){
+    var e = event || window.event;
+    
+    var tailleMax = $("textarea[name=" + name + "]").attr("maxlength");
+    
+    if(e.keyCode == 8){
+        var textLength = $("textarea[name=" + name + "]").val().length - 1;
+    }else{
+        var textLength = $("textarea[name=" + name + "]").val().length + 1;
+    }
+    
+    if(textLength >= 0 && textLength <= tailleMax){
+        $("#" + name + "TailleMax").text(textLength + "/" + tailleMax);
+    }
+}
+
+// récupèration des valeurs en paramètre pour les afficher dans le modal
 function candidater(idAlerte, idEspece){
     $('#idAlerteCandidater').val(idAlerte);
     $('#idEspeceCandidater').val(idEspece);
@@ -76,6 +113,7 @@ function ajouterTache(idProjet){
     $('#idProjet').val(idProjet);
 }
 
+// récupère la valeur en paramètre pour utiliser la fonction voirTaxinomie
 function taxinomie(idEspece){
     $.ajax({
         url: 'includes/fonctions/vues/fonction_vue_all.php',

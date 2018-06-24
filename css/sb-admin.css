@@ -328,7 +328,7 @@ img.image_accueil, img.image_livre, img.image_alerte {
   height: 40%;
 }
 
-img.image_popup_taxinomie {
+img.image_modal_taxinomie {
   width: 70%;
   height: 70%;
 }
@@ -337,16 +337,24 @@ img.image_taxinomie {
   height: 100%;
 }
 
-#activeHover:hover {
-  background-color: #e9ecef;
+td.vertical_align {
+  vertical-align: middle;
 }
 
 td.taxinomie {
   height: 150px;
 }
 
+#activeHover:hover {
+  background-color: #e9ecef;
+}
+
 #modalCreerAlerte,#modalAjouterTache, #modalTaxinomie {
   height: 100%;
+}
+
+#toggleNavColor:after {
+  display:none;
 }
 
 @media (min-width: 576px) {

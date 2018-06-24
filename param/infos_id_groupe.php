@@ -34,4 +34,14 @@
     function getIdGroupePersonnelPermanent(){
         return 9;
     }
+
+    function getNomGroupe(){
+        $nomGroupe = $GLOBALS['connexion']->prepare('SELECT Nom_groupe FROM groupe WHERE Id_groupe = ' . $_SESSION['Id_groupe']);
+        $nomGroupe->execute();
+        $donnee = $nomGroupe->fetch();
+        $nom = $donnee['Nom_groupe'];
+        $nomGroupe->closeCursor();
+
+        echo $nom;
+    }
 ?>

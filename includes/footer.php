@@ -1,8 +1,8 @@
 <footer class="sticky-footer">
     <div class="container">
-    <div class="text-center">
-        <small>Copyright © Your Website 2018</small>
-    </div>
+        <div class="text-center">
+            <small><span class="mr-3 d-inline-block">Copyright © Your Website 2018</span> <span class="mr-3 d-inline-block">Nous contacter Numero: <b>0143845656</b></span> <span class="mr-3 d-inline-block">Mail: <b>archedenoe@arche.com</b></span></small>
+        </div>
     </div>
 </footer>
 <!-- Retour en haut de page -->
@@ -29,6 +29,5 @@
 <?php
     $GLOBALS['connexion'] = null;
 ?>
-
 
 <script src="js/sb-admin.min.js"></script>

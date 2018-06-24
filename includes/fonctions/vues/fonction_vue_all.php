@@ -5,16 +5,16 @@
         <div class="card-body">
             <form action="includes/fonctions/fonction_creation.php" method="post">
                 <div class="form-group">
-                    <label for="nomUtilisateurInscription">Nom</label>
-                    <input class="form-control" type="text" name="nomUtilisateurInscription" maxlength="30" value="<?php echo isset($_GET['nomUtilisateurInscription']) ? $_GET['nomUtilisateurInscription'] : ''; ?>" placeholder="Entrer votre nom" required autofocus/>
+                    <label class="col-12" for="nomUtilisateurInscription">Nom <span class="small float-right text-muted" id="nomUtilisateurInscriptionTailleMax"></span></label>
+                    <input class="form-control" type="text" name="nomUtilisateurInscription" onkeypress="tailleInput('nomUtilisateurInscription', event);" maxlength="30" value="<?php echo isset($_GET['nomUtilisateurInscription']) ? $_GET['nomUtilisateurInscription'] : ''; ?>" placeholder="Entrer votre nom" required autofocus/>
                 </div>
                 <div class="form-group">
-                    <label for="prenomUtilisateurInscription">Prénom</label>
-                    <input class="form-control" type="text" name="prenomUtilisateurInscription" maxlength="30" value="<?php echo isset($_GET['prenomUtilisateurInscription']) ? $_GET['prenomUtilisateurInscription'] : ''; ?>" placeholder="Entrer votre prénom" required/>
+                    <label class="col-12" for="prenomUtilisateurInscription">Prénom <span class="small float-right text-muted" id="prenomUtilisateurInscriptionTailleMax"></span></label>
+                    <input class="form-control" type="text" name="prenomUtilisateurInscription" onkeypress="tailleInput('prenomUtilisateurInscription', event);" maxlength="30" value="<?php echo isset($_GET['prenomUtilisateurInscription']) ? $_GET['prenomUtilisateurInscription'] : ''; ?>" placeholder="Entrer votre prénom" required/>
                 </div>
                 <div class="form-group">
-                    <label for="mdpUtilisateurInscription">Mot de passe</label>
-                    <input class="form-control" type="password" name="mdpUtilisateurInscription" maxlength="30" placeholder="Entrer votre mot de passe" required/>
+                    <label class="col-12" for="mdpUtilisateurInscription">Mot de passe <span class="small float-right text-muted" id="mdpUtilisateurInscriptionTailleMax"></span></label>
+                    <input class="form-control" type="password" name="mdpUtilisateurInscription" onkeypress="tailleInput('mdpUtilisateurInscription', event);" maxlength="30" placeholder="Entrer votre mot de passe" required/>
                 </div>
                 <button class="btn btn-primary btn-block" type="submit" name="inscriptionUtilisateur">S'inscrire</button>
             </form>
@@ -28,12 +28,12 @@
         <div class="card-body">
             <form action="includes/fonctions/fonction_connexion.php" method="post">
                 <div class="form-group">
-                    <label for="nom">Nom</label>
-                    <input class="form-control" type="text" name="nom" maxlength="30" value="<?php echo isset($_GET['nom']) ? $_GET['nom'] : ''; ?>" placeholder="Entrer votre nom" required autofocus/>
+                    <label class="col-12" for="nom">Nom <span class="small float-right text-muted" id="nomTailleMax"></span></label>
+                    <input class="form-control" type="text" name="nom" onkeypress="tailleInput('nom', event);" maxlength="30" value="<?php echo isset($_GET['nom']) ? $_GET['nom'] : ''; ?>" placeholder="Entrer votre nom" required autofocus/>
                 </div>
                 <div class="form-group">
-                    <label for="mdp">Mot de passe</label>
-                    <input class="form-control" type="password" name="mdp" maxlength="30" placeholder="Entrer votre mot de passe" required/>
+                    <label class="col-12" for="mdp">Mot de passe <span class="small float-right text-muted" id="mdpTailleMax"></span></label>
+                    <input class="form-control" type="password" name="mdp" onkeypress="tailleInput('mdp', event);" maxlength="30" placeholder="Entrer votre mot de passe" required/>
                 </div>
                 <button class="btn btn-primary btn-block" type="submit" name="connexion">Se connecter</button>
             </form>
@@ -46,13 +46,12 @@
 
     function voirProjets($tabProjet, $idProjet, $idAlerte, $nomProjet, $dateDebutProjet, $dateFinProjet){
         $texteTache = getAllTacheParProjet($idProjet);
-        
-        echo '<div class="card mb-3">
-                    <div class="card-body"> ';
 
         if(!in_array($idProjet, $tabProjet)){
             array_push($tabProjet, $idProjet);
-            echo '<h6 class="card-title mb-1">' . $nomProjet . '</h6>
+            echo '<div class="card mb-3">
+                    <div class="card-body">
+                        <h6 class="card-title mb-1">' . $nomProjet . '</h6>
                         ' . $texteTache . '
                     </div>';
                     
@@ -60,25 +59,23 @@
 
                 echo '<hr class="my-0">
                     <div class="card-body py-2 small">
-                    <a class="mr-3 d-inline-block" href="includes/fonctions/fonction_validation.php?archiverProjet=' . $idProjet . '">Archiver</a>
-                    <a href="#" class="mr-3 d-inline-block" data-toggle="modal" onclick="ajouterTache(' . $idProjet . ');" data-target="#ajouterTache">Ajouter une nouvelle tâche</a>
+                        <a class="mr-3 d-inline-block" href="includes/fonctions/fonction_validation.php?archiverProjet=' . $idProjet . '">Archiver</a>
+                        <a href="#" class="mr-3 d-inline-block" data-toggle="modal" onclick="ajouterTache(' . $idProjet . ');" data-target="#ajouterTache">Ajouter une nouvelle tâche</a>
                     </div>';
             }else if($_SESSION['Id_groupe'] == getIdGroupeParrainFinancier()){
                 echo '<hr class="my-0">
                     <div class="card-body py-2 small">
-                    <a href="#" class="mr-3 d-inline-block" data-toggle="modal" data-target="#don" disabled>Faire un don</a>
+                        <a href="#" class="mr-3 d-inline-block" data-toggle="modal" data-target="#don" disabled>Faire un don</a>
                     </div>';
             }
 
             echo '<div class="card-footer small text-muted">
-                <span class="mr-3 d-inline-block">Posté le ' . dateFr($dateDebutProjet) . '</span>
-                <span class="mr-3 d-inline-block">Fini le ' . dateFr($dateFinProjet) . '</span>';
-        }else{
-             echo $texte;
+                    <span class="mr-3 d-inline-block">Posté le ' . dateFr($dateDebutProjet) . '</span>
+                    <span class="mr-3 d-inline-block">Fini le ' . dateFr($dateFinProjet) . '</span>
+                </div>
+            </div>';
         }
 
-        echo '</div>
-        </div>';
 
         return $tabProjet;
     }
@@ -113,7 +110,7 @@
             <div class="row">
                 <div class="col-12">
                         <div class="text-center pb-3">
-                            <img class="image_popup_taxinomie" src="images/especes/<?php echo $donnees['Photo']; ?>" alt="<?php echo $donnees['Nom_espece']; ?>">
+                            <img class="image_modal_taxinomie" src="images/especes/<?php echo $donnees['Photo']; ?>" alt="<?php echo $donnees['Nom_espece']; ?>">
                         </div>
                     <div class="row">
                         <div class="col-6">

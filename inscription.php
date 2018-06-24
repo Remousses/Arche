@@ -5,7 +5,10 @@
         <!DOCTYPE html>
         <html lang="fr">
             <head>
-              <?php require_once 'includes/head.php'; ?>
+                <?php
+                    require_once 'includes/head.php';
+                    verificationIdGroupe('inscription.php'); 
+                ?>
             </head>
 
             <body class="bg-dark">

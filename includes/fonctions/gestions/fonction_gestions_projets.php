@@ -3,6 +3,14 @@
         $tabAlerte = array();
         $nbAlerte = array();
         $nbProjet = array();
+
+        $utlisateur = $GLOBALS['connexion']->prepare('SELECT Nom_utilisateur, Prenom_utilisateur FROM utilisateur WHERE Id_utilisateur = ' . $_SESSION['Id_utilisateur']);
+        $utlisateur->execute();
+        $nomUtilisateur = $utlisateur->fetch();
+        echo '<p>' . $nomUtilisateur['Nom_utilisateur'] . ' ' . $nomUtilisateur['Prenom_utilisateur'] . '</p>
+        <p><a href ="mot_de_passe_oublie.php"> Cliquez ici pour reinitialiser le mot de passe </a></p>';
+        $utlisateur->closeCursor();
+
         $like = '%[' . $_SESSION['Id_utilisateur'] . ']%';
         $profil = $GLOBALS['connexion']->prepare('SELECT alerte.Id_alerte, Nom_alerte, alerte.Statut, Id_projet, Nom_projet, Date_debut, Date_fin 
         FROM alerte, projet WHERE Id_utilisateur LIKE "' . $like . '" AND projet.Id_alerte = alerte.Id_alerte ORDER BY alerte.Id_alerte, alerte.Statut, Date_debut');
@@ -77,7 +85,7 @@
     function getAllProjetParAlerte(){
         $tabProjet = array();
         $projetParAlerte = $GLOBALS['connexion']->prepare('SELECT Id_projet, Nom_projet, Date_debut, Date_fin, alerte.Id_alerte FROM alerte, projet WHERE alerte.Id_alerte = ' . $_GET['idAlerte'] . ' AND projet.Statut = 1 AND alerte.Id_alerte = projet.Id_alerte ORDER BY Date_debut DESC');
-        
+
         if($projetParAlerte->execute() && $projetParAlerte->rowCount() > 0){
             while ($donnees = $projetParAlerte->fetch()) {
                 $tabProjet = voirProjets($tabProjet, $donnees['Id_projet'], $donnees['Id_alerte'], $donnees['Nom_projet'], $donnees['Date_debut'], $donnees['Date_fin']);
@@ -114,5 +122,25 @@
         }
 
         return $texteTache;
+    }
+
+    function getNbInscritsParProjet($idAlerte){
+        $nbInscritsParProjet = $GLOBALS['connexion']->prepare('SELECT COUNT(Id_candidater_alerte) AS nbInscritsParProjet FROM candidater_alerte WHERE Id_alerte = ' . $idAlerte . ' AND Statut = 1');
+        $nb = '';
+
+        if($nbInscritsParProjet->execute()){
+            $donnee = $nbInscritsParProjet->fetch();
+            if($donnee['nbInscritsParProjet'] > 0){
+                $nb = 'Nombre de personne inscrites : ' . $donnee['nbInscritsParProjet'];
+            }else{
+                $nb = 'Aucune inscription';
+            }
+        }else{
+            $nb = 'Aucune inscription';
+        }
+
+        $nbInscritsParProjet->closeCursor();
+
+        return $nb;
     }
 ?>

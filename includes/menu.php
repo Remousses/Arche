@@ -20,14 +20,13 @@
           </a>
         </li>
         <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Livre de sauvetage">
-          <a class="nav-link" href="livre.php">
+          <a class="nav-link" href="livres.php">
             <i class="fa fa-fw fa-book"></i>
             <span class="nav-link-text">Livre de sauvetage</span>
           </a>
         </li>
         <?php
           if(!empty($_SESSION)){
-            if($_SESSION['Id_groupe'] != getIdGroupeVisiteur()){
         ?>
         <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Profil">
           <a class="nav-link nav-link"  href="profil.php">
@@ -36,8 +35,6 @@
           </a>
         </li>
         <?php
-            }
-
             if($_SESSION['Id_groupe'] == getIdGroupeRessourcesHumaines()){
         ?>
         <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Salariés">
@@ -66,7 +63,7 @@
         <?php
             }
 
-            if($_SESSION['Id_groupe'] == getIdGroupeAdministrateur() || $_SESSION['Id_groupe'] == getIdGroupeComite()){
+            if($_SESSION['Id_groupe'] == getIdGroupeAdministrateur()){
         ?>
         <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Gestion des utilisateurs">
           <a class="nav-link nav-link" href="utilisateurs.php">
@@ -94,28 +91,38 @@
           <a class="nav-link dropdown-toggle mr-lg-2" id="toggleNavColor" href="#">
             <span class="fa-lg">
               <i class="fa fa-fw fa-lightbulb-o"></i>
-          </span>
+            </span>
           </a>
         </li>
 <?php
         if(isset($_SESSION['Id_groupe'])){
           if($_SESSION['Id_groupe'] == getIdGroupeComite()){
-            nouvellesCandidatures();
             nouvellesAlertes();
+            nouvellesCandidatures();
           }
+          ?>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle mr-lg-2" id="messagesDropdown" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <i class="fa fa-fw fa-users"></i>
+          </a>
+          <div class="dropdown-menu" aria-labelledby="messagesDropdown">
+            <h6 class="dropdown-header text-center"><?php getNomGroupe(); ?></h6>
+          </div>
+        </li>
+<?php
         }
 
         if(!empty($_SESSION)){
 ?>
-            <li class="nav-item">
-                <a class="nav-link" data-toggle="modal" data-target="#deconnexion"><i class="fa fa-fw fa-sign-out"></i>Se déconnecter</a>
-            </li>
+          <li class="nav-item">
+              <a class="nav-link" data-toggle="modal" data-target="#deconnexion"><i class="fa fa-fw fa-sign-out"></i>Se déconnecter</a>
+          </li>
 <?php
         }else{
 ?>
-            <li class="nav-item">
-                <a class="nav-link" href="connexion.php"><i class="fa fa-fw fa-sign-out"></i>Se connecter</a>
-            </li>
+          <li class="nav-item">
+              <a class="nav-link" href="connexion.php"><i class="fa fa-fw fa-sign-out"></i>Se connecter</a>
+          </li>
 <?php
         }
 ?>

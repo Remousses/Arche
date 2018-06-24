@@ -18,13 +18,13 @@
 <?php
         while($donnees = $sites->fetch()){
             echo '<tr>
-                    <td>' . $donnees['Nom_site'] . '</td>
-                    <td>' . $donnees['Rue'] . '</td>
-                    <td>' . $donnees['Code_postal'] . '</td>
-                    <td>' . $donnees['Commune'] . '</td>
-                    <td>' . $donnees['Pays'] . '</td>
-                    <td class="text-center"><a href="includes/fonctions/fonction_modification.php?modifierSite=' . $donnees['Id_site'] . '"><i class="fa fa-edit"></i></a></td>
-                    <td class="text-center"><a href="includes/fonctions/fonction_suppression.php?supprimerSite=' . $donnees['Id_site'] . '"><i class="fa fa-close"></i></a></td>
+                    <td class="vertical_align">' . $donnees['Nom_site'] . '</td>
+                    <td class="vertical_align">' . $donnees['Rue'] . '</td>
+                    <td class="vertical_align">' . $donnees['Code_postal'] . '</td>
+                    <td class="vertical_align">' . $donnees['Commune'] . '</td>
+                    <td class="vertical_align">' . $donnees['Pays'] . '</td>
+                    <td class="vertical_align"><a href="#"><i class="fa fa-edit"></i></a></td>
+                    <td class="vertical_align"><a href="#"><i class="fa fa-close"></i></a></td>
                 </tr>';
         }
 

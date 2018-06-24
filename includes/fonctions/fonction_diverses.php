@@ -10,12 +10,20 @@
         
         switch($_GET['message']){
 
+            case 'erreurPageConnexion':
+                messageBox($warning, 'Vous êtes déjà connecté.');
+                break;
+            
             case 'erreurConnexion':
                 messageBox($danger, 'Veuillez réessayer.');
                 break;
 
             case 'succesDeconnexion':
                 messageBox($success, 'Déconnexion réussi');
+                break;
+
+            case 'erreurPageMdpOublie':
+                messageBox($danger, 'Vous n\'êtes pas connecté.');
                 break;
             
             case 'succesInscription':
@@ -122,6 +130,22 @@
                 messageBox($danger, 'Cette alerte n\'existe pas ou elle a été supprimée.');
                 break;
                 
+            case 'succesLivreSauvetage':
+                messageBox($success, 'Le livre de sauvetage a été crée.');
+                break;
+            
+            case 'livreExiste':
+                messageBox($warning, 'Un livre porte déjà le même nom ou bien vous avez déjà écrit un livre pour votre projet.');
+                break;
+                
+            case 'erreurLivreSauvetage':
+                messageBox($danger, 'Le livre de sauvetage n\'a pas été crée.');
+                break;
+            
+            case 'erreurRechercheProjet':
+                messageBox($danger, 'Vous n\'avez pas de projet en cours.');
+                break;
+                    
             default:
                 break;
         }

@@ -34,7 +34,6 @@
             $informationsAlerte = htmlspecialchars($_POST['informationsAlerte'], ENT_QUOTES, "UTF-8");
             $nomEspece = htmlspecialchars($_POST['nomEspece'], ENT_QUOTES, "UTF-8");
             $date = date("Y-m-d");
-            $connexion = connexionDB();
             $tabNomAlerte = array();
             
             $rechercheNomAlerte = $connexion->prepare('SELECT Nom_alerte FROM alerte WHERE Statut BETWEEN 0 AND 1 AND Nom_alerte = "' . $nomAlerte . '"');
@@ -44,7 +43,7 @@
                 $creerAlerte = $connexion->prepare('INSERT INTO alerte SET Nom_alerte = "' . $nomAlerte . '", 
                 Informations_alerte = "' . $informationsAlerte . '", Date_alerte = "' . $date . '", Statut = 0, 
                 Id_espece = (SELECT Id_espece FROM espece WHERE Nom_espece = "' . $nomEspece . '")');
-                var_dump($creerAlerte);
+                
                 if($creerAlerte->execute()){
                     $creerAlerte->closeCursor();
                     if($creerAlerte->rowCount() > 0){
@@ -80,7 +79,6 @@
             }
 
             $lienErreur = 'Location: ../../all_alertes.php?regne=' . urlencode($regne) . '&embranchement=' . urlencode($embranchement) . '&classe=' . urlencode($classe) . '&ordre=' . urlencode($ordre) . '&famille=' . urlencode($famille) . '&genre=' . urlencode($genre) . '&espece=' . urlencode($espece) . '&message=erreurEspece';
-            $connexion = connexionDB();
 
             $rechercheEspece = $connexion->prepare('SELECT Nom_espece FROM espece WHERE Nom_espece = "' . $espece . '" OR Photo = "' . $photo['name'] . '"');
 
@@ -170,7 +168,7 @@
             $activite = htmlspecialchars($_POST['activite'], ENT_QUOTES, "UTF-8");
             $idAlerte = htmlspecialchars($_POST['idAlerte'], ENT_QUOTES, "UTF-8");
             $idEspece = htmlspecialchars($_POST['idEspece'], ENT_QUOTES, "UTF-8");
-            $connexion = connexionDB();
+            
             $rechercherNomProjet = $connexion->prepare('SELECT Nom_projet FROM projet WHERE Nom_projet = "' . $nomProjet . '" AND Id_alerte = ' . $idAlerte . ' AND projet.Statut = 1');
             $parametreUrl = parametreUrl();
 
@@ -216,7 +214,6 @@
             $idAlerte = $_POST['idAlerte'];
             $idEspece = $_POST['idEspece'];
             $idProjet = $_POST['idProjet'];
-            $connexion = connexionDB();
 
             $rechercherNomProjet = $connexion->prepare('SELECT Nom_projet FROM projet, tache WHERE tache.Id_projet = ' . $idProjet . ' AND Activite = "' . $activite . '" AND tache.Id_projet = projet.Id_projet');
             $parametreUrl = parametreUrl();
@@ -251,30 +248,73 @@
             $idAlerte = $_POST['idAlerteCandidater'];
             $idEspece = $_POST['idEspeceCandidater'];
             
-            $candidatureExiste = $connexion->prepare('SELECT * FROM candidater_alerte, alerte WHERE Id_utilisateur = ' . $_SESSION['Id_utilisateur'] . ' AND candidater_alerte.Id_alerte = ' . $idAlerte . ' AND alerte.Id_alerte = candidater_alerte.Id_alerte AND candidater_alerte.Statut BETWEEN 0 AND 1');
+            $rechercheCandidature = $connexion->prepare('SELECT Id_candidater_alerte FROM candidater_alerte, alerte WHERE Id_utilisateur = ' . $_SESSION['Id_utilisateur'] . ' AND candidater_alerte.Id_alerte = ' . $idAlerte . ' AND alerte.Id_alerte = candidater_alerte.Id_alerte AND candidater_alerte.Statut BETWEEN 0 AND 1');
 
-            if($candidatureExiste->execute()){
-                $candidatureExiste->closeCursor();
+            if($rechercheCandidature->execute()){
+                $rechercheCandidature->closeCursor();
                 
-                if($candidatureExiste->rowCount() == 0){
+                if($rechercheCandidature->rowCount() == 0){
                     $candidaterAlerte = $connexion->prepare('INSERT INTO candidater_alerte (Informations_candidater, Role, Statut, Date_candidater, Id_alerte, Id_espece, Id_utilisateur) 
                     VALUE ("' . $informationsCandidater . '", "' . $roleCandidater . '", 0, "' . $date . '", ' . $idAlerte . ', ' . $idEspece . ', ' . $_SESSION['Id_utilisateur'] . ')');
                     
-                    if($candidaterAlerte->execute()){
+                    if($candidaterAlerte->execute() && $candidaterAlerte->rowCount() > 0){
                         $candidaterAlerte->closeCursor();
                         header('Location: ../../all_alertes.php?message=succesCandidature_' . $idAlerte . '#alerte' . $idAlerte);
                     }else{
                         $candidaterAlerte->closeCursor();
-                        header('Location: ../../all_alertes.php?message=erreurCandidature_' . $idAlerte . '#alerte' . $idAlerte);
+                        header('Location: ../../all_alertes.php?informationsCandidater=' . $informationsCandidater . '&message=erreurCandidature_' . $idAlerte . '#alerte' . $idAlerte);
                     }
                 }else{
                     header('Location: ../../all_alertes.php?message=existeCandidature_' . $idAlerte . '#alerte' . $idAlerte);
                 }
             }else{
-                $candidatureExiste->closeCursor();
+                $rechercheCandidature->closeCursor();
             }
         }else{
-            header('Location: ../../all_alertes.php?message=erreurCandidature_' . $idAlerte . '#alerte' . $idAlerte);
+            header('Location: ../../all_alertes.php?informationsCandidater=' . $informationsCandidater . '&message=erreurCandidature_' . $idAlerte . '#alerte' . $idAlerte);
         }
     }
+
+    if(isset($_POST['enregistrerLivre'])){
+        if(!empty($_POST['titre']) && !empty($_POST['narration'])){
+            $titre = htmlspecialchars($_POST['titre'], ENT_QUOTES, "UTF-8"); // le htmlspecialchars() passera les guillemets en entités HTML, ce qui empêchera les injections SQL
+            $narration = htmlspecialchars($_POST['narration'], ENT_QUOTES, "UTF-8");
+            $date = date("Y-m-d");
+            
+            $like = '%[' . $_SESSION['Id_utilisateur'] . ']%';
+            $rechercheProjet = $connexion->prepare('SELECT Id_projet FROM projet WHERE Id_utilisateur LIKE "' . $like . '" AND Statut = 1');
+            
+            if($rechercheProjet->execute() && $rechercheProjet->rowCount() > 0){
+                $donnee = $rechercheProjet->fetch();
+                $idProjet = $donnee['Id_projet'];
+                $rechercheProjet->closeCursor();
+
+                $rechercheLivre = $connexion->prepare('SELECT Titre FROM livre_sauvetage WHERE Titre = "' . $titre . '" AND Id_projet =  ' . $idProjet);
+            
+                if($rechercheLivre->execute() && $rechercheLivre->rowCount() == 0){
+                    $rechercheLivre->closeCursor();
+                    $livreSauvetage = $connexion->prepare('INSERT INTO livre_sauvetage (Titre, Narration, Date, Id_projet, Id_utilisateur) 
+                    VALUE ("' . $titre . '", "' . $narration . '", "' . $date . '", ' . $idProjet . ', ' . $_SESSION['Id_utilisateur'] . ')');
+                    
+                    if($livreSauvetage->execute() && $livreSauvetage->rowCount() > 0){
+                        $livreSauvetage->closeCursor();
+                        header('Location: ../../livres.php?message=succesLivreSauvetage');
+                    }else{
+                        $livreSauvetage->closeCursor();
+                        header('Location: ../../livres.php?titre=' . $titre . '&narration=' . $narration . '&message=erreurLivreSauvetage');
+                    }
+                }else{
+                    $rechercheLivre->closeCursor();
+                    header('Location: ../../livres.php?titre=' . $titre . '&narration=' . $narration . '&message=livreExiste');
+                }
+            }else{
+                $rechercheProjet->closeCursor();
+                header('Location: ../../livres.php?titre=' . $titre . '&narration=' . $narration . '&message=erreurRechercheProjet');
+            }
+        }else{
+            header('Location: ../../livres.php?titre=' . $titre . '&narration=' . $narration . '&message=erreurLivreSauvetage');
+        }
+    }
+
+    $connexion = null;
 ?>

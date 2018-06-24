@@ -17,12 +17,11 @@
 ✔ page salarie @done (2018-6-18 00:10:19)
 ✔ page utilisateurs @done (2018-6-18 00:10:24)
 ✔ page site_stockage @done (2018-6-18 00:10:26)
-☐ faire condidtion page comme menu
+✔ faire condidtion page comme menu
 ✔ profil faire affichage comme projet @done (2018-6-19 22:19:18)
 ✔ afficher projet effectué par l'utilisateur, (mettre narrateur ou missionnaire si possible) @done (2018-6-19 22:19:16)
-✔ page profil vérifier si alerte et ou projet fini quand il y a participé même si visiteur : pour historique quand répartition qu'il @done (2018-6-19 22:19:19)
-sois missionnaire ou narrateur il reprend Id_groupe à 1
-☐ livre de sauvetage
+✔ page profil vérifier si alerte et ou projet fini quand il y a participé même si visiteur : pour historique quand répartition qu'il sois missionnaire ou narrateur il reprend Id_groupe à 1 @done (2018-6-19 22:19:19)
+✔ livre de sauvetage @done (2018-6-23 22:19:19)
 
 
 BDD :

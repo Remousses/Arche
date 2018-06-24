@@ -43,29 +43,37 @@
                 header('Location: ../../all_alertes.php?message=erreurRepartition_' . $idAlerte . '#alerte' . $idAlerte);
             }
 
-            for ($idProjet = 1, $cad = 0; $cad < sizeof($tabCandidat); $idProjet++, $cad++) {
-                $idUtilisateur = $tabCandidat[$cad];
-
-                if(sizeof($tabProjet) == 1){
-                    if($idProjet == 1){
-                        ajoutNarrateur($connexion, $idUtilisateur);
-                    }
-                }else if($idProjet % sizeof($tabProjet) == 0){
-                    $idProjet = 0;
-                    ajoutNarrateur($connexion, $idUtilisateur);
-                }
-    
-                if(sizeof($tabProjet) == 1){
-                    $id = $tabProjet[0];
-                }else if($idProjet == 0){
-                    $id = $tabProjet[sizeof($tabProjet) - 1];
+            for($id = 0; $id < sizeof($tabProjet); $id++){
+                $concat = '[' . $tabCandidat[$id] . '] ';
+                $projet = $connexion->prepare('UPDATE projet SET Id_utilisateur = CONCAT(Id_utilisateur, "'. $concat . '") WHERE Id_projet = ' . $tabProjet[$id]);
+                $majNarrateur = $connexion->prepare('UPDATE utilisateur SET Id_groupe = ' . getIdGroupeNarrateur() . ' WHERE Id_utilisateur = ' . $tabCandidat[$id]);
+                $majCandidature = $connexion->prepare('UPDATE candidater_alerte SET Statut = 2 WHERE Id_utilisateur = ' . $tabCandidat[$id] . ' AND Role = "Participer physiquement" AND Id_alerte = ' . $idAlerte);
+                
+                if($projet->execute() && $projet->rowCount() > 0 && $majNarrateur->execute() && $majNarrateur->rowCount() > 0 
+                    && $majCandidature->execute() && $majCandidature->rowCount() > 0){
+                    $projet->closeCursor();
+                    $majNarrateur->closeCursor();
+                    $projet->closeCursor();
+                    unset($tabCandidat[$id]);
                 }else{
-                    $id = $tabProjet[$idProjet - 1];
+                    $projet->closeCursor();
+                    $majNarrateur->closeCursor();
+                    $projet->closeCursor();
+                    header('Location: ../../all_alertes.php?message=erreurRepartition_' . $idAlerte . '#alerte' . $idAlerte);
+                }
+            }
+
+            for ($idProjet = 0, $idCad = 0; $idCad < sizeof($tabCandidat); $idProjet++, $idCad++) {
+                $idUtilisateur = $tabCandidat[sizeof($tabProjet) + $idCad];
+                $concat = '[' . $tabCandidat[sizeof($tabProjet) + $idCad] . '] ';
+
+                if($idProjet % sizeof($tabProjet) == 0){
+                    $idProjet = 0;
                 }
                 
-                $projet = $connexion->prepare('UPDATE projet SET Id_utilisateur = CONCAT(Id_utilisateur, "[' . $idUtilisateur . '] ") WHERE Id_projet = ' . $id);
+                $projet = $connexion->prepare('UPDATE projet SET Id_utilisateur = CONCAT(Id_utilisateur, "'. $concat . '") WHERE Id_projet = ' . $tabProjet[$idProjet]);
                 $majCandidature = $connexion->prepare('UPDATE candidater_alerte SET Statut = 2 WHERE Id_utilisateur = ' . $idUtilisateur . ' AND Role = "Participer physiquement" AND Id_alerte = ' . $idAlerte);
-                
+ 
                 if($projet->execute() && $projet->rowCount() > 0 && $majCandidature->execute() && $majCandidature->rowCount() > 0){
                     $majCandidature->closeCursor();
                     $projet->closeCursor();
@@ -83,9 +91,5 @@
         header('Location: ../../index.php?message=erreurPage');
     }
 
-    function ajoutNarrateur($connexion, $idUtilisateur){
-        $narrateur = $connexion->prepare('UPDATE utilisateur SET Id_groupe = ' . getIdGroupeNarrateur() . ' WHERE Id_utilisateur = ' . $idUtilisateur);
-        $narrateur->execute();
-        $narrateur->closeCursor();
-    }
+    $connexion = null;
 ?>
