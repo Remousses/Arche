@@ -5,7 +5,6 @@
 <link href="json/manifest.json" rel="manifest">
 <link href="images/icons/icon-72x72.png" rel="icon" type="image/png">
 <link href="css/sb-admin.css" rel="stylesheet" type="text/css">
-<link href="css/add2home.css" rel="stylesheet" type="text/css">
 <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css">
 <link href="vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
 <link href="vendor/datatables/dataTables.bootstrap4.css" rel="stylesheet" type="text/css">
