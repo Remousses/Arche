@@ -313,15 +313,20 @@ body.sidenav-toggled .navbar-sidenav-tooltip.show {
   max-width: 40rem;
 }
 
-footer.sticky-footer {
-  position: absolute;
-  right: 0;
-  bottom: 0;
-  width: 100%;
-  height: 56px;
-  background-color: #e9ecef;
-  line-height: 55px;
+@media(min-width: 992px){
+  footer.sticky-footer {
+    line-height: 55px;
+  }
 }
+
+  footer.sticky-footer {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    width: 100%;
+    height: 56px;
+    background-color: #e9ecef;
+  }
 
 img.image_accueil, img.image_livre, img.image_alerte {
   width: 40%;
